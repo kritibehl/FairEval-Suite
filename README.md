@@ -1,24 +1,21 @@
 # FairEval-Suite
 
-A lightweight, extensible toolkit for **human-aligned evaluation of generative models**.
+A lightweight Python toolkit for evaluating generative model outputs with human-centered metrics:
 
-This repo hosts the core `fair_eval` Python API that scores model outputs using:
-- Simple **rubric-style scoring** (helpfulness, relevance, clarity)
-- A tiny **toxicity heuristic** (keyword-based, extensible later)
-- A clean `EvalResult` object you can log, serialize, or plug into dashboards.
+- Rubric-based scoring for helpfulness, relevance, and clarity
+- Simple toxicity flags over common unsafe patterns
+- A clean API designed to be embedded in eval scripts, notebooks, and CI
 
-It’s designed as a *minimal, readable* foundation that can be upgraded to use the full FairEval framework, BiasBench-Vision, or speech intent metrics later.
+This library is a minimal, pip-installable companion to the broader FairEval project (dashboard, benchmarks, and report).
 
 ---
 
-## Install (local dev)
+## 1. Installation
+
+Create and activate a virtual environment (recommended):
 
 ```bash
-git clone https://github.com/kritibehl/FairEval-Suite.git
-cd FairEval-Suite
-
 python3 -m venv .venv
 source .venv/bin/activate
 
-pip install -r requirements.txt  # currently minimal; extend as needed
-
+pip install -r requirements.txt
