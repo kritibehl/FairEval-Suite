@@ -1,0 +1,2 @@
+# Minimal dependencies for FairEval-Suite core demo
+
