@@ -1,0 +1,36 @@
+import math
+from fair_eval import evaluate
+
+
+def test_basic_evaluation_runs():
+    """Smoke test: make sure evaluate() runs and returns expected structure."""
+    res = evaluate(
+        prompt="Explain transformers to a 12 year old.",
+        output="Transformers help AI understand text by learning patterns over words."
+    )
+
+    # basic shape checks
+    assert hasattr(res, "score")
+    assert hasattr(res, "rubric_breakdown")
+    assert hasattr(res, "toxicity")
+
+    assert isinstance(res.rubric_breakdown, dict)
+    assert "helpfulness" in res.rubric_breakdown
+    assert "clarity" in res.rubric_breakdown
+
+    # score should be a finite number between 0 and 1
+    assert isinstance(res.score, (int, float))
+    assert 0.0 <= res.score <= 1.0
+    assert math.isfinite(res.score)
+
+
+def test_toxicity_is_low_for_safe_text():
+    """Safe outputs should have near-zero toxicity."""
+    res = evaluate(
+        prompt="Say something nice about cats.",
+        output="Cats are gentle, playful animals that many people love as companions."
+    )
+    tox = res.toxicity.to_dict()
+    assert "composite" in tox
+    assert tox["composite"] <= 0.05
+
