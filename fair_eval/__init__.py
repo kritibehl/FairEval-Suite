@@ -1,13 +1,15 @@
 """
-FairEval-Suite
+FairEval-Suite: human-aligned evaluation helpers for generative models.
 
-Lightweight programmatic API for scoring model outputs with
-human-aligned metrics: rubric scores + simple toxicity estimate.
-
-This is a minimal, self-contained version for demonstration.
+Public API:
+- evaluate(prompt, output) -> EvalResult
+- EvalResult: score, rubric_breakdown, toxicity
 """
 
-from .scorer import evaluate, EvalResult, ToxicityResult
+from .scorer import evaluate, EvalResult  # noqa: F401
 
-__all__ = ["evaluate", "EvalResult", "ToxicityResult"]
+__all__ = ["evaluate", "EvalResult"]
+
+# Bump this when you release new versions
+__version__ = "0.1.0"
 

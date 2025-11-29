@@ -14,7 +14,10 @@ This library is a minimal, pip-installable companion to the broader FairEval pro
 
 Create and activate a virtual environment (recommended):
 
+From PyPI (recommended once released):
+
 ```bash
+pip install faireval-suite
 python3 -m venv .venv
 source .venv/bin/activate
 
