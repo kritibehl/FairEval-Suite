@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "faireval-suite"
+version = "0.0.1"
+description = "Lightweight human-aligned evaluation toolkit for generative AI models."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Kriti Behl", email = "kriti0608@gmail.com" }
+]
+
+keywords = [
+  "AI evaluation",
+  "fairness",
+  "toxicity",
+  "alignment",
+  "llm",
+  "nlp",
+  "responsible-ai",
+]
+
+dependencies = [
+    "numpy>=1.20",
+]
+
+[project.urls]
+Homepage = "https://github.com/kritibehl/FairEval-Suite"
+Repository = "https://github.com/kritibehl/FairEval-Suite"
+Issues     = "https://github.com/kritibehl/FairEval-Suite/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fair_eval*"]
+
