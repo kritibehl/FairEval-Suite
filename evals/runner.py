@@ -11,10 +11,15 @@ from .scorers.rag_overlap import RagOverlapScorer
 from .spec import EvalReport, EvalResult, EvalRunConfig
 
 
-def stable_run_id(suite_name: str, model_name: str, scorer_name: str) -> str:
-    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    raw = f"{suite_name}|{model_name}|{scorer_name}|{ts}"
+def stable_run_id(suite_name: str, model_name: str, scorer_name: str, dataset_path: str) -> str:
+    # High-resolution timestamp so two runs in the same second don't collide
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
+
+    # Stable fingerprint of "what was evaluated" (helps debugging + compare)
+    raw = f"{suite_name}|{model_name}|{scorer_name}|{dataset_path}"
     h = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12]
+
+    # Keep readable + unique
     return f"{ts}_{suite_name}_{model_name}_{h}"
 
 
@@ -41,7 +46,7 @@ def run_suite(
     scorer_name = scorer_name or scorer.name
 
     # 4) Metadata
-    run_id = stable_run_id(suite_name, model_name, scorer_name)
+    run_id = stable_run_id(suite_name, model_name, scorer_name, dataset_path)
     created_at = datetime.now(timezone.utc)
     config = EvalRunConfig(
         suite_name=suite_name,
