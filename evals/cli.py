@@ -1,7 +1,7 @@
 import typer
 
 from .runner import run_suite
-from evals.compare.diff import compare_reports
+from .compare.diff import compare_reports
 
 app = typer.Typer(help="GenAI Evaluation Platform CLI")
 
@@ -11,6 +11,8 @@ def run(
     suite: str = typer.Option(..., help="Evaluation suite name (e.g., rag_basic)"),
     model: str = typer.Option("mock", help="Model identifier"),
     out_dir: str = typer.Option(".", help="Output directory for runs/ and reports/"),
+    max_workers: int = typer.Option(1, help="Max parallel workers"),
+    timeout_seconds: float = typer.Option(10.0, help="Per-case timeout seconds"),
 ):
     """
     Run an evaluation suite and write run/report artifacts to runs/ and reports/.
@@ -21,6 +23,8 @@ def run(
         dataset_path=dataset_path,
         model_name=model,
         out_dir=out_dir,
+        max_workers=max_workers,
+        timeout_seconds=timeout_seconds,
     )
     typer.echo(res)
 
@@ -42,19 +46,20 @@ def report(
 
 
 @app.command()
-def run(
-    suite: str = typer.Option(..., help="Evaluation suite name (e.g., rag_basic)"),
-    model: str = typer.Option("mock", help="Model identifier"),
-    out_dir: str = typer.Option(".", help="Output directory for runs/ and reports/"),
-    max_workers: int = typer.Option(4, help="Max parallel workers for case execution"),
+def compare(
+    baseline: str = typer.Option(..., help="Baseline run id"),
+    candidate: str = typer.Option(..., help="Candidate run id"),
+    reports_dir: str = typer.Option("reports", help="Directory containing report artifacts"),
+    out_dir: str = typer.Option("compare", help="Output directory for compare artifacts"),
 ):
-    dataset_path = f"datasets/{suite}/cases.jsonl"
-    res = run_suite(
-        suite_name=suite,
-        dataset_path=dataset_path,
-        model_name=model,
+    """
+    Compare two evaluation runs and write a diff artifact.
+    """
+    res = compare_reports(
+        baseline_run_id=baseline,
+        candidate_run_id=candidate,
+        reports_dir=reports_dir,
         out_dir=out_dir,
-        max_workers=max_workers,
     )
     typer.echo(res)
 
