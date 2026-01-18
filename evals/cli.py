@@ -42,23 +42,19 @@ def report(
 
 
 @app.command()
-def compare(
-    baseline: str = typer.Option(..., help="Baseline run id"),
-    candidate: str = typer.Option(..., help="Candidate run id"),
-    out_dir: str = typer.Option(".", help="Output directory (writes compare/ artifacts here)"),
-    top_k: int = typer.Option(10, help="Top K regressions/improvements to include"),
+def run(
+    suite: str = typer.Option(..., help="Evaluation suite name (e.g., rag_basic)"),
+    model: str = typer.Option("mock", help="Model identifier"),
+    out_dir: str = typer.Option(".", help="Output directory for runs/ and reports/"),
+    max_workers: int = typer.Option(4, help="Max parallel workers for case execution"),
 ):
-    """
-    Compare two evaluation runs and write a regression diff report to compare/.
-    """
-    baseline_path = f"{out_dir}/reports/{baseline}.json"
-    candidate_path = f"{out_dir}/reports/{candidate}.json"
-
-    res = compare_reports(
-        baseline_report_path=baseline_path,
-        candidate_report_path=candidate_path,
+    dataset_path = f"datasets/{suite}/cases.jsonl"
+    res = run_suite(
+        suite_name=suite,
+        dataset_path=dataset_path,
+        model_name=model,
         out_dir=out_dir,
-        top_k=top_k,
+        max_workers=max_workers,
     )
     typer.echo(res)
 

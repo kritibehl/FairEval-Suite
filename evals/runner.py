@@ -1,4 +1,5 @@
 import hashlib
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +24,7 @@ def run_suite(
     model_name: str = "mock",
     scorer_name: str | None = None,
     out_dir: str = ".",
+    max_workers: int = 4,
 ) -> Dict[str, Any]:
     # 1) Load cases (fail fast)
     cases = load_jsonl_cases(dataset_path)
@@ -34,7 +36,7 @@ def run_suite(
         raise RuntimeError(f"unsupported model_name={model_name} (v0 only supports mock)")
     model = MockModelClient()
 
-    # 3) Scorer (deterministic RAG grounding proxy)
+    # 3) Scorer
     scorer = RagOverlapScorer()
     scorer_name = scorer_name or scorer.name
 
@@ -48,44 +50,53 @@ def run_suite(
         created_at=created_at,
     )
 
-    results: List[EvalResult] = []
-    outputs: List[Dict[str, Any]] = []
-
-    # 5) Run cases
-    for c in cases:
+    # --- parallel worker fn ---
+    def process_case(idx: int, c):
         case_input = dict(c.input or {})
         expected_keywords = (c.expected or {}).get("answer_contains", []) or []
         case_input["expected_keywords"] = expected_keywords
 
         out_text = model.generate(case_input)
 
-
+        # keep your current scorer call signature
         sr = scorer.score(c.input, c.expected, out_text)
 
-        results.append(
-            EvalResult(
-                case_id=c.id,
-                score=float(sr.score),
-                passed=bool(sr.passed),
-                details={
-                    "scorer": scorer.name,
-                    "scorer_details": sr.details,
-                    "model_output": out_text,
-                },
-            )
+        result = EvalResult(
+            case_id=c.id,
+            score=float(sr.score),
+            passed=bool(sr.passed),
+            details={
+                "scorer": scorer.name,
+                "scorer_details": sr.details,
+                "model_output": out_text,
+            },
         )
 
-        outputs.append(
-            {
-                "case_id": c.id,
-                "input": c.input,
-                "expected": c.expected,
-                "output": out_text,
-                "score": float(sr.score),
-                "passed": bool(sr.passed),
-                "details": sr.details,
-            }
-        )
+        output_row = {
+            "case_id": c.id,
+            "input": c.input,
+            "expected": c.expected,
+            "output": out_text,
+            "score": float(sr.score),
+            "passed": bool(sr.passed),
+            "details": sr.details,
+        }
+
+        return idx, result, output_row
+
+    # 5) Run cases (bounded parallel + deterministic ordering)
+    indexed_results: List[EvalResult | None] = [None] * len(cases)
+    indexed_outputs: List[Dict[str, Any] | None] = [None] * len(cases)
+
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        futures = [ex.submit(process_case, i, c) for i, c in enumerate(cases)]
+        for fut in as_completed(futures):
+            idx, result, output_row = fut.result()
+            indexed_results[idx] = result
+            indexed_outputs[idx] = output_row
+
+    results: List[EvalResult] = [r for r in indexed_results if r is not None]
+    outputs: List[Dict[str, Any]] = [o for o in indexed_outputs if o is not None]
 
     # 6) Summary
     avg_score = sum(r.score for r in results) / max(1, len(results))
