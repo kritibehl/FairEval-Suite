@@ -1,4 +1,19 @@
-.venv/
+# Python
 __pycache__/
-.DS_Store
 *.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtualenv
+.venv/
+venv/
+
+# Eval artifacts
+runs/
+reports/
+
+# Local experiments
+quick_test.py
+toxicity.py
