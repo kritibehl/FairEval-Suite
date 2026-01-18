@@ -60,6 +60,8 @@ def run_suite(
     out_dir: str = ".",
 ) -> Dict[str, Any]:
     cases = load_jsonl_cases(dataset_path)
+    if len(cases) == 0:
+       raise RuntimeError(f"no cases loaded from dataset: {dataset_path}")
 
     run_id = stable_run_id(suite_name, model_name, scorer_name)
     created_at = datetime.now(timezone.utc)
