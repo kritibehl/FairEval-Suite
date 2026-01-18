@@ -1,71 +1,46 @@
 import hashlib
-import json
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
 from .io import ensure_dir, load_jsonl_cases, write_json
-from .spec import EvalReport, EvalResult, EvalRunConfig
 from .models.mock import MockModelClient
+from .scorers.rag_overlap import RagOverlapScorer
+from .spec import EvalReport, EvalResult, EvalRunConfig
 
 
 def stable_run_id(suite_name: str, model_name: str, scorer_name: str) -> str:
-    # Deterministic-ish id: includes timestamp but hashed for nice shortness
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     raw = f"{suite_name}|{model_name}|{scorer_name}|{ts}"
     h = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:12]
     return f"{ts}_{suite_name}_{model_name}_{h}"
 
 
-def mock_generate(case_input: Dict[str, Any]) -> str:
-    """
-    Deterministic 'model' response for v1 plumbing.
-    We will replace with real model adapters in Commit 6.
-    """
-    prompt = case_input.get("prompt", "")
-    context = case_input.get("context", [])
-    # Deterministic response: echo a small summary-like string.
-    return f"{prompt} | ctx_items={len(context)}"
-
-
-def score_contains(expected: Dict[str, Any] | None, output_text: str) -> Dict[str, Any]:
-    """
-    Minimal v1 scoring: check 'answer_contains' substrings.
-    Returns score in [0,1] with details.
-    """
-    if not expected:
-        return {"score": 0.0, "passed": False, "hits": 0, "total": 0}
-
-    needles = expected.get("answer_contains") or []
-    if not isinstance(needles, list) or len(needles) == 0:
-        return {"score": 0.0, "passed": False, "hits": 0, "total": 0}
-
-    hits = 0
-    lowered = output_text.lower()
-    for n in needles:
-        if isinstance(n, str) and n.lower() in lowered:
-            hits += 1
-
-    score = hits / len(needles)
-    passed = score == 1.0
-    return {"score": score, "passed": passed, "hits": hits, "total": len(needles)}
-
-
 def run_suite(
     suite_name: str,
     dataset_path: str,
     model_name: str = "mock",
-    scorer_name: str = "contains_v1",
+    scorer_name: str | None = None,
     out_dir: str = ".",
 ) -> Dict[str, Any]:
+    # 1) Load cases (fail fast)
     cases = load_jsonl_cases(dataset_path)
     if len(cases) == 0:
-       raise RuntimeError(f"no cases loaded from dataset: {dataset_path}")
+        raise RuntimeError(f"no cases loaded from dataset: {dataset_path}")
 
+    # 2) Model adapter (deterministic mock for now)
+    if model_name != "mock":
+        raise RuntimeError(f"unsupported model_name={model_name} (v0 only supports mock)")
+    model = MockModelClient()
+
+    # 3) Scorer (deterministic RAG grounding proxy)
+    scorer = RagOverlapScorer()
+    scorer_name = scorer_name or scorer.name
+
+    # 4) Metadata
     run_id = stable_run_id(suite_name, model_name, scorer_name)
     created_at = datetime.now(timezone.utc)
-
     config = EvalRunConfig(
         suite_name=suite_name,
         model_name=model_name,
@@ -76,18 +51,21 @@ def run_suite(
     results: List[EvalResult] = []
     outputs: List[Dict[str, Any]] = []
 
+    # 5) Run cases
     for c in cases:
-        out_text = mock_generate(c.input)
-        score_info = score_contains(c.expected, out_text)
+        out_text = model.generate(c.input)
+
+        sr = scorer.score(c.input, c.expected, out_text)
 
         results.append(
             EvalResult(
                 case_id=c.id,
-                score=float(score_info["score"]),
-                passed=bool(score_info["passed"]),
+                score=float(sr.score),
+                passed=bool(sr.passed),
                 details={
+                    "scorer": scorer.name,
+                    "scorer_details": sr.details,
                     "model_output": out_text,
-                    "score_info": score_info,
                 },
             )
         )
@@ -98,11 +76,13 @@ def run_suite(
                 "input": c.input,
                 "expected": c.expected,
                 "output": out_text,
-                "score": float(score_info["score"]),
-                "passed": bool(score_info["passed"]),
+                "score": float(sr.score),
+                "passed": bool(sr.passed),
+                "details": sr.details,
             }
         )
 
+    # 6) Summary
     avg_score = sum(r.score for r in results) / max(1, len(results))
     pass_rate = sum(1 for r in results if r.passed) / max(1, len(results))
 
@@ -117,6 +97,7 @@ def run_suite(
         },
     )
 
+    # 7) Write artifacts
     root = Path(out_dir)
     runs_dir = ensure_dir(root / "runs")
     reports_dir = ensure_dir(root / "reports")
