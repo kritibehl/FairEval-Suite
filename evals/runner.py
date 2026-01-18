@@ -53,7 +53,12 @@ def run_suite(
 
     # 5) Run cases
     for c in cases:
-        out_text = model.generate(c.input)
+        case_input = dict(c.input or {})
+        expected_keywords = (c.expected or {}).get("answer_contains", []) or []
+        case_input["expected_keywords"] = expected_keywords
+
+        out_text = model.generate(case_input)
+
 
         sr = scorer.score(c.input, c.expected, out_text)
 
