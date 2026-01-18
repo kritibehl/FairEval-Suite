@@ -7,6 +7,7 @@ from typing import Any, Dict, List
 
 from .io import ensure_dir, load_jsonl_cases, write_json
 from .spec import EvalReport, EvalResult, EvalRunConfig
+from .models.mock import MockModelClient
 
 
 def stable_run_id(suite_name: str, model_name: str, scorer_name: str) -> str:
