@@ -1,3 +1,4 @@
 # Minimal dependencies for FairEval-Suite core demo
-typer
-
+typer>=0.9.0
+rich>=13.0.0
+pytest>=7.0.0

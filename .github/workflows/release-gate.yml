@@ -18,41 +18,53 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install package and deps
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -e .
           pip install pytest typer
 
       - name: Run tests
         run: |
           pytest -q
 
-      - name: Run evaluation
+      - name: Run baseline eval
         run: |
-          python -m evals.cli run --suite rag_basic --model mock
+          python -m evals.cli run --suite rag_basic --model mock --out-dir baseline_artifacts
 
-      - name: List reports
+      - name: Capture baseline run id
         run: |
-          ls reports
+          BASELINE_ID=$(ls baseline_artifacts/reports/*.json | head -n 1 | xargs -n 1 basename | sed 's/.json//')
+          echo "BASELINE_ID=$BASELINE_ID" >> $GITHUB_ENV
 
-      - name: Compare runs (latest two)
+      - name: Run candidate eval
         run: |
-          BASELINE=$(ls reports | head -n 1 | sed 's/.json//')
-          CANDIDATE=$(ls reports | tail -n 1 | sed 's/.json//')
+          python -m evals.cli run --suite rag_basic --model mock --out-dir candidate_artifacts
 
-          echo "Baseline: $BASELINE"
-          echo "Candidate: $CANDIDATE"
+      - name: Capture candidate run id
+        run: |
+          CANDIDATE_ID=$(ls candidate_artifacts/reports/*.json | head -n 1 | xargs -n 1 basename | sed 's/.json//')
+          echo "CANDIDATE_ID=$CANDIDATE_ID" >> $GITHUB_ENV
 
+      - name: Copy reports into one directory
+        run: |
+          mkdir -p reports
+          cp baseline_artifacts/reports/*.json reports/
+          cp candidate_artifacts/reports/*.json reports/
+
+      - name: Compare runs
+        run: |
           python -m evals.cli compare \
-            --baseline $BASELINE \
-            --candidate $CANDIDATE
+            --baseline "$BASELINE_ID" \
+            --candidate "$CANDIDATE_ID" \
+            --reports-dir ./reports \
+            --out-dir .
 
       - name: Apply release gate
         run: |
           COMPARE_FILE=$(ls compare/*.json | head -n 1)
-
           python -m evals.cli gate \
-            --compare-artifact $COMPARE_FILE \
+            --compare-artifact "$COMPARE_FILE" \
             --max-avg-score-drop 0.05 \
-            --max-pass-rate-drop 0.10
+            --max-pass-rate-drop 0.10 \
+            --out-dir .

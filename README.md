@@ -9,11 +9,11 @@ FairEval turns model evaluation into a **release safety check**.
 
 Instead of relying on manual spot checks, FairEval:
 
-• runs deterministic evaluation suites  
-• compares baseline vs candidate model behavior  
-• detects regressions  
-• applies threshold-based release gates  
-• generates machine-readable artifacts  
+- runs deterministic evaluation suites  
+- compares baseline vs candidate model behavior  
+- detects regressions  
+- applies threshold-based release gates  
+- generates machine-readable artifacts  
 
 This allows teams to prevent degraded model outputs from shipping.
 
