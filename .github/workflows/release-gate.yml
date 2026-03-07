@@ -1,0 +1,58 @@
+name: FairEval Release Gate
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  eval-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest typer
+
+      - name: Run tests
+        run: |
+          pytest -q
+
+      - name: Run evaluation
+        run: |
+          python -m evals.cli run --suite rag_basic --model mock
+
+      - name: List reports
+        run: |
+          ls reports
+
+      - name: Compare runs (latest two)
+        run: |
+          BASELINE=$(ls reports | head -n 1 | sed 's/.json//')
+          CANDIDATE=$(ls reports | tail -n 1 | sed 's/.json//')
+
+          echo "Baseline: $BASELINE"
+          echo "Candidate: $CANDIDATE"
+
+          python -m evals.cli compare \
+            --baseline $BASELINE \
+            --candidate $CANDIDATE
+
+      - name: Apply release gate
+        run: |
+          COMPARE_FILE=$(ls compare/*.json | head -n 1)
+
+          python -m evals.cli gate \
+            --compare-artifact $COMPARE_FILE \
+            --max-avg-score-drop 0.05 \
+            --max-pass-rate-drop 0.10
