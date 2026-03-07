@@ -1,9 +1,9 @@
 import hashlib
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from .io import ensure_dir, load_jsonl_cases, write_json
 from .models.mock import MockModelClient
@@ -30,6 +30,7 @@ def run_suite(
     scorer_name: str | None = None,
     out_dir: str = ".",
     max_workers: int = 4,
+    timeout_seconds: float = 10.0,
 ) -> Dict[str, Any]:
     # 1) Load cases (fail fast)
     cases = load_jsonl_cases(dataset_path)
@@ -56,14 +57,14 @@ def run_suite(
     )
 
     # --- parallel worker fn ---
-    def process_case(idx: int, c):
+    def process_case(idx: int, c) -> Tuple[int, EvalResult, Dict[str, Any]]:
         case_input = dict(c.input or {})
         expected_keywords = (c.expected or {}).get("answer_contains", []) or []
         case_input["expected_keywords"] = expected_keywords
 
         out_text = model.generate(case_input)
 
-        # keep your current scorer call signature
+        # scorer signature: score(input, expected, output_text)
         sr = scorer.score(c.input, c.expected, out_text)
 
         result = EvalResult(
@@ -94,11 +95,67 @@ def run_suite(
     indexed_outputs: List[Dict[str, Any] | None] = [None] * len(cases)
 
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
-        futures = [ex.submit(process_case, i, c) for i, c in enumerate(cases)]
-        for fut in as_completed(futures):
-            idx, result, output_row = fut.result()
-            indexed_results[idx] = result
-            indexed_outputs[idx] = output_row
+        future_to_idx = {ex.submit(process_case, i, c): i for i, c in enumerate(cases)}
+
+        # Iterate in submission order to keep behavior stable; we still place into index
+        for fut, idx in future_to_idx.items():
+            try:
+                i, result, output_row = fut.result(timeout=timeout_seconds)
+                indexed_results[i] = result
+                indexed_outputs[i] = output_row
+
+            except FuturesTimeoutError:
+                case_id = cases[idx].id
+                timeout_detail = {
+                    "error": "timeout",
+                    "timeout_seconds": timeout_seconds,
+                }
+
+                indexed_results[idx] = EvalResult(
+                    case_id=case_id,
+                    score=0.0,
+                    passed=False,
+                    details={
+                        "scorer": scorer.name,
+                        "scorer_details": timeout_detail,
+                        "model_output": None,
+                    },
+                )
+
+                indexed_outputs[idx] = {
+                    "case_id": case_id,
+                    "input": cases[idx].input,
+                    "expected": cases[idx].expected,
+                    "output": None,
+                    "score": 0.0,
+                    "passed": False,
+                    "details": timeout_detail,
+                }
+
+            except Exception as e:
+                case_id = cases[idx].id
+                err_detail = {"error": "exception", "message": str(e)}
+
+                indexed_results[idx] = EvalResult(
+                    case_id=case_id,
+                    score=0.0,
+                    passed=False,
+                    details={
+                        "scorer": scorer.name,
+                        "scorer_details": err_detail,
+                        "model_output": None,
+                    },
+                )
+
+                indexed_outputs[idx] = {
+                    "case_id": case_id,
+                    "input": cases[idx].input,
+                    "expected": cases[idx].expected,
+                    "output": None,
+                    "score": 0.0,
+                    "passed": False,
+                    "details": err_detail,
+                }
 
     results: List[EvalResult] = [r for r in indexed_results if r is not None]
     outputs: List[Dict[str, Any]] = [o for o in indexed_outputs if o is not None]
