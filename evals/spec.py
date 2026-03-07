@@ -1,14 +1,10 @@
 from typing import Any, Dict, List, Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 
 
 @dataclass(frozen=True)
 class EvalCase:
-    """
-    A single evaluation example.
-    Must be deterministic and serializable.
-    """
     id: str
     input: Dict[str, Any]
     expected: Optional[Dict[str, Any]] = None
@@ -17,20 +13,17 @@ class EvalCase:
 
 @dataclass(frozen=True)
 class EvalRunConfig:
-    """
-    Defines how an evaluation run is executed.
-    """
     suite_name: str
     model_name: str
     scorer_name: str
     created_at: datetime
+    artifact_version: str = "v1"
+    suite_version: str = "2026.03"
+    gate_rules_version: str = "v1"
 
 
 @dataclass
 class EvalResult:
-    """
-    Result of evaluating a single case.
-    """
     case_id: str
     score: float
     passed: bool
@@ -39,10 +32,7 @@ class EvalResult:
 
 @dataclass
 class EvalReport:
-    """
-    Aggregated report for an evaluation run.
-    """
     run_id: str
     config: EvalRunConfig
     results: List[EvalResult]
-    summary: Dict[str, Any]
+    summary: Dict[str, Any] = field(default_factory=dict)
