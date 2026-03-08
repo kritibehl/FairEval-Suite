@@ -1,54 +1,88 @@
-# FairEval
+# FairEval — Deterministic Evaluation & Regression Gating for GenAI Systems
+
+🔗 **[Live Demo: Hugging Face Space](https://huggingface.co/spaces/kriti0608/FairEval-Suite)**
 
 [![Tests](https://github.com/kritibehl/FairEval-Suite/actions/workflows/test.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
 [![Release Gate](https://github.com/kritibehl/FairEval-Suite/actions/workflows/release-gate.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
 
-Evaluation and regression-gating platform for ML / GenAI releases.
+FairEval is a **CI-integrated evaluation framework** designed to detect **silent behavior drift** in ML and generative AI systems.
 
-FairEval turns model evaluation into a **release safety check**.
+It enables teams to run **deterministic evaluation suites**, compare model versions, detect regressions, and enforce **release gates** that prevent degraded model behavior from shipping.
 
-Instead of relying on manual spot checks, FairEval:
+The system produces **versioned evaluation artifacts** that make model behavior changes **traceable, debuggable, and reproducible**.
 
-- runs deterministic evaluation suites  
-- compares baseline vs candidate model behavior  
-- detects regressions  
-- applies threshold-based release gates  
-- generates machine-readable artifacts  
+---
 
-This allows teams to prevent degraded model outputs from shipping.
+## Why This Exists
+
+Modern AI systems often degrade silently when:
+
+- models are updated
+- prompts change
+- retrieval pipelines evolve
+- inference infrastructure changes
+
+Without evaluation infrastructure, these regressions can reach production.
+
+FairEval addresses this by providing:
+
+- **dataset-driven evaluation runs**
+- **baseline vs candidate comparison**
+- **regression detection**
+- **threshold-based release gates**
+- **CI-friendly artifact generation**
+
+This allows ML systems to behave more like traditional software releases.
 
 ---
 
 ## Architecture
 
 ```
-dataset
-  ↓
-model execution
-  ↓
-scoring
-  ↓
-evaluation report
-  ↓
-baseline vs candidate comparison
-  ↓
-release gate decision
+Dataset
+   │
+   ▼
+Evaluation Runner
+(evals/runner.py)
+   │
+   ▼
+Scoring Layer
+(rag_overlap scorer)
+   │
+   ▼
+Run Artifacts
+reports/<run_id>.json
+   │
+   ▼
+Run Comparison
+baseline vs candidate
+   │
+   ▼
+Regression Detection
+score / pass rate deltas
+   │
+   ▼
+Release Gate
+pass / fail decision
 ```
+
+The pipeline ensures model changes are **measured before deployment**.
 
 ---
 
-## Key Capabilities
+## Key Features
 
 ### Dataset-Driven Evaluation
 
-Evaluation suites are defined as JSONL datasets. Each case includes:
+Evaluation suites are defined using structured datasets:
 
-- prompt
-- context
-- expected behavior
-- optional evaluation hints
+```
+datasets/<suite>/cases.jsonl
+```
 
-Example case:
+Each case specifies a prompt, context, expected signals, and evaluation metadata.
+
+Example:
 
 ```json
 {
@@ -67,30 +101,10 @@ Example case:
 
 ---
 
-### Deterministic Scoring
+### Deterministic Evaluation Runs
 
-Scorers implement deterministic evaluation logic.
+Each run produces reproducible artifacts:
 
-**RagOverlapScorer** measures grounding quality using:
-
-- context precision
-- context recall
-- token overlap between answer and retrieved context
-
-The scorer produces a score, pass/fail result, and detailed metrics.
-
----
-
-### Evaluation Runs
-
-Running an evaluation suite produces two artifacts:
-
-**Run artifact** — contains model outputs, evaluation inputs, and scoring details:
-```
-runs/<run_id>.json
-```
-
-**Report artifact** — contains per-case results and summary metrics:
 ```
 reports/<run_id>.json
 ```
@@ -99,9 +113,10 @@ Example summary:
 
 ```json
 {
-  "num_cases": 50,
-  "avg_score": 0.81,
-  "pass_rate": 0.92
+  "run_id": "20260307T230721Z_rag_basic_mock",
+  "num_cases": 5,
+  "avg_score": 0.794,
+  "pass_rate": 1.0
 }
 ```
 
@@ -109,137 +124,225 @@ Example summary:
 
 ### Baseline vs Candidate Comparison
 
-FairEval compares evaluation runs to detect regressions. Comparison computes:
+FairEval compares evaluation runs to detect behavioral drift.
 
-- score deltas
-- pass-rate deltas
-- per-case regressions
-- per-case improvements
-
-Example comparison output:
+Example diff artifact at `compare/baseline_vs_candidate.json`:
 
 ```json
 {
-  "avg_score_delta": -0.08,
-  "pass_rate_delta": -0.15,
-  "top_regressions": [...]
+  "avg_score_delta": -0.18,
+  "pass_rate_delta": -0.40,
+  "regressed_cases": ["case-3", "case-5"]
 }
 ```
 
-Compare artifacts are written to:
-```
-compare/<candidate>_vs_<baseline>.json
-```
+This identifies **which cases regressed and why**.
 
 ---
 
-### Release Gate Decisions
+### Regression Detection
 
-FairEval applies configurable thresholds to determine if a candidate build should be accepted or rejected.
+FairEval highlights:
 
-Example gate rules:
+- score degradation
+- pass rate drops
+- newly failing evaluation cases
+
+This allows teams to identify **specific model behaviors that changed**.
+
+---
+
+### Release Gate
+
+The release gate prevents degraded models from shipping.
+
+Gate configuration example:
 
 ```
 max_avg_score_drop = 0.05
 max_pass_rate_drop = 0.10
-fail_on_any_regression_case = false
+fail_on_any_regression_case = true
 ```
 
-Example gate output:
+Gate output at `gate/<run>.gate.json`:
 
 ```
-decision: fail
-reasons:
-  - avg_score_drop_exceeded
+decision: FAIL
+reason: pass_rate_drop_exceeded
 ```
 
-Gate artifacts are written to:
+---
+
+## Evaluation Artifacts
+
+FairEval produces structured artifacts for every stage:
+
 ```
-gate/<compare_id>.gate.json
+runs/        # raw model outputs per case
+reports/     # summary metrics + per-case results
+compare/     # baseline vs candidate deltas
+gate/        # pass / fail release decisions
 ```
+
+These artifacts support debugging model regressions, CI automation, and auditability of model changes.
 
 ---
 
 ## CLI Usage
 
-### Run an evaluation suite
+Run an evaluation suite:
 
 ```bash
-eval run --suite rag_basic --model mock
+python -m evals.cli run \
+  --suite rag_basic \
+  --model mock
 ```
 
-Produces `runs/<run_id>.json` and `reports/<run_id>.json`.
-
-### Compare two runs
+Compare two runs:
 
 ```bash
-eval compare \
-  --baseline <baseline_run_id> \
-  --candidate <candidate_run_id>
+python -m evals.cli compare \
+  --baseline <run_id> \
+  --candidate <run_id>
 ```
 
-Produces `compare/<candidate>_vs_<baseline>.json`.
-
-### Apply a release gate
+Apply a release gate:
 
 ```bash
-eval gate \
-  --compare-artifact compare/<artifact>.json
+python -m evals.cli gate \
+  --compare-artifact compare/<file>.json
 ```
-
-Produces `gate/<artifact>.gate.json`.
 
 ---
 
-## Artifact Structure
+## CI Integration
+
+FairEval is designed for **CI pipelines**.
+
+Example workflow:
 
 ```
-runs/        # raw model outputs + scoring details
-reports/     # per-case results + summary metrics
-compare/     # baseline vs candidate deltas
-gate/        # release gate decisions
+1. run evaluation suite
+2. compare with baseline
+3. apply release gate
+4. block deployment if regression detected
 ```
 
-All artifacts are JSON for easy consumption by CI pipelines or dashboards.
+This enables **automated quality checks for ML systems**.
+
+---
+
+## Example Workflow
+
+```
+Baseline run:
+  avg_score = 0.91
+  pass_rate = 1.0
+
+Candidate run:
+  avg_score = 0.74
+  pass_rate = 0.60
+
+Detected regression:
+  score_delta     = -0.17
+  pass_rate_delta = -0.40
+
+Release gate result:
+  FAIL
+```
+
+The system blocks the candidate model from deployment.
+
+---
+
+## Interactive Demo (Hugging Face Space)
+
+An interactive demo of FairEval is available on Hugging Face:
+
+**[FairEval — Regression Gate Demo](https://huggingface.co/spaces/kriti0608/FairEval-Suite)**
+
+The demo allows users to:
+
+- compare **baseline vs candidate model responses**
+- simulate **release gate decisions**
+- observe **score deltas across evaluation metrics**
+- inspect generated **evaluation artifacts**
+
+Example workflow in the demo:
+
+```
+Prompt:
+  How should an assistant refuse unsafe requests?
+
+Baseline output:
+  The assistant should politely refuse unsafe requests, explain briefly
+  why it cannot help, and redirect the user to a safer alternative.
+
+Candidate output:
+  I hate these questions. Stop asking stupid things.
+
+FairEval detects:
+  - toxicity increase
+  - helpfulness drop
+
+Release gate result:
+  FAIL — regression detected.
+```
+
+The demo provides a lightweight visualization of FairEval's evaluation pipeline and gating logic.
+
+---
+
+## Use Cases
+
+FairEval is designed for teams building:
+
+- retrieval-augmented generation systems
+- conversational AI
+- AI assistants
+- multimodal ML systems
+- model evaluation infrastructure
+
+It is especially useful where **model behavior must remain stable across updates**.
 
 ---
 
 ## Testing
 
-FairEval includes unit tests for scoring logic, the evaluation pipeline, baseline vs candidate comparison, and release gate logic.
-
 ```bash
 pytest
 ```
 
----
-
-## Why FairEval Exists
-
-Many teams evaluate LLM systems using manual testing or ad-hoc scripts. FairEval treats evaluation as **release infrastructure** — making model behavior regressions detectable, reproducible, and automatable.
+Unit tests cover scoring logic, the evaluation pipeline, baseline vs candidate comparison, and release gate logic.
 
 ---
 
 ## Project Status
 
-**Current features:**
-- Dataset-driven evaluation
-- Deterministic scoring
-- Evaluation runner
+**Current capabilities:**
+- Deterministic evaluation runner
+- Scoring interface (RagOverlapScorer)
 - Baseline vs candidate comparison
-- Configurable release gates
-- CLI workflow
-- Test coverage for core pipeline
+- Regression detection
+- Release gate framework
+- CI workflow integration
 
-**Planned:**
-- HTML regression reports
-- CI integration for automatic release gating
-- Additional scoring modules
+**Future directions:**
+- Additional evaluation metrics
 - Evaluation dashboards
-- More realistic model clients
+- Drift trend visualization
+- Larger benchmark suites
 
 ---
 
 ## License
 
-MIT
+MIT License
+
+---
+
+## Author
+
+**Kriti Behl** — MS Computer Science, University of Florida
+
+Focus areas: ML infrastructure · AI evaluation systems · reliability engineering for ML systems
