@@ -1,4 +1,8 @@
-# Minimal dependencies for FairEval-Suite core demo
+# Core demo + CLI
 typer>=0.9.0
 rich>=13.0.0
 pytest>=7.0.0
+
+# Real model inference (conservative pins for Apple/macOS)
+torch==2.10.0
+transformers==4.51.3
