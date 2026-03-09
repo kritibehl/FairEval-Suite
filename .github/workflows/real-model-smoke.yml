@@ -3,9 +3,13 @@ name: Real Model Smoke Test
 on:
   workflow_dispatch:
   push:
-    branches: [ main, refactor/fair-eval-release-gate ]
+    branches:
+      - main
+      - refactor/fair-eval-release-gate
+      - feat/faireval-distilbert-real-model
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   distilbert-smoke:
