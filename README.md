@@ -348,7 +348,7 @@ Unit tests cover scoring logic, the evaluation pipeline, baseline vs candidate c
 - Larger benchmark suites
 
 ---
-### Real Transformer Model Support
+## Real Transformer Model Support
 
 FairEval supports live transformer inference via DistilBERT (`distilbert-base-uncased-finetuned-sst-2-english`) for classification-oriented evaluation suites.
 
@@ -360,6 +360,22 @@ Run the evaluation pipeline using a real transformer model:
 
 ```bash
 ./scripts/run_real_model_smoke.sh
+```
+
+This script runs:
+
+1. DistilBERT inference
+2. dataset-driven evaluation
+3. scoring and artifact generation
+4. regression gate validation
+
+Artifacts generated:
+
+```
+real_model_artifacts/
+ ├── runs/
+ └── reports/
+```
 
 ## Who This Is For
 
