@@ -1,6 +1,8 @@
 # FairEval — Deterministic Evaluation & Regression Gating for GenAI Systems
 
-🔗 **[Live Demo: Hugging Face Space](https://huggingface.co/spaces/kriti0608/FairEval-Suite)**
+> CI-integrated evaluation and regression-gating for detecting silent behavior drift in ML / GenAI systems.
+
+🔗 **Live Demo:** [Hugging Face Space](https://huggingface.co/spaces/kriti0608/FairEval-Suite)
 
 [![Tests](https://github.com/kritibehl/FairEval-Suite/actions/workflows/test.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
 [![Release Gate](https://github.com/kritibehl/FairEval-Suite/actions/workflows/release-gate.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
@@ -188,6 +190,16 @@ These artifacts support debugging model regressions, CI automation, and auditabi
 
 ---
 
+## Quickstart
+
+```bash
+python -m evals.cli run --suite rag_basic --model mock
+python -m evals.cli compare --baseline <run_id> --candidate <run_id>
+python -m evals.cli gate --compare-artifact compare/<file>.json
+```
+
+---
+
 ## CLI Usage
 
 Run an evaluation suite:
@@ -291,6 +303,8 @@ Release gate result:
 
 The demo provides a lightweight visualization of FairEval's evaluation pipeline and gating logic.
 
+The Space is intended as a lightweight visual companion to the main evaluation pipeline, not as a research benchmark.
+
 ---
 
 ## Use Cases
@@ -327,11 +341,33 @@ Unit tests cover scoring logic, the evaluation pipeline, baseline vs candidate c
 - Release gate framework
 - CI workflow integration
 
-**Future directions:**
+**Planned next steps:**
 - Additional evaluation metrics
 - Evaluation dashboards
 - Drift trend visualization
 - Larger benchmark suites
+
+---
+### Real Transformer Model Support
+
+FairEval supports live transformer inference via DistilBERT (`distilbert-base-uncased-finetuned-sst-2-english`) for classification-oriented evaluation suites.
+
+The deterministic mock path remains the default for lightweight local testing and CI portability, while the live-model path is validated separately in a Linux smoke workflow.
+
+## Quick Demo
+
+Run the evaluation pipeline using a real transformer model:
+
+```bash
+./scripts/run_real_model_smoke.sh
+
+## Who This Is For
+
+FairEval is aimed at:
+
+- ML tooling / evaluation infrastructure teams
+- GenAI reliability and AI quality engineering roles
+- teams validating model-backed product behavior before release
 
 ---
 
