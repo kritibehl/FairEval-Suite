@@ -6,12 +6,13 @@
 
 [![Tests](https://github.com/kritibehl/FairEval-Suite/actions/workflows/test.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
 [![Release Gate](https://github.com/kritibehl/FairEval-Suite/actions/workflows/release-gate.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
+![GitHub Repo stars](https://img.shields.io/github/stars/kritibehl/FairEval-Suite?style=social)
 
 ---
 
 ## Overview
 
-FairEval provides infrastructure for evaluating model behavior changes before deployment, similar to regression testing for traditional software systems.
+FairEval provides infrastructure for evaluating model behavior changes before deployment, analogous to regression testing for traditional software systems.
 
 It is an evaluation infrastructure framework designed to detect silent regressions in ML and GenAI systems **before deployment**.
 
@@ -72,7 +73,7 @@ Release Gate
 gate/<run>.gate.json
 ```
 
-This architecture ensures that model changes are measured before deployment.
+This pipeline evaluates model outputs, compares behavioral changes across runs, and applies configurable regression thresholds before deployment.
 
 ---
 
@@ -251,6 +252,8 @@ This exposes FairEval as a reusable evaluation service rather than only a CLI wo
 
 🔗 [FairEval Hugging Face Space](https://huggingface.co/spaces/kriti0608/FairEval-Suite)
 
+The demo is built using Gradio and simulates a model evaluation pipeline with scoring, regression detection, and release gate decisions.
+
 **Example scenario:**
 
 | | Output |
@@ -260,6 +263,33 @@ This exposes FairEval as a reusable evaluation service rather than only a CLI wo
 | **Candidate** | I hate these questions. Stop asking. |
 | **FairEval detects** | Helpfulness drop · Toxicity increase |
 | **Gate result** | `FAIL` |
+
+---
+
+## Screenshots
+
+**Hugging Face Demo — Full Interface**
+![FairEval Hugging Face Demo](docs/images/hf-demo-full.png)
+
+**Delta Summary & Gate Controls**
+![FairEval Gate Controls and Delta Summary](docs/images/hf-demo-gate.png)
+
+The live demo accepts baseline and candidate responses, applies configurable regression thresholds (overall score drop, helpfulness drop, toxicity flag), and outputs a gate decision with a downloadable artifact JSON.
+
+---
+
+## CLI Modules
+
+```
+evals/
+├── cli.py
+├── runner.py
+├── scorers/
+├── compare/
+└── gate/
+```
+
+The CLI exposes commands for evaluation runs, comparison artifacts, and release gate enforcement.
 
 ---
 
@@ -310,18 +340,6 @@ Current capabilities:
 - FastAPI service endpoints
 - DistilBERT-based real model evaluation
 - Hugging Face interactive demo
-
----
-
-## Screenshots
-
-**Hugging Face Demo — Full Interface**
-![FairEval Hugging Face Demo](docs/images/hf-demo-full.png)
-
-**Delta Summary & Gate Controls**
-![FairEval Gate Controls and Delta Summary](docs/images/hf-demo-gate.png)
-
-The live demo accepts baseline and candidate responses, applies configurable regression thresholds (overall score drop, helpfulness drop, toxicity flag), and outputs a gate decision with a downloadable artifact JSON.
 
 ---
 
