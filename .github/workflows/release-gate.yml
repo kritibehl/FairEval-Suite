@@ -1,70 +1,70 @@
 name: FairEval Release Gate
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   eval-gate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install package and deps
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e .
-          pip install pytest typer
+          pip install -r requirements.txt
 
       - name: Run tests
         run: |
           pytest -q
 
-      - name: Run baseline eval
+      - name: Run baseline evaluation
         run: |
           python -m evals.cli run --suite rag_basic --model mock --out-dir baseline_artifacts
 
-      - name: Capture baseline run id
-        run: |
-          BASELINE_ID=$(ls baseline_artifacts/reports/*.json | head -n 1 | xargs -n 1 basename | sed 's/.json//')
-          echo "BASELINE_ID=$BASELINE_ID" >> $GITHUB_ENV
-
-      - name: Run candidate eval
+      - name: Run candidate evaluation
         run: |
           python -m evals.cli run --suite rag_basic --model mock --out-dir candidate_artifacts
 
-      - name: Capture candidate run id
-        run: |
-          CANDIDATE_ID=$(ls candidate_artifacts/reports/*.json | head -n 1 | xargs -n 1 basename | sed 's/.json//')
-          echo "CANDIDATE_ID=$CANDIDATE_ID" >> $GITHUB_ENV
-
-      - name: Copy reports into one directory
+      - name: Copy reports into shared directory
         run: |
           mkdir -p reports
           cp baseline_artifacts/reports/*.json reports/
           cp candidate_artifacts/reports/*.json reports/
 
-      - name: Compare runs
+      - name: Compare baseline and candidate
         run: |
+          BASELINE_ID=$(ls baseline_artifacts/reports/*.json | head -n 1 | xargs -n 1 basename | sed 's/.json//')
+          CANDIDATE_ID=$(ls candidate_artifacts/reports/*.json | head -n 1 | xargs -n 1 basename | sed 's/.json//')
+
           python -m evals.cli compare \
             --baseline "$BASELINE_ID" \
             --candidate "$CANDIDATE_ID" \
             --reports-dir ./reports \
             --out-dir .
 
-      - name: Apply release gate
+      - name: Apply regression gate
         run: |
-          COMPARE_FILE=$(ls compare/*.json | head -n 1)
+          COMPARE_FILE=$(ls compare/*.json | tail -n 1)
+
           python -m evals.cli gate \
             --compare-artifact "$COMPARE_FILE" \
             --max-avg-score-drop 0.05 \
             --max-pass-rate-drop 0.10 \
             --out-dir .
+
+      - name: Show generated artifacts
+        run: |
+          find reports -maxdepth 2 -type f | sort || true
+          find compare -maxdepth 2 -type f | sort || true
+          find gate -maxdepth 2 -type f | sort || true
