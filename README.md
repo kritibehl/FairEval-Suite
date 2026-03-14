@@ -27,6 +27,11 @@ It enables teams to:
 This allows ML systems to behave more like traditional software releases — quality checks run before shipping.
 
 ---
+## Demo Workflow
+
+FairEval follows a simple evaluation pipeline:
+
+dataset / model change → evaluate → compare → gate → release decision
 
 ## Why This Exists
 
