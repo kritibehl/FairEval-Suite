@@ -24,6 +24,8 @@ It enables teams to:
 - Enforce threshold-based regression gates
 - Generate versioned evaluation artifacts
 
+This makes FairEval useful as both an evaluation framework and a release-safety layer for model-backed systems.
+
 ---
 
 ## End-to-End Evaluation Flow
