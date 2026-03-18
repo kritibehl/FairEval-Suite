@@ -1,0 +1,4 @@
+pack_run_id,suite_name,model_name,created_at,repeat_count,avg_score_mean,avg_score_ci_low,avg_score_ci_high,pass_rate_mean,pass_rate_ci_low,pass_rate_ci_high,pack_artifact_path
+20260318T174710.407017Z_rag_basic_mock_pack_b821e687fa,rag_basic,mock,2026-03-18T17:47:10.407058+00:00,4,0.794,0.794,0.794,1.0,1.0,1.0,packs/20260318T174710.407017Z_rag_basic_mock_pack_b821e687fa.json
+20260318T174720.820870Z_rag_basic_mock_pack_b821e687fa,rag_basic,mock,2026-03-18T17:47:20.820918+00:00,4,0.794,0.794,0.794,1.0,1.0,1.0,packs/20260318T174720.820870Z_rag_basic_mock_pack_b821e687fa.json
+20260318T180145.786195Z_rag_basic_mock_pack_b821e687fa,rag_basic,mock,2026-03-18T18:01:45.786206+00:00,4,0.794,0.794,0.794,1.0,1.0,1.0,packs/20260318T180145.786195Z_rag_basic_mock_pack_b821e687fa.json

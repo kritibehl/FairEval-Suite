@@ -1,0 +1,2 @@
+{"id":"case-1","input":{"prompt":"What is retrieval augmented generation?","context":["Retrieval augmented generation uses retrieved context to ground responses."]},"expected":{"answer_contains":["retrieved","context"]}}
+{"id":"case-2","input":{"prompt":"How can grounded answers reduce hallucinations?","context":["Grounded answers use retrieved documents instead of unsupported guesses."]},"expected":{"answer_contains":["retrieved","documents"]}}

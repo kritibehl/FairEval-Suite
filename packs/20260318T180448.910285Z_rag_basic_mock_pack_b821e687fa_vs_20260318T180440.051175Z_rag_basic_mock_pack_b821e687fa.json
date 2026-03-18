@@ -1,0 +1,53 @@
+{
+  "baseline_avg_score_ci": {
+    "half_width": 0.0,
+    "lower": 0.794,
+    "mean": 0.794,
+    "n": 4,
+    "upper": 0.794
+  },
+  "baseline_pack_path": "packs/20260318T180440.051175Z_rag_basic_mock_pack_b821e687fa.json",
+  "baseline_pass_rate_ci": {
+    "half_width": 0.0,
+    "lower": 1.0,
+    "mean": 1.0,
+    "n": 4,
+    "upper": 1.0
+  },
+  "candidate_avg_score_ci": {
+    "half_width": 0.0,
+    "lower": 0.794,
+    "mean": 0.794,
+    "n": 4,
+    "upper": 0.794
+  },
+  "candidate_pack_path": "packs/20260318T180448.910285Z_rag_basic_mock_pack_b821e687fa.json",
+  "candidate_pass_rate_ci": {
+    "half_width": 0.0,
+    "lower": 1.0,
+    "mean": 1.0,
+    "n": 4,
+    "upper": 1.0
+  },
+  "drift_significant": false,
+  "pass_fail_distribution_test": {
+    "observed": [
+      [
+        20,
+        0
+      ],
+      [
+        20,
+        0
+      ]
+    ],
+    "reason": "all observations passed; chi-squared not informative",
+    "supported": false
+  },
+  "score_change_test": {
+    "baseline_mean": 0.794,
+    "candidate_mean": 0.794,
+    "reason": "all observations identical; t-test not informative",
+    "supported": false
+  }
+}

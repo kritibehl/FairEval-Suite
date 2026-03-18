@@ -1,6 +1,12 @@
+from __future__ import annotations
+
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict
+
+from .io import write_json
+from .storage import ArtifactStore
 
 
 def load_json(path: str | Path) -> Dict[str, Any]:
@@ -17,33 +23,24 @@ def apply_gate(
     fail_on_any_regression_case: bool = False,
 ) -> Dict[str, Any]:
     compare_data = load_json(compare_artifact_path)
-
     delta = compare_data.get("delta", {}) or {}
     case_diffs = compare_data.get("case_diffs", []) or []
-
     avg_score_delta = float(delta.get("avg_score", 0.0))
     pass_rate_delta = float(delta.get("pass_rate", 0.0))
+    regressed_cases = [c for c in case_diffs if c.get("regressed") is True]
 
     reasons = []
-
     if avg_score_delta < -max_avg_score_drop:
-        reasons.append(
-            f"avg_score_drop_exceeded: {avg_score_delta:.4f} < {-max_avg_score_drop:.4f}"
-        )
-
+        reasons.append(f"avg_score_drop_exceeded: {avg_score_delta:.4f} < {-max_avg_score_drop:.4f}")
     if pass_rate_delta < -max_pass_rate_drop:
-        reasons.append(
-            f"pass_rate_drop_exceeded: {pass_rate_delta:.4f} < {-max_pass_rate_drop:.4f}"
-        )
-
-    regressed_cases = [c for c in case_diffs if c.get("regressed") is True]
+        reasons.append(f"pass_rate_drop_exceeded: {pass_rate_delta:.4f} < {-max_pass_rate_drop:.4f}")
     if fail_on_any_regression_case and regressed_cases:
-        reasons.append(
-            f"regressed_cases_detected: {len(regressed_cases)}"
-        )
+        reasons.append(f"regressed_cases_detected: {len(regressed_cases)}")
+    if compare_data.get("candidate", {}).get("integrity", {}).get("status") == "fail":
+        reasons.append("candidate_integrity_failed")
 
     decision = "fail" if reasons else "pass"
-
+    rollback_recommendation = "rollback_recommended" if decision == "fail" else "ship_candidate"
     artifact = {
         "decision": decision,
         "reasons": reasons,
@@ -57,16 +54,28 @@ def apply_gate(
             "pass_rate_delta": pass_rate_delta,
             "regressed_case_count": len(regressed_cases),
         },
+        "rollback_recommendation": rollback_recommendation,
         "compare_artifact_path": compare_artifact_path,
     }
 
     gate_dir = Path(out_dir) / "gate"
     gate_dir.mkdir(parents=True, exist_ok=True)
-
     compare_stem = Path(compare_artifact_path).stem
     out_path = gate_dir / f"{compare_stem}.gate.json"
+    write_json(out_path, artifact)
 
-    with out_path.open("w", encoding="utf-8") as f:
-        json.dump(artifact, f, indent=2, sort_keys=False)
-
+    store = ArtifactStore(out_dir)
+    store.index_gate(
+        {
+            "gate_id": f"{compare_stem}.gate",
+            "compare_artifact_path": compare_artifact_path,
+            "decision": decision,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "avg_score_delta": avg_score_delta,
+            "pass_rate_delta": pass_rate_delta,
+            "regressed_case_count": len(regressed_cases),
+            "rollback_recommendation": rollback_recommendation,
+            "gate_artifact_path": str(out_path),
+        }
+    )
     return {"output_path": str(out_path), **artifact}

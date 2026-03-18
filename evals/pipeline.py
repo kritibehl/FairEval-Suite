@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from pathlib import Path
 from typing import Any, Dict
 
-from .runner import run_suite
 from .compare.diff import compare_reports
 from .gate import apply_gate
+from .runner import run_suite
 
 
 def run_release_gate(
@@ -27,19 +29,15 @@ def run_release_gate(
         max_workers=max_workers,
         timeout_seconds=timeout_seconds,
     )
-
     candidate_run_id = run_res["run_id"]
     reports_root = Path(reports_dir) if reports_dir else Path(out_dir) / "reports"
-
     baseline_report_path = reports_root / f"{baseline_run_id}.json"
     candidate_report_path = reports_root / f"{candidate_run_id}.json"
-
     compare_res = compare_reports(
         baseline_report_path=str(baseline_report_path),
         candidate_report_path=str(candidate_report_path),
         out_dir=out_dir,
     )
-
     gate_res = apply_gate(
         compare_artifact_path=compare_res["output_path"],
         out_dir=out_dir,
@@ -47,7 +45,6 @@ def run_release_gate(
         max_pass_rate_drop=max_pass_rate_drop,
         fail_on_any_regression_case=fail_on_any_regression_case,
     )
-
     return {
         "baseline_run_id": baseline_run_id,
         "candidate_run_id": candidate_run_id,

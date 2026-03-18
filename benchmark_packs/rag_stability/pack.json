@@ -1,0 +1,10 @@
+{
+  "name": "rag_stability",
+  "description": "RAG behavior stability pack",
+  "suites": ["rag_basic"],
+  "gate_defaults": {
+    "max_avg_score_drop": 0.05,
+    "max_pass_rate_drop": 0.10,
+    "fail_on_any_regression_case": false
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "baseline_avg_score_ci": {
+    "half_width": 0.0,
+    "lower": 0.794,
+    "mean": 0.794,
+    "n": 4,
+    "upper": 0.794
+  },
+  "baseline_pack_path": "packs/20260318T180755.517404Z_rag_basic_mock_pack_b821e687fa.json",
+  "baseline_pass_rate_ci": {
+    "half_width": 0.0,
+    "lower": 1.0,
+    "mean": 1.0,
+    "n": 4,
+    "upper": 1.0
+  },
+  "candidate_avg_score_ci": {
+    "half_width": 0.0,
+    "lower": 0.0,
+    "mean": 0.0,
+    "n": 4,
+    "upper": 0.0
+  },
+  "candidate_pack_path": "packs/20260318T181148.249875Z_rag_basic_mock_regressed_pack_7cd9fbc037.json",
+  "candidate_pass_rate_ci": {
+    "half_width": 0.0,
+    "lower": 0.0,
+    "mean": 0.0,
+    "n": 4,
+    "upper": 0.0
+  },
+  "drift_significant": true,
+  "pass_fail_distribution_test": {
+    "chi2_statistic": 36.1,
+    "expected": [
+      [
+        10.0,
+        10.0
+      ],
+      [
+        10.0,
+        10.0
+      ]
+    ],
+    "observed": [
+      [
+        20,
+        0
+      ],
+      [
+        0,
+        20
+      ]
+    ],
+    "p_value": 0.0,
+    "supported": true,
+    "test": "chi_squared"
+  },
+  "score_change_test": {
+    "baseline_mean": 0.794,
+    "candidate_mean": 0.0,
+    "p_value": 0.0,
+    "supported": true,
+    "t_statistic": Infinity,
+    "test": "welch_t_test"
+  }
+}

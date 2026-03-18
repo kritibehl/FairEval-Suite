@@ -1,0 +1,228 @@
+{
+  "baseline": {
+    "config": {
+      "artifact_version": "v2",
+      "created_at": "2026-03-18 17:46:43.278587+00:00",
+      "gate_rules_version": "v2",
+      "model_name": "mock",
+      "scorer_name": "rag_overlap_v1",
+      "suite_name": "rag_basic",
+      "suite_version": "2026.03"
+    },
+    "integrity": {
+      "duplicate_case_ids": [],
+      "duplicate_case_payloads": [],
+      "missing_expected_ids": [],
+      "pack_completeness": {
+        "complete": true,
+        "num_cases": 5
+      },
+      "schema_violations": [],
+      "stale_baseline_warning": null,
+      "status": "pass"
+    },
+    "path": "reports/20260318T174643.278545Z_rag_basic_mock_7ed6ae0c4224.json",
+    "run_id": "20260318T174643.278545Z_rag_basic_mock_7ed6ae0c4224",
+    "summary": {
+      "avg_score": 0.794,
+      "failed_case_count": 0,
+      "num_cases": 5,
+      "pass_rate": 1.0
+    }
+  },
+  "candidate": {
+    "config": {
+      "artifact_version": "v2",
+      "created_at": "2026-03-18 17:46:50.470235+00:00",
+      "gate_rules_version": "v2",
+      "model_name": "mock",
+      "scorer_name": "rag_overlap_v1",
+      "suite_name": "rag_basic",
+      "suite_version": "2026.03"
+    },
+    "integrity": {
+      "duplicate_case_ids": [],
+      "duplicate_case_payloads": [],
+      "missing_expected_ids": [],
+      "pack_completeness": {
+        "complete": true,
+        "num_cases": 5
+      },
+      "schema_violations": [],
+      "stale_baseline_warning": null,
+      "status": "pass"
+    },
+    "path": "reports/20260318T174650.470189Z_rag_basic_mock_7ed6ae0c4224.json",
+    "run_id": "20260318T174650.470189Z_rag_basic_mock_7ed6ae0c4224",
+    "summary": {
+      "avg_score": 0.794,
+      "failed_case_count": 0,
+      "num_cases": 5,
+      "pass_rate": 1.0
+    }
+  },
+  "case_diffs": [
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.8473,
+      "candidate_passed": true,
+      "candidate_score": 0.8473,
+      "case_id": "rag-1",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.7083,
+      "candidate_passed": true,
+      "candidate_score": 0.7083,
+      "case_id": "rag-2",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.7513,
+      "candidate_passed": true,
+      "candidate_score": 0.7513,
+      "case_id": "rag-3",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.8133,
+      "candidate_passed": true,
+      "candidate_score": 0.8133,
+      "case_id": "rag-4",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.85,
+      "candidate_passed": true,
+      "candidate_score": 0.85,
+      "case_id": "rag-5",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    }
+  ],
+  "delta": {
+    "avg_score": 0.0,
+    "num_cases": 0,
+    "pass_rate": 0.0
+  },
+  "drift_alerts": [],
+  "regressed_case_count": 0,
+  "rollback_recommendation": "hold_candidate_ok",
+  "top_improvements": [
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.8473,
+      "candidate_passed": true,
+      "candidate_score": 0.8473,
+      "case_id": "rag-1",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.7083,
+      "candidate_passed": true,
+      "candidate_score": 0.7083,
+      "case_id": "rag-2",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.7513,
+      "candidate_passed": true,
+      "candidate_score": 0.7513,
+      "case_id": "rag-3",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.8133,
+      "candidate_passed": true,
+      "candidate_score": 0.8133,
+      "case_id": "rag-4",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.85,
+      "candidate_passed": true,
+      "candidate_score": 0.85,
+      "case_id": "rag-5",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    }
+  ],
+  "top_regressions": [
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.8473,
+      "candidate_passed": true,
+      "candidate_score": 0.8473,
+      "case_id": "rag-1",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.7083,
+      "candidate_passed": true,
+      "candidate_score": 0.7083,
+      "case_id": "rag-2",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.7513,
+      "candidate_passed": true,
+      "candidate_score": 0.7513,
+      "case_id": "rag-3",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.8133,
+      "candidate_passed": true,
+      "candidate_score": 0.8133,
+      "case_id": "rag-4",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    },
+    {
+      "baseline_passed": true,
+      "baseline_score": 0.85,
+      "candidate_passed": true,
+      "candidate_score": 0.85,
+      "case_id": "rag-5",
+      "delta": 0.0,
+      "improved": false,
+      "regressed": false
+    }
+  ]
+}

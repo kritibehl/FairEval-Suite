@@ -1,0 +1,16 @@
+{
+  "compare_artifact_path": "compare/20260318T174650.470189Z_rag_basic_mock_7ed6ae0c4224_vs_20260318T174643.278545Z_rag_basic_mock_7ed6ae0c4224.json",
+  "decision": "pass",
+  "reasons": [],
+  "rollback_recommendation": "ship_candidate",
+  "summary": {
+    "avg_score_delta": 0.0,
+    "pass_rate_delta": 0.0,
+    "regressed_case_count": 0
+  },
+  "thresholds": {
+    "fail_on_any_regression_case": false,
+    "max_avg_score_drop": 0.05,
+    "max_pass_rate_drop": 0.1
+  }
+}
