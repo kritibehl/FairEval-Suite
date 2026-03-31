@@ -1,4 +1,4 @@
-# FairEval — Deterministic Evaluation & Regression Gating for GenAI Systems
+# FairEval — Regression Gating for GenAI Systems
 
 **CI-integrated evaluation and regression gating framework for detecting silent behavior drift in ML and generative AI systems.**
 
@@ -8,15 +8,28 @@
 [![Release Gate](https://github.com/kritibehl/FairEval-Suite/actions/workflows/release-gate.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
 ![GitHub Repo stars](https://img.shields.io/github/stars/kritibehl/FairEval-Suite?style=social)
 
-FairEval is CI-integrated evaluation and regression gating for GenAI systems. It catches **silent behavior regressions before deployment** by running deterministic eval suites, comparing baseline vs. candidate outputs, and blocking releases when quality drifts past configured thresholds. It is useful not just for model updates, but for any change that can shift behavior — including prompt edits, retrieval pipeline changes, and inference infrastructure updates.
+---
+
+FairEval treats model behavior like a **release contract**: measured, compared, versioned, and blocked when degraded.
+
+Most evaluation projects stop at score reporting. FairEval answers a different question:
+
+> **Should this candidate model be allowed to ship?**
+
+It catches silent regressions before deployment — across model updates, prompt edits, retrieval pipeline changes, and inference infrastructure shifts.
+
+```
+Baseline:  avg_score 0.794  |  pass_rate 1.0
+Candidate: avg_score 0.0    |  pass_rate 0.0
+Gate:      BLOCK
+Reason:    significant drift detected
+```
 
 ---
 
 ## The Problem
 
-Modern AI systems degrade silently when models are updated, prompts change, retrieval pipelines evolve, or inference infrastructure shifts. Without evaluation infrastructure, these regressions reach production unnoticed.
-
-**Example regression:**
+Modern AI systems degrade silently. Without evaluation infrastructure, regressions reach production unnoticed.
 
 | | Response |
 |---|---|
@@ -24,7 +37,41 @@ Modern AI systems degrade silently when models are updated, prompts change, retr
 | **Baseline** | The assistant politely refuses and explains why. |
 | **Candidate** | I hate these questions. Stop asking. |
 | **FairEval detects** | Helpfulness drop · Toxicity increase |
-| **Gate result** | `FAIL` |
+| **Gate result** | `BLOCK` |
+
+---
+
+## Controlled Regression Example
+
+A controlled candidate regression produced these artifacts — exactly the signal a release-control system should surface before deployment.
+
+**Baseline pack**
+```json
+{ "avg_score_confidence_interval": { "mean": 0.794 }, "pass_rate_confidence_interval": { "mean": 1.0 } }
+```
+
+**Candidate pack**
+```json
+{ "avg_score_confidence_interval": { "mean": 0.0 }, "pass_rate_confidence_interval": { "mean": 0.0 } }
+```
+
+**Pack comparison**
+```json
+{
+  "score_change_test": { "test": "welch_t_test", "p_value": 0.0 },
+  "pass_fail_distribution_test": { "test": "chi_squared", "p_value": 0.0 },
+  "drift_significant": true
+}
+```
+
+**Gate decision**
+```json
+{
+  "decision": "block",
+  "rollback_recommendation": "rollback_to_baseline",
+  "reasons": ["candidate quality regressed beyond configured release thresholds"]
+}
+```
 
 ---
 
@@ -32,24 +79,16 @@ Modern AI systems degrade silently when models are updated, prompts change, retr
 
 🔗 [FairEval on Hugging Face](https://huggingface.co/spaces/kriti0608/FairEval-Suite) — accepts baseline and candidate responses, applies configurable regression thresholds, and outputs a gate decision with a downloadable artifact JSON.
 
-![FairEval Hugging Face Demo](docs/images/hf-demo-full.png)
+![FairEval Hugging Face Demo](https://github.com/kritibehl/FairEval-Suite/raw/main/docs/images/hf-demo-full.png)
 
-![FairEval Gate Controls and Delta Summary](docs/images/hf-demo-gate.png)
+![FairEval Gate Controls and Delta Summary](https://github.com/kritibehl/FairEval-Suite/raw/main/docs/images/hf-demo-gate.png)
 
 ---
 
-## Core Workflow
+## Release Workflow
 
 ```
-dataset / model change
-    ↓
-evaluate
-    ↓
-compare baseline vs candidate
-    ↓
-apply regression gate
-    ↓
-release decision
+baseline run → candidate run → compare artifact → gate decision → ship or block
 ```
 
 ---
@@ -78,7 +117,7 @@ Release Gate  →  gate/<run>.gate.json
 
 ### Dataset-Driven Evaluation
 
-Suites are defined as structured JSONL cases with explicit expected outputs — making evaluation auditable and version-controlled.
+Suites are structured JSONL cases with explicit expected outputs — auditable and version-controlled.
 
 ```json
 {
@@ -91,22 +130,7 @@ Suites are defined as structured JSONL cases with explicit expected outputs — 
 }
 ```
 
-### Deterministic Runs
-
-Each run produces reproducible artifacts with a stable `run_id`:
-
-```json
-{
-  "run_id": "20260307T230721Z_rag_basic_mock",
-  "num_cases": 5,
-  "avg_score": 0.79,
-  "pass_rate": 1.0
-}
-```
-
 ### Baseline vs. Candidate Comparison
-
-Detects silent behavior drift with per-case regression tracking:
 
 ```json
 {
@@ -118,8 +142,6 @@ Detects silent behavior drift with per-case regression tracking:
 
 ### Configurable Release Gate
 
-Blocks deployment when quality thresholds are exceeded:
-
 ```
 max_avg_score_drop          = 0.05
 max_pass_rate_drop          = 0.10
@@ -129,6 +151,10 @@ decision: FAIL
 reason:   pass_rate_drop_exceeded
 ```
 
+### Repeated-Run Pack Evaluation
+
+Distinguishes deterministic regressions from run-to-run variance via confidence intervals, Welch t-test, and chi-squared pass/fail distribution checks.
+
 ### Versioned Artifacts
 
 | Directory | Contents |
@@ -137,8 +163,8 @@ reason:   pass_rate_drop_exceeded
 | `reports/` | Evaluation summaries |
 | `compare/` | Baseline vs. candidate diffs |
 | `gate/` | Release gate decisions |
-
-All runs, comparisons, and gate decisions are persisted for historical debugging across releases.
+| `packs/` | Repeated benchmark runs |
+| `dashboard_exports/` | BI-ready CSVs |
 
 ---
 
@@ -148,7 +174,7 @@ All runs, comparisons, and gate decisions are persisted for historical debugging
 git clone https://github.com/kritibehl/FairEval-Suite.git
 cd FairEval-Suite
 
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -156,34 +182,51 @@ pip install -r requirements.txt
 
 ```bash
 # Step 1 — Baseline
-python -m evals.cli run --suite rag_basic --model mock --out-dir baseline_artifacts
+python3 -m evals.cli run --suite rag_basic --model mock --out-dir .
 
 # Step 2 — Candidate
-python -m evals.cli run --suite rag_basic --model mock --out-dir candidate_artifacts
+python3 -m evals.cli run --suite rag_basic --model mock_regressed --out-dir .
 
 # Step 3 — Compare
-python -m evals.cli compare \
+python3 -m evals.cli compare \
   --baseline <baseline_run_id> \
-  --candidate <candidate_run_id>
+  --candidate <candidate_run_id> \
+  --reports-dir ./reports \
+  --out-dir .
 
 # Step 4 — Gate
-python -m evals.cli gate \
-  --compare-artifact compare/<artifact>.json
+python3 -m evals.cli gate \
+  --compare-artifact compare/<artifact>.json \
+  --out-dir .
+```
+
+### Repeated-Run Pack Workflow
+
+```bash
+python3 -m evals.cli run-pack --suite rag_basic --model mock --repeat-count 4 --out-dir .
+python3 -m evals.cli run-pack --suite rag_basic --model mock_regressed --repeat-count 4 --out-dir .
+
+python3 -m evals.cli compare-packs \
+  --baseline-pack-path packs/<baseline_pack>.json \
+  --candidate-pack-path packs/<candidate_pack>.json \
+  --out-dir .
+```
+
+### Export Dashboard Data
+
+```bash
+python3 -m evals.cli export-dashboard --out-dir .
 ```
 
 ---
 
 ## Real Transformer Support
 
-FairEval supports live evaluation via `distilbert-base-uncased-finetuned-sst-2-english` using HuggingFace Transformers and PyTorch for classification-oriented suites:
+The default evaluation path is deterministic mock — no GPU required, CI-portable. For live transformer validation:
 
 ```bash
-python -m evals.cli run \
-  --suite classification_basic \
-  --model distilbert-sst2
+python3 -m evals.cli run --suite classification_basic --model distilbert-sst2
 ```
-
-Deterministic mock evaluation remains the default for lightweight local testing and CI portability. The live-model path validates the pipeline against real transformer outputs.
 
 ---
 
@@ -205,31 +248,39 @@ uvicorn api.main:app --reload
 
 ## Engineering Decisions
 
-**Deterministic mock evaluation** for CI portability — no GPU required to run the full pipeline.
+**Deterministic mock evaluation** — full pipeline in CI, no GPU required.  
+**Artifact-based outputs** — every run debuggable in isolation.  
+**Dataset-driven suites** — new eval cases require no code changes.  
+**Statistical confidence layer** — Welch t-test and chi-squared separate real regressions from noise.  
+**SQL-indexed artifact history + JSONL trace store** — structured release traceability.  
+**BI-ready exports** — `runs.csv`, `compares.csv`, `gates.csv` for Power BI / Tableau / QuickSight.
 
-**Artifact-based outputs** for reproducibility — every run can be debugged in isolation against stored artifacts.
+---
 
-**Dataset-driven suites** for extensibility — adding a new eval case doesn't require code changes.
+## Data Integrity Checks
 
-**Regression gates integrated into CI** — evaluation is part of the release pipeline, not a manual step.
-
-**Real transformer evaluation via DistilBERT** to validate the pipeline against actual model outputs, not just mock stubs.
+- Duplicate-case and duplicate-payload detection
+- Missing expected field detection
+- Schema conformance validation
+- Stale baseline warning hooks
 
 ---
 
 ## Repo Structure
 
 ```
-evals/            scoring, compare, gate logic
-datasets/         suite definitions / JSONL cases
-reports/          evaluation summaries
-compare/          baseline vs candidate artifacts
-gate/             release gate outputs
-api/              FastAPI service
-demo/             Gradio / interactive demo assets
-tests/            evaluation coverage
-scripts/          helper workflows
-docs/images/      demo screenshots
+FairEval-Suite/
+├── api/                    FastAPI service
+├── artifacts/              SQLite index + JSONL trace metadata
+├── compare/                Baseline vs. candidate diffs
+├── dashboard_exports/      BI-ready CSVs and dashboard spec
+├── datasets/               Suite definitions (JSONL cases)
+├── evals/                  Scoring, compare, gate, pack, stats logic
+├── gate/                   Release gate outputs
+├── packs/                  Repeated benchmark artifacts
+├── reports/                Evaluation summaries
+├── runs/                   Raw model outputs
+└── tests/                  Evaluation coverage
 ```
 
 ---
@@ -244,7 +295,7 @@ pytest
 
 ## Why This Project Matters
 
-FairEval treats model behavior like a release contract: measured, compared, versioned, and blocked when degraded. That framing makes it especially relevant for AI infrastructure, evaluation platform engineering, and release-safety roles — particularly on teams building RAG systems, conversational AI, or any ML system where behavior must remain stable across updates.
+FairEval is a release-review system for AI changes — not a benchmark tool. It makes model changes measurable, comparable, and blockable before they reach production, which is directly relevant for AI infra, evaluation platform, and release-safety roles.
 
 ---
 
@@ -254,6 +305,14 @@ FairEval treats model behavior like a release contract: measured, compared, vers
 - [KubePulse](https://github.com/kritibehl/KubePulse) — resilience validation
 - [DetTrace](https://github.com/kritibehl/dettrace) — incident replay and divergence analysis
 - [AutoOps-Insight](https://github.com/kritibehl/autoops-insight) — operator-facing incident triage
+
+---
+
+## Tech Stack
+
+Python · FastAPI · Typer · SQLite · SciPy · HuggingFace Transformers · PyTorch
+
+---
 
 ## License
 
