@@ -70,6 +70,7 @@ def evaluate(req: EvaluateRequest):
         },
         "report": report_path,
         "report_path": report_path,
+        "report_artifact_path": report_path,
         "run_artifact": result,
     }
 
@@ -83,7 +84,8 @@ def compare(req: CompareRequest):
         top_k=req.top_k,
     )
     return {
-        "compare_artifact": result,
+        "compare_artifact": result["output_path"],
+        "compare_artifact_path": result["output_path"],
         "summary": {
             "avg_score": result.get("avg_score"),
             "pass_rate": result.get("pass_rate"),
@@ -91,6 +93,7 @@ def compare(req: CompareRequest):
             "rollback_recommendation": result.get("rollback_recommendation"),
         },
         "output_path": result["output_path"],
+        "compare_details": result,
     }
 
 
@@ -109,6 +112,8 @@ def gate(req: GateRequest):
         block_on_high_downstream_risk=req.block_on_high_downstream_risk,
     )
     return {
-        "gate_artifact": result,
+        "gate_artifact": result["output_path"],
+        "gate_artifact_path": result["output_path"],
         "output_path": result["output_path"],
+        "gate_details": result,
     }
