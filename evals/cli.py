@@ -69,11 +69,16 @@ def compare_packs(
 
 @app.command()
 def gate(
-    compare_artifact: str = typer.Option(..., help="Path to compare artifact JSON"),
-    out_dir: str = typer.Option(".", help="Output directory for gate artifacts"),
-    max_avg_score_drop: float = typer.Option(0.05, help="Maximum allowed avg score drop"),
-    max_pass_rate_drop: float = typer.Option(0.10, help="Maximum allowed pass rate drop"),
-    fail_on_any_regression_case: bool = typer.Option(False, help="Fail if any individual case regresses"),
+ compare_artifact: str = typer.Option(..., help="Path to compare artifact JSON"),
+ out_dir: str = typer.Option(".", help="Output directory for gate artifacts"),
+ max_avg_score_drop: float = typer.Option(0.05, help="Maximum allowed avg score drop"),
+ max_pass_rate_drop: float = typer.Option(0.10, help="Maximum allowed pass rate drop"),
+ fail_on_any_regression_case: bool = typer.Option(False, help="Fail if any individual case regresses"),
+ estimated_affected_query_pct: float = typer.Option(None, help="Estimated fraction of production queries affected, e.g. 0.12 for 12 percent"),
+ max_affected_query_pct: float = typer.Option(0.10, help="Block if estimated affected query share exceeds this threshold"),
+ daily_query_volume: int = typer.Option(None, help="Optional daily production query volume for impact estimation"),
+ downstream_risk: str = typer.Option(None, help="Optional explicit downstream risk label: low, medium, high"),
+ block_on_high_downstream_risk: bool = typer.Option(True, help="Block release if downstream risk is high"),
 ):
     typer.echo(
         apply_gate(
@@ -93,11 +98,21 @@ def export_dashboard(out_dir: str = typer.Option(".", help="Artifact root to exp
 
 @app.command("release-gate")
 def release_gate(
-    suite: str = typer.Option(..., help="Evaluation suite name"),
-    baseline: str = typer.Option(..., help="Baseline run id"),
-    model: str = typer.Option("mock", help="Model identifier"),
-    out_dir: str = typer.Option(".", help="Output directory for artifacts"),
-    reports_dir: str = typer.Option("./reports", help="Reports directory for baseline lookup"),
+ suite: str = typer.Option(..., help="Evaluation suite name"),
+ baseline: str = typer.Option(..., help="Baseline run id"),
+ model: str = typer.Option("mock", help="Model identifier"),
+ out_dir: str = typer.Option(".", help="Output directory for artifacts"),
+ reports_dir: str = typer.Option("./reports", help="Reports directory for baseline lookup"),
+ max_workers: int = typer.Option(1, help="Max parallel workers"),
+ timeout_seconds: float = typer.Option(10.0, help="Per-case timeout seconds"),
+ max_avg_score_drop: float = typer.Option(0.05, help="Maximum allowed avg score drop"),
+ max_pass_rate_drop: float = typer.Option(0.10, help="Maximum allowed pass rate drop"),
+ fail_on_any_regression_case: bool = typer.Option(False, help="Fail if any individual case regresses"),
+ estimated_affected_query_pct: float = typer.Option(None, help="Estimated fraction of production queries affected, e.g. 0.12 for 12 percent"),
+ max_affected_query_pct: float = typer.Option(0.10, help="Block if estimated affected query share exceeds this threshold"),
+ daily_query_volume: int = typer.Option(None, help="Optional daily production query volume for impact estimation"),
+ downstream_risk: str = typer.Option(None, help="Optional explicit downstream risk label: low, medium, high"),
+ block_on_high_downstream_risk: bool = typer.Option(True, help="Block release if downstream risk is high"),
 ):
     dataset_path = f"datasets/{suite}/cases.jsonl"
     typer.echo(run_release_gate(suite_name=suite, baseline_run_id=baseline, dataset_path=dataset_path, model_name=model, out_dir=out_dir, reports_dir=reports_dir))

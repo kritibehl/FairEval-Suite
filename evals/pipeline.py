@@ -9,17 +9,22 @@ from .runner import run_suite
 
 
 def run_release_gate(
-    suite_name: str,
-    baseline_run_id: str,
-    dataset_path: str,
-    model_name: str = "mock",
-    out_dir: str = ".",
-    max_workers: int = 1,
-    timeout_seconds: float = 10.0,
-    reports_dir: str | None = None,
-    max_avg_score_drop: float = 0.05,
-    max_pass_rate_drop: float = 0.10,
-    fail_on_any_regression_case: bool = False,
+ suite_name: str,
+ baseline_run_id: str,
+ dataset_path: str,
+ model_name: str = "mock",
+ out_dir: str = ".",
+ max_workers: int = 1,
+ timeout_seconds: float = 10.0,
+ reports_dir: str | None = None,
+ max_avg_score_drop: float = 0.05,
+ max_pass_rate_drop: float = 0.10,
+ fail_on_any_regression_case: bool = False,
+ estimated_affected_query_pct: float | None = None,
+ max_affected_query_pct: float = 0.10,
+ daily_query_volume: int | None = None,
+ downstream_risk: str | None = None,
+ block_on_high_downstream_risk: bool = True,
 ) -> Dict[str, Any]:
     run_res = run_suite(
         suite_name=suite_name,
@@ -39,12 +44,17 @@ def run_release_gate(
         out_dir=out_dir,
     )
     gate_res = apply_gate(
-        compare_artifact_path=compare_res["output_path"],
-        out_dir=out_dir,
-        max_avg_score_drop=max_avg_score_drop,
-        max_pass_rate_drop=max_pass_rate_drop,
-        fail_on_any_regression_case=fail_on_any_regression_case,
-    )
+ compare_artifact_path=compare_res["output_path"],
+ out_dir=out_dir,
+ max_avg_score_drop=max_avg_score_drop,
+ max_pass_rate_drop=max_pass_rate_drop,
+ fail_on_any_regression_case=fail_on_any_regression_case,
+ estimated_affected_query_pct=estimated_affected_query_pct,
+ max_affected_query_pct=max_affected_query_pct,
+ daily_query_volume=daily_query_volume,
+ downstream_risk=downstream_risk,
+ block_on_high_downstream_risk=block_on_high_downstream_risk,
+)
     return {
         "baseline_run_id": baseline_run_id,
         "candidate_run_id": candidate_run_id,
