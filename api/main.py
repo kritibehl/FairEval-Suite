@@ -118,5 +118,11 @@ def gate(req: GateRequest):
         "gate_artifact": result["output_path"],
         "gate_artifact_path": result["output_path"],
         "output_path": result["output_path"],
+        "summary": {
+            "decision": result.get("decision"),
+            "release_decision": result.get("release_decision"),
+            "rollback_recommendation": result.get("rollback_recommendation"),
+            "reasons": result.get("reasons", []),
+        },
         "gate_details": result,
     }
