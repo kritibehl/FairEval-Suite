@@ -83,16 +83,19 @@ def compare(req: CompareRequest):
         out_dir=req.out_dir,
         top_k=req.top_k,
     )
+    artifact_path = result["output_path"]
+    artifact_text = Path(artifact_path).read_text(encoding="utf-8")
+
     return {
-        "compare_artifact": result["output_path"],
-        "compare_artifact_path": result["output_path"],
+        "compare_artifact": artifact_text,
+        "compare_artifact_path": artifact_path,
         "summary": {
             "avg_score": result.get("avg_score"),
             "pass_rate": result.get("pass_rate"),
             "regressed_case_count": result.get("regressed_case_count"),
             "rollback_recommendation": result.get("rollback_recommendation"),
         },
-        "output_path": result["output_path"],
+        "output_path": artifact_path,
         "compare_details": result,
     }
 
