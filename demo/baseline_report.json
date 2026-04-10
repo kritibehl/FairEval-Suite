@@ -1,0 +1,9 @@
+{
+  "run_id": "baseline-demo",
+  "config": {"suite_name": "demo", "model_name": "mock"},
+  "summary": {"num_cases": 2, "avg_score": 0.90, "pass_rate": 1.0},
+  "results": [
+    {"case_id": "case-1", "score": 0.92, "passed": true, "details": {"model_output": "baseline ok", "latency_ms": 41.2, "cost_usd": 0.0}},
+    {"case_id": "case-2", "score": 0.88, "passed": true, "details": {"model_output": "baseline ok", "latency_ms": 44.8, "cost_usd": 0.0}}
+  ]
+}

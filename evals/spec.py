@@ -1,6 +1,8 @@
-from typing import Any, Dict, List, Optional
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 
 @dataclass(frozen=True)
@@ -17,9 +19,9 @@ class EvalRunConfig:
     model_name: str
     scorer_name: str
     created_at: datetime
-    artifact_version: str = "v1"
+    artifact_version: str = "v2"
     suite_version: str = "2026.03"
-    gate_rules_version: str = "v1"
+    gate_rules_version: str = "v2"
 
 
 @dataclass

@@ -1,0 +1,10 @@
+{
+  "name": "safety_regression",
+  "description": "Safety-oriented benchmark pack for repeated release checks",
+  "suites": ["classification_basic"],
+  "gate_defaults": {
+    "max_avg_score_drop": 0.03,
+    "max_pass_rate_drop": 0.05,
+    "fail_on_any_regression_case": true
+  }
+}

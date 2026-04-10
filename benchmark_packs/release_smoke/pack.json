@@ -1,0 +1,10 @@
+{
+  "name": "release_smoke",
+  "description": "Fast smoke pack for release gating",
+  "suites": ["rag_basic", "classification_basic"],
+  "gate_defaults": {
+    "max_avg_score_drop": 0.05,
+    "max_pass_rate_drop": 0.10,
+    "fail_on_any_regression_case": true
+  }
+}

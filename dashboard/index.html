@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FairEval Reliability Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; max-width: 1100px; }
+    h1, h2 { margin-bottom: 8px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    .fail { color: #b00020; font-weight: bold; }
+    .pass { color: #0a7a28; font-weight: bold; }
+    table { border-collapse: collapse; width: 100%; }
+    td, th { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>FairEval Reliability Dashboard</h1>
+  <p>Version comparison, drift alerts, rollback recommendation, and recent traces.</p>
+
+  <div class="card">
+    <h2>Recommended API flow</h2>
+    <p><code>dataset/model → evaluate → compare → gate → rollback recommendation</code></p>
+  </div>
+
+  <div class="card">
+    <h2>Endpoints</h2>
+    <ul>
+      <li><code>POST /evaluate</code></li>
+      <li><code>POST /compare</code></li>
+      <li><code>POST /gate</code></li>
+      <li><code>GET /traces</code></li>
+      <li><code>POST /packs/compare-gate</code></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>What this dashboard is for</h2>
+    <ul>
+      <li>version comparison</li>
+      <li>latency / correctness monitoring</li>
+      <li>alerting on behavior drift</li>
+      <li>rollback recommendation logic</li>
+      <li>trace view for prompts / responses / failures</li>
+      <li>benchmark pack reuse across releases</li>
+    </ul>
+  </div>
+</body>
+</html>

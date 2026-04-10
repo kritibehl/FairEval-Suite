@@ -1,0 +1,11 @@
+.venv
+.git
+__pycache__
+.pytest_cache
+dist
+build
+*.pyc
+docs/images
+real_model_artifacts
+baseline_artifacts
+candidate_artifacts

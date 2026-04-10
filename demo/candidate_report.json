@@ -1,0 +1,9 @@
+{
+  "run_id": "candidate-demo",
+  "config": {"suite_name": "demo", "model_name": "mock"},
+  "summary": {"num_cases": 2, "avg_score": 0.70, "pass_rate": 0.5},
+  "results": [
+    {"case_id": "case-1", "score": 0.75, "passed": true, "details": {"model_output": "candidate weaker", "latency_ms": 73.2, "cost_usd": 0.0}},
+    {"case_id": "case-2", "score": 0.65, "passed": false, "details": {"model_output": "candidate failed", "latency_ms": 85.1, "cost_usd": 0.0}}
+  ]
+}

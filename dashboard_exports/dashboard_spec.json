@@ -1,0 +1,21 @@
+{
+  "tool_targets": [
+    "Power BI",
+    "Tableau",
+    "QuickSight"
+  ],
+  "recommended_views": [
+    "baseline_vs_candidate_avg_score",
+    "pass_rate_trends",
+    "drift_alerts",
+    "rollback_recommendations",
+    "regressed_case_counts",
+    "benchmark_pack_performance_over_time"
+  ],
+  "files": {
+    "runs": "dashboard_exports/runs.csv",
+    "compares": "dashboard_exports/compares.csv",
+    "gates": "dashboard_exports/gates.csv",
+    "pack_runs": "dashboard_exports/pack_runs.csv"
+  }
+}
