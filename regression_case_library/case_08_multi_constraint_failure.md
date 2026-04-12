@@ -1,19 +1,23 @@
 # case_08_multi_constraint_failure
 
 ## Summary
-Model satisfies one instruction but ignores another
+Model satisfies one instruction but ignores another.
 
 ## Baseline behavior
-- TODO
+- Correctly balances multiple simultaneous constraints.
+- Example: one sentence plus required keyword inclusion.
 
 ## Candidate regression
-- TODO
+- Follows only the easiest or most obvious instruction.
+- Appears partially correct but fails the true task contract.
 
 ## Why a naive check might miss it
-- TODO
+- Reviewers may reward partial correctness.
+- Loose evaluation may not capture multi-constraint failure.
 
 ## What FairEval detects
-- TODO
+- Missing expected tokens plus degraded pass/fail outcome.
+- Candidate is flagged at case level as regressed.
 
 ## Expected release decision
 - BLOCK

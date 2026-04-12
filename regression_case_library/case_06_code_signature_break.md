@@ -1,19 +1,23 @@
 # case_06_code_signature_break
 
 ## Summary
-Generated code misses required function signature
+Generated code misses the required function signature or interface contract.
 
 ## Baseline behavior
-- TODO
+- Produces code with the requested function name and expected return path.
+- Matches the minimal callable contract.
 
 ## Candidate regression
-- TODO
+- Returns code that is syntactically plausible but interface-incompatible.
+- Example: wrong function name, missing return, extra wrapper text.
 
 ## Why a naive check might miss it
-- TODO
+- Code may still look “correct” on quick visual scan.
+- Non-executable review misses interface-level breakage.
 
 ## What FairEval detects
-- TODO
+- Expected signature tokens are absent.
+- Candidate is marked regressed even when code quality appears reasonable.
 
 ## Expected release decision
 - BLOCK

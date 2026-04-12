@@ -1,19 +1,23 @@
 # case_01_instruction_drop
 
 ## Summary
-Instruction dropped despite otherwise fluent answer
+Instruction dropped despite an otherwise fluent answer.
 
 ## Baseline behavior
-- TODO
+- Follows the requested instruction exactly.
+- Produces a response that satisfies both content and formatting constraints.
 
 ## Candidate regression
-- TODO
+- Answers the general question correctly but ignores the explicit instruction.
+- Example: asked for one sentence, returns a paragraph.
 
 ## Why a naive check might miss it
-- TODO
+- Surface-level quality still appears strong.
+- Human reviewer may read the answer as “good enough” and overlook instruction non-compliance.
 
 ## What FairEval detects
-- TODO
+- Missing required expected terms or format-aligned content.
+- Reduced pass rate even when language quality appears acceptable.
 
 ## Expected release decision
 - BLOCK

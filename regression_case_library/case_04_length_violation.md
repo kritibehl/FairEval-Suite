@@ -1,19 +1,23 @@
 # case_04_length_violation
 
 ## Summary
-Response exceeds strict brevity constraint
+Candidate exceeds a strict brevity or length constraint.
 
 ## Baseline behavior
-- TODO
+- Obeys the requested brevity bound.
+- Example: under 20 words or exactly one sentence.
 
 ## Candidate regression
-- TODO
+- Produces a longer response that violates product UX constraints.
+- The answer may still be semantically good but operationally wrong.
 
 ## Why a naive check might miss it
-- TODO
+- Traditional evaluation often rewards completeness and detail.
+- It may fail to penalize instruction non-compliance.
 
 ## What FairEval detects
-- TODO
+- Missing format-aligned success conditions.
+- Case fails despite acceptable language quality.
 
 ## Expected release decision
 - BLOCK

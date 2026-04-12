@@ -1,19 +1,23 @@
 # case_02_format_regression
 
 ## Summary
-Required output format violated after model update
+Required output format violated after a model update.
 
 ## Baseline behavior
-- TODO
+- Produces output in the exact requested structure.
+- Example: valid JSON or exact bullet count.
 
 ## Candidate regression
-- TODO
+- Returns natural language prose instead of the required structure.
+- Breaks downstream consumers expecting machine-readable output.
 
 ## Why a naive check might miss it
-- TODO
+- The semantic content can still look correct to a human.
+- Basic quality scoring may overrate the answer even though it is operationally unusable.
 
 ## What FairEval detects
-- TODO
+- Expected structure-related keywords or fields are missing.
+- Regression appears in pass-rate drop and case-level failure.
 
 ## Expected release decision
 - BLOCK
