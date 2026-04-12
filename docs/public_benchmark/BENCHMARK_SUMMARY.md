@@ -22,7 +22,7 @@ Evaluate whether a candidate model should ship or be blocked based on measurable
 |---|---:|---:|---|
 | GPT-4o-mini | TODO | TODO | TODO |
 | Claude Haiku | TODO | TODO | TODO |
-| Gemini Flash | TODO | TODO | TODO |
+| Gemini Flash | 0.367 | 0.400 | first successful public run |
 
 ## Compare summary
 | Baseline | Candidate | Avg Score Delta | Pass Rate Delta | Gate Decision |
