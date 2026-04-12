@@ -48,13 +48,22 @@ def run_pack_cmd(
 
 @app.command()
 def compare(
-    baseline: str = typer.Option(..., help="Baseline run id"),
-    candidate: str = typer.Option(..., help="Candidate run id"),
+    baseline: str = typer.Option(None, help="Baseline run id"),
+    candidate: str = typer.Option(None, help="Candidate run id"),
+    baseline_path: str = typer.Option(None, help="Baseline report path"),
+    candidate_path: str = typer.Option(None, help="Candidate report path"),
     reports_dir: str = typer.Option("./reports", help="Reports directory"),
     out_dir: str = typer.Option(".", help="Output directory for compare artifacts"),
 ):
-    baseline_report_path = Path(reports_dir) / f"{baseline}.json"
-    candidate_report_path = Path(reports_dir) / f"{candidate}.json"
+    if baseline_path and candidate_path:
+        baseline_report_path = Path(baseline_path)
+        candidate_report_path = Path(candidate_path)
+    elif baseline and candidate:
+        baseline_report_path = Path(reports_dir) / f"{baseline}.json"
+        candidate_report_path = Path(reports_dir) / f"{candidate}.json"
+    else:
+        raise ValueError("Provide either run_ids or explicit report paths")
+
     typer.echo(compare_reports(str(baseline_report_path), str(candidate_report_path), out_dir=out_dir))
 
 

@@ -27,12 +27,23 @@ def stable_run_id(suite_name: str, model_name: str, scorer_name: str, dataset_pa
 
 
 def _resolve_model(model_name: str):
+    from .models.mock import MockModelClient
+    from .models.mock_regressed import MockRegressedModelClient
+    from .models.real.openai_real import OpenAIRealModelClient
+    from .models.real.anthropic_real import AnthropicRealModelClient
+    from .models.real.gemini_real import GeminiRealModelClient
+
     if model_name == "mock":
         return MockModelClient()
-    if model_name == "mock_regressed":
+    elif model_name == "mock_regressed":
         return MockRegressedModelClient()
+    elif model_name == "openai_real":
+        return OpenAIRealModelClient()
+    elif model_name == "anthropic_real":
+        return AnthropicRealModelClient()
+    elif model_name == "gemini_real":
+        return GeminiRealModelClient()
     raise RuntimeError(f"unsupported model_name={model_name}")
-
 
 def _resolve_scorer(suite_name: str, scorer_name: str | None):
     if scorer_name:
@@ -79,7 +90,7 @@ def run_suite(
         case_input = dict(c.input or {})
         expected_keywords = (c.expected or {}).get("answer_contains", []) or []
         case_input["expected_keywords"] = expected_keywords
-        out_text = model.generate(case_input)
+        out_text = model.generate(c.input.get("prompt"), c.input.get("context"))
         sr = scorer.score(c.input, c.expected, out_text)
         result = EvalResult(
             case_id=c.id,
