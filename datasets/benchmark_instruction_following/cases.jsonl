@@ -1,0 +1,10 @@
+{"id":"if-001","input":{"prompt":"Answer in exactly one sentence: What is retrieval-augmented generation?"},"expected":{"answer_contains":["retrieval","context"]}}
+{"id":"if-002","input":{"prompt":"Return exactly 3 bullet points explaining why regression gating matters for LLM releases."},"expected":{"answer_contains":["regression","release","quality"]}}
+{"id":"if-003","input":{"prompt":"Write a Python function named add that returns the sum of two numbers."},"expected":{"answer_contains":["def add","return"]}}
+{"id":"if-004","input":{"prompt":"In one sentence, explain overfitting without using the word model."},"expected":{"answer_contains":["training","generalize"]}}
+{"id":"if-005","input":{"prompt":"Give a JSON object with keys risk and action describing why a degraded candidate should be blocked."},"expected":{"answer_contains":["risk","action"]}}
+{"id":"if-006","input":{"prompt":"Summarize the role of a release gate in under 20 words."},"expected":{"answer_contains":["release","gate"]}}
+{"id":"if-007","input":{"prompt":"List two failure modes in distributed systems as comma-separated terms only."},"expected":{"answer_contains":["timeout","retry"]}}
+{"id":"if-008","input":{"prompt":"Write one sentence that includes the terms baseline, candidate, and regression."},"expected":{"answer_contains":["baseline","candidate","regression"]}}
+{"id":"if-009","input":{"prompt":"Explain idempotency in one sentence for backend engineers."},"expected":{"answer_contains":["same","repeated"]}}
+{"id":"if-010","input":{"prompt":"Produce exactly one line of shell that prints hello."},"expected":{"answer_contains":["echo","hello"]}}
