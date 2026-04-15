@@ -1,0 +1,26 @@
+{
+  "decision": "pass",
+  "release_decision": "ship",
+  "reasons": [],
+  "thresholds": {
+    "max_avg_score_drop": 0.05,
+    "max_pass_rate_drop": 0.1,
+    "fail_on_any_regression_case": false,
+    "max_affected_query_pct": 0.1,
+    "block_on_high_downstream_risk": true
+  },
+  "summary": {
+    "avg_score_delta": 0.3667,
+    "pass_rate_delta": 0.4,
+    "regressed_case_count": 0,
+    "total_case_count": 10
+  },
+  "production_impact": {
+    "estimated_affected_query_pct": 0.0,
+    "estimated_affected_query_count_per_day": null,
+    "downstream_risk": "low",
+    "impact_statement": "SHIP release: estimated impact to 0.0% of queries, downstream_risk=low."
+  },
+  "rollback_recommendation": "ship_candidate",
+  "compare_artifact_path": "benchmark_public/instruction_following/compares/compare/20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60_vs_20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60.json"
+}
