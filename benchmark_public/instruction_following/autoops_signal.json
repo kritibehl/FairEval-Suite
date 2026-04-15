@@ -1,0 +1,23 @@
+{
+  "scenario": "llm_instruction_following_benchmark",
+  "failure_class": "ai_quality_regression",
+  "metrics": {
+    "avg_score": 0.3667,
+    "pass_rate": 0.4,
+    "failed_case_count": 6,
+    "num_cases": 10
+  },
+  "recommendation": "review_before_release",
+  "safe": false,
+  "operator_summary": {
+    "top_failed_cases": [
+      "if-004",
+      "if-006",
+      "if-007",
+      "if-008",
+      "if-009"
+    ],
+    "benchmark_run_id": "20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60",
+    "model_name": "gemini_real"
+  }
+}

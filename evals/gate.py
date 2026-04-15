@@ -1,4 +1,5 @@
 import json
+from .release_policies import get_policy
 from pathlib import Path
 from typing import Any, Dict
 

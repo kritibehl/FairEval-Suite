@@ -1,0 +1,13 @@
+{
+  "num_runs": 4,
+  "avg_score_mean": 0.0917,
+  "pass_rate_mean": 0.1,
+  "score_variance": 0.0252,
+  "pass_rate_variance": 0.03,
+  "report_paths": [
+    "benchmark_public/instruction_following/runs/reports/20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60.json",
+    "benchmark_public/instruction_following/runs/reports/20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60.json",
+    "benchmark_public/instruction_following/runs/reports/20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60.json",
+    "benchmark_public/instruction_following/runs/reports/20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60.json"
+  ]
+}
