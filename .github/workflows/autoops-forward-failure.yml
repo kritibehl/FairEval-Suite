@@ -12,8 +12,8 @@ jobs:
       - name: Create failure log
         run: |
           cat > failure.log <<'LOG'
-          ERROR evaluation stage exceeded timeout while loading model artifact
-          WARN retrying benchmark job after dependency latency spike
+          ERROR evaluation regression triggered after model update
+          WARN benchmark dependency timed out during scoring
           LOG
 
       - name: Send to AutoOps
