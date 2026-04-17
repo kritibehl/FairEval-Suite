@@ -1,8 +1,8 @@
 <div align="center">
 
-# FairEval
+# FairEval — Regression Gating for GenAI Systems
 
-**CI-integrated regression gating for ML and generative AI systems**
+**Most evaluation tools score models. FairEval decides whether to ship them.**
 
 [![Tests](https://github.com/kritibehl/FairEval-Suite/actions/workflows/test.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
 [![Release Gate](https://github.com/kritibehl/FairEval-Suite/actions/workflows/release-gate.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
@@ -16,16 +16,33 @@
 
 ---
 
-> Most evaluation tools score models.
-> **FairEval decides whether to ship them.**
+## Gate Decision
+
+```json
+{
+  "decision": "block",
+  "rollback_recommendation": "rollback_to_baseline",
+  "reasons": ["candidate quality regressed beyond configured release thresholds"]
+}
+```
+
+---
+
+## Ship / Block: What This Looks Like
+
+| Model | Avg Score | Pass Rate | Decision |
+|---|---|---|---|
+| Gemini 2.0 Flash | 0.367 | 40% | **BLOCK** |
+| Baseline (mock) | 0.794 | 100% | **SHIP** |
+| Candidate (regressed) | 0.000 | 0% | **BLOCK** |
 
 ---
 
 ## The Problem
 
-Modern AI systems degrade silently. A model update that scores slightly lower on average may not raise any alerts — but if it consistently fails instruction-following cases, breaks JSON output contracts, or changes safety posture, it will affect a measurable fraction of production queries.
+AI systems degrade silently. A model update that scores slightly lower on average may not raise any alerts — but if it consistently fails instruction-following cases, breaks JSON output contracts, or changes safety posture, it affects a measurable fraction of production queries.
 
-FairEval catches this before deployment:
+Example of what FairEval catches before deployment:
 
 | | Response |
 |---|---|
@@ -37,29 +54,19 @@ FairEval catches this before deployment:
 
 ---
 
-## Release Workflow
-
-```
-Baseline run → Candidate run → Compare artifact → Gate decision → SHIP or BLOCK
-```
-
----
-
 ## Controlled Regression: Demonstrated
 
-A controlled candidate regression produced these artifacts — exactly the signal a release-control system must surface before deployment.
-
-**Baseline pack**
+**Baseline pack:**
 ```json
 { "avg_score_confidence_interval": { "mean": 0.794 }, "pass_rate_confidence_interval": { "mean": 1.0 } }
 ```
 
-**Candidate pack**
+**Candidate pack (regressed):**
 ```json
 { "avg_score_confidence_interval": { "mean": 0.0 }, "pass_rate_confidence_interval": { "mean": 0.0 } }
 ```
 
-**Comparison artifact**
+**Comparison artifact:**
 ```json
 {
   "score_change_test": { "test": "welch_t_test", "p_value": 0.0 },
@@ -68,29 +75,7 @@ A controlled candidate regression produced these artifacts — exactly the signa
 }
 ```
 
-**Gate decision**
-```json
-{
-  "decision": "block",
-  "rollback_recommendation": "rollback_to_baseline",
-  "reasons": ["candidate quality regressed beyond configured release thresholds"]
-}
-```
-
----
-
-## Public Benchmark: Gemini Flash
-
-FairEval was run against Gemini 2.0 Flash on a 10-case instruction-following suite.
-
-| Metric | Result |
-|---|---|
-| avg_score | 0.367 |
-| pass_rate | 40% |
-| failed cases | 6 / 10 |
-| gate decision | **BLOCK** |
-
-Benchmark package and raw artifacts: `benchmark_public/instruction_following/`
+A p-value of 0.0 on both tests means the regression is not noise — it is a structural change in model behavior.
 
 ---
 
@@ -103,6 +88,20 @@ Input baseline and candidate responses, configure regression thresholds, receive
 ![FairEval Hugging Face Demo](docs/images/hf-demo-full.png)
 
 ![FairEval Gate Controls and Delta Summary](docs/images/hf-demo-gate.png)
+
+---
+
+## Release Workflow
+
+```
+Baseline run → Candidate run → Compare artifact → Gate decision → SHIP or BLOCK
+```
+
+---
+
+## Why Average Score Is Not Enough
+
+A model can maintain a 0.79 average score while silently collapsing on the specific case class that matters most. Safety refusal quality, factuality on low-frequency topics, and toxicity under adversarial prompts are invisible to average-score monitoring if their weight in the dataset is small. FairEval surfaces them by tracking pass/fail at the case level and flagging any case that regresses, regardless of aggregate effect.
 
 ---
 
@@ -122,8 +121,6 @@ FairEval ships with a 10-case library covering the failure classes most commonly
 | `multi_constraint_failure` | Multiple simultaneous constraint violations |
 | `consistency_drop` | Same input → inconsistent outputs |
 | `context_regression` | Behavior degrades under longer context |
-
-These cases were selected because they represent failure modes most likely to affect real users and least likely to be caught by aggregate score metrics alone.
 
 ---
 
@@ -174,32 +171,6 @@ thresholds:
 
 ---
 
-## Statistical Rigor
-
-Repeated-run pack evaluation distinguishes real regressions from run-to-run variance:
-
-- **Welch t-test** for score distribution comparison
-- **Chi-squared test** for pass/fail distribution shift
-- **Confidence intervals** across repeated runs
-
-A p-value of 0.0 on both tests means the regression is not noise — it is a structural change in model behavior.
-
----
-
-## Versioned Artifact Structure
-
-| Directory | Contents |
-|---|---|
-| `runs/` | Raw model outputs per run |
-| `reports/` | Evaluation summaries |
-| `compare/` | Baseline vs candidate diffs |
-| `gate/` | Release gate decisions |
-| `packs/` | Repeated benchmark run collections |
-| `benchmark_public/` | Public benchmark packages |
-| `dashboard_exports/` | BI-ready CSVs (runs, compares, gates) |
-
----
-
 ## Running
 
 ```bash
@@ -241,7 +212,21 @@ uvicorn api.main:app --reload
 
 ---
 
-## Engineering Decisions
+## Versioned Artifact Structure
+
+| Directory | Contents |
+|---|---|
+| `runs/` | Raw model outputs per run |
+| `reports/` | Evaluation summaries |
+| `compare/` | Baseline vs candidate diffs |
+| `gate/` | Release gate decisions |
+| `packs/` | Repeated benchmark run collections |
+| `benchmark_public/` | Public benchmark packages |
+| `dashboard_exports/` | BI-ready CSVs (runs, compares, gates) |
+
+---
+
+## Key Engineering Decisions
 
 **Deterministic mock evaluation** — full pipeline runs in CI with no GPU, no external API calls, no flaky results.
 
@@ -251,15 +236,28 @@ uvicorn api.main:app --reload
 
 **Dataset-driven suites** — new evaluation cases require no code changes, just a JSONL entry.
 
-**BI-ready exports** — `runs.csv`, `compares.csv`, `gates.csv` for Power BI, Tableau, or QuickSight dashboards.
+**BI-ready exports** — `runs.csv`, `compares.csv`, `gates.csv` for Power BI, Tableau, or QuickSight.
 
 ---
 
-## Why This Project Matters
+## Why This Matters in Production
 
-FairEval is a release-review system for AI changes — not a benchmark tool. It makes model changes measurable, comparable, and blockable before they reach production. That is directly relevant for ML infra, evaluation platform, and release-safety engineering roles.
+FairEval is a release-review system for AI changes — not a benchmark tool. It makes model changes measurable, comparable, and blockable before they reach production. That is directly relevant for ML infra, evaluation platform, and release-safety engineering roles. Scoring tells you how a model performs. Gating tells you whether to ship it.
 
-Scoring tells you how a model performs. Gating tells you whether to ship it.
+---
+
+## Scope and Limitations
+
+- Evaluation is simulation-based (mock model) by default; live evaluation requires API keys or local transformer models
+- DistilBERT-backed live evaluation supports classification suites; RAG and generation suites use mock inference
+- Gate thresholds are static configuration, not adaptive baselines
+- Designed for release-time gating, not continuous production monitoring
+
+---
+
+## Signals For
+
+`ML Infra` · `AI/ML Platform Engineering` · `Evaluation Infrastructure` · `GenAI Product Engineering` · `Release Engineering`
 
 ---
 
