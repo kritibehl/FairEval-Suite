@@ -1,5 +1,4 @@
 import json
-from .release_policies import get_policy
 from pathlib import Path
 from typing import Any, Dict
 
@@ -73,10 +72,13 @@ def apply_gate(
     daily_query_volume: int | None = None,
     downstream_risk: str | None = None,
     block_on_high_downstream_risk: bool = True,
+    max_latency_p95_regression_pct: float | None = None,
+    max_throughput_drop_pct: float | None = None,
 ) -> Dict[str, Any]:
     compare_data = load_json(compare_artifact_path)
     delta = compare_data.get("delta", {}) or {}
     case_diffs = compare_data.get("case_diffs", []) or []
+    serving = compare_data.get("serving_delta", {}) or {}
 
     avg_score_delta = float(delta.get("avg_score", 0.0))
     pass_rate_delta = float(delta.get("pass_rate", 0.0))
@@ -111,6 +113,31 @@ def apply_gate(
             f"affected_query_pct_exceeded: {affected_query_pct:.4f} >= {max_affected_query_pct:.4f}"
         )
 
+    latency_regression = float(serving.get("latency_p95_regression_pct", 0.0))
+    throughput_delta_pct = float(serving.get("throughput_delta_pct", 0.0))
+
+    latency_pass = True
+    throughput_pass = True
+
+    if max_latency_p95_regression_pct is not None:
+        if latency_regression > max_latency_p95_regression_pct:
+            latency_pass = False
+            reasons.append(
+                f"latency_p95_regression_exceeded: {latency_regression:.4f} > {max_latency_p95_regression_pct:.4f}"
+            )
+
+    if max_throughput_drop_pct is not None:
+        if throughput_delta_pct < -max_throughput_drop_pct:
+            throughput_pass = False
+            reasons.append(
+                f"throughput_drop_exceeded: {throughput_delta_pct:.4f} < {-max_throughput_drop_pct:.4f}"
+            )
+
+    quality_pass = (
+        avg_score_delta >= -max_avg_score_drop
+        and pass_rate_delta >= -max_pass_rate_drop
+    )
+
     derived_downstream_risk = _derive_downstream_risk(
         explicit_risk=downstream_risk,
         affected_query_pct=affected_query_pct,
@@ -127,6 +154,15 @@ def apply_gate(
     if daily_query_volume is not None:
         estimated_affected_queries = int(round(daily_query_volume * affected_query_pct))
 
+    if quality_pass and not latency_pass:
+        reason = "Blocked candidate due to serving-latency regression despite quality parity."
+    elif quality_pass and not throughput_pass:
+        reason = "Blocked candidate due to throughput regression despite quality parity."
+    elif reasons:
+        reason = "Blocked candidate due to release gate policy violations."
+    else:
+        reason = "Candidate satisfied quality and serving thresholds."
+
     impact_statement = _impact_statement(
         affected_query_pct=affected_query_pct,
         estimated_affected_queries=estimated_affected_queries,
@@ -139,6 +175,7 @@ def apply_gate(
     artifact = {
         "decision": status,
         "release_decision": release_decision,
+        "reason": reason,
         "reasons": reasons,
         "thresholds": {
             "max_avg_score_drop": max_avg_score_drop,
@@ -146,12 +183,21 @@ def apply_gate(
             "fail_on_any_regression_case": fail_on_any_regression_case,
             "max_affected_query_pct": max_affected_query_pct,
             "block_on_high_downstream_risk": block_on_high_downstream_risk,
+            "max_latency_p95_regression_pct": max_latency_p95_regression_pct,
+            "max_throughput_drop_pct": max_throughput_drop_pct,
         },
         "summary": {
             "avg_score_delta": avg_score_delta,
             "pass_rate_delta": pass_rate_delta,
             "regressed_case_count": regressed_case_count,
             "total_case_count": total_case_count,
+            "quality_pass": quality_pass,
+        },
+        "serving_gate": {
+            "latency_p95_regression_pct": latency_regression,
+            "throughput_delta_pct": throughput_delta_pct,
+            "latency_pass": latency_pass,
+            "throughput_pass": throughput_pass,
         },
         "production_impact": {
             "estimated_affected_query_pct": affected_query_pct,

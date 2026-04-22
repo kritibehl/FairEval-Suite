@@ -1,0 +1,11 @@
+{
+  "delta": {
+    "avg_score": -0.002,
+    "pass_rate": 0.0
+  },
+  "case_diffs": [],
+  "serving_delta": {
+    "latency_p95_regression_pct": 41.8,
+    "throughput_delta_pct": -5.0
+  }
+}

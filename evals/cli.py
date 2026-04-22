@@ -88,6 +88,8 @@ def gate(
  daily_query_volume: int = typer.Option(None, help="Optional daily production query volume for impact estimation"),
  downstream_risk: str = typer.Option(None, help="Optional explicit downstream risk label: low, medium, high"),
  block_on_high_downstream_risk: bool = typer.Option(True, help="Block release if downstream risk is high"),
+ max_latency_p95_regression_pct: float = typer.Option(None, help="Maximum allowed p95 latency regression percent"),
+ max_throughput_drop_pct: float = typer.Option(None, help="Maximum allowed throughput drop percent"),
 ):
     typer.echo(
         apply_gate(
@@ -96,6 +98,13 @@ def gate(
             max_avg_score_drop=max_avg_score_drop,
             max_pass_rate_drop=max_pass_rate_drop,
             fail_on_any_regression_case=fail_on_any_regression_case,
+            estimated_affected_query_pct=estimated_affected_query_pct,
+            max_affected_query_pct=max_affected_query_pct,
+            daily_query_volume=daily_query_volume,
+            downstream_risk=downstream_risk,
+            block_on_high_downstream_risk=block_on_high_downstream_risk,
+            max_latency_p95_regression_pct=max_latency_p95_regression_pct,
+            max_throughput_drop_pct=max_throughput_drop_pct,
         )
     )
 

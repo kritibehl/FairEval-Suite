@@ -1,0 +1,38 @@
+{
+  "decision": "fail",
+  "release_decision": "block",
+  "reason": "Blocked candidate due to serving-latency regression despite quality parity.",
+  "reasons": [
+    "latency_p95_regression_exceeded: 41.8000 > 20.0000"
+  ],
+  "thresholds": {
+    "max_avg_score_drop": 0.05,
+    "max_pass_rate_drop": 0.1,
+    "fail_on_any_regression_case": false,
+    "max_affected_query_pct": 0.1,
+    "block_on_high_downstream_risk": true,
+    "max_latency_p95_regression_pct": 20.0,
+    "max_throughput_drop_pct": 15.0
+  },
+  "summary": {
+    "avg_score_delta": -0.002,
+    "pass_rate_delta": 0.0,
+    "regressed_case_count": 0,
+    "total_case_count": 0,
+    "quality_pass": true
+  },
+  "serving_gate": {
+    "latency_p95_regression_pct": 41.8,
+    "throughput_delta_pct": -5.0,
+    "latency_pass": false,
+    "throughput_pass": true
+  },
+  "production_impact": {
+    "estimated_affected_query_pct": 0.0,
+    "estimated_affected_query_count_per_day": null,
+    "downstream_risk": "low",
+    "impact_statement": "BLOCK release: estimated impact to 0.0% of queries, downstream_risk=low."
+  },
+  "rollback_recommendation": "rollback_to_baseline",
+  "compare_artifact_path": "artifacts/amd_mi300x/compare_serving_regression.json"
+}
