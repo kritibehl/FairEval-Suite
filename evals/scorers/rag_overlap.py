@@ -28,8 +28,21 @@ class RagOverlapScorer(Scorer):
         ctx_toks = _context_tokens(ctx)
         if not out_toks:
             return ScoreResult(score=0.0, passed=False, details={"reason": "empty_output"})
+        # Fallback: if no context, evaluate using expected keywords only
         if not ctx_toks:
-            return ScoreResult(score=0.0, passed=False, details={"reason": "empty_context"})
+            expected_contains = (expected or {}).get("answer_contains", [])
+            if not expected_contains:
+                return ScoreResult(score=0.0, passed=False, details={"reason": "no_expected_terms"})
+
+            output_lower = (output_text or "").lower()
+            matches = sum(1 for kw in expected_contains if kw.lower() in output_lower)
+            score = matches / len(expected_contains)
+
+            return ScoreResult(
+                score=round(float(score), 4),
+                passed=score >= 0.5,
+                details={"mode": "keyword_fallback", "matches": matches}
+            )
 
         overlap = out_toks & ctx_toks
         precision = len(overlap) / max(1, len(out_toks))

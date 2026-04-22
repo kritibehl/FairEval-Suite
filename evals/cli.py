@@ -48,13 +48,22 @@ def run_pack_cmd(
 
 @app.command()
 def compare(
-    baseline: str = typer.Option(..., help="Baseline run id"),
-    candidate: str = typer.Option(..., help="Candidate run id"),
+    baseline: str = typer.Option(None, help="Baseline run id"),
+    candidate: str = typer.Option(None, help="Candidate run id"),
+    baseline_path: str = typer.Option(None, help="Baseline report path"),
+    candidate_path: str = typer.Option(None, help="Candidate report path"),
     reports_dir: str = typer.Option("./reports", help="Reports directory"),
     out_dir: str = typer.Option(".", help="Output directory for compare artifacts"),
 ):
-    baseline_report_path = Path(reports_dir) / f"{baseline}.json"
-    candidate_report_path = Path(reports_dir) / f"{candidate}.json"
+    if baseline_path and candidate_path:
+        baseline_report_path = Path(baseline_path)
+        candidate_report_path = Path(candidate_path)
+    elif baseline and candidate:
+        baseline_report_path = Path(reports_dir) / f"{baseline}.json"
+        candidate_report_path = Path(reports_dir) / f"{candidate}.json"
+    else:
+        raise ValueError("Provide either run_ids or explicit report paths")
+
     typer.echo(compare_reports(str(baseline_report_path), str(candidate_report_path), out_dir=out_dir))
 
 
@@ -79,6 +88,8 @@ def gate(
  daily_query_volume: int = typer.Option(None, help="Optional daily production query volume for impact estimation"),
  downstream_risk: str = typer.Option(None, help="Optional explicit downstream risk label: low, medium, high"),
  block_on_high_downstream_risk: bool = typer.Option(True, help="Block release if downstream risk is high"),
+ max_latency_p95_regression_pct: float = typer.Option(None, help="Maximum allowed p95 latency regression percent"),
+ max_throughput_drop_pct: float = typer.Option(None, help="Maximum allowed throughput drop percent"),
 ):
     typer.echo(
         apply_gate(
@@ -87,6 +98,13 @@ def gate(
             max_avg_score_drop=max_avg_score_drop,
             max_pass_rate_drop=max_pass_rate_drop,
             fail_on_any_regression_case=fail_on_any_regression_case,
+            estimated_affected_query_pct=estimated_affected_query_pct,
+            max_affected_query_pct=max_affected_query_pct,
+            daily_query_volume=daily_query_volume,
+            downstream_risk=downstream_risk,
+            block_on_high_downstream_risk=block_on_high_downstream_risk,
+            max_latency_p95_regression_pct=max_latency_p95_regression_pct,
+            max_throughput_drop_pct=max_throughput_drop_pct,
         )
     )
 

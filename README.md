@@ -287,3 +287,53 @@ pytest
 ## License
 
 MIT
+
+## Hardware-Aware Release Gate
+
+FairEval supports hardware-aware release gating, where a candidate can preserve model quality yet still be blocked if it regresses serving behavior on target hardware.
+
+Example AMD MI300X-style gate result:
+
+- `quality_pass = true`
+- `latency_pass = false`
+- `release_decision = block`
+
+This captures a production scenario where output quality remains acceptable, but p95 serving latency regresses enough to make the candidate unsafe to ship.
+
+Example artifact:
+
+`artifacts/amd_mi300x/gate/compare_serving_regression.gate.json`
+
+Run it from the CLI:
+
+```bash
+python -m evals.cli gate \
+  --compare-artifact artifacts/amd_mi300x/compare_serving_regression.json \
+  --out-dir artifacts/amd_mi300x \
+  --max-latency-p95-regression-pct 20 \
+  --max-throughput-drop-pct 15
+
+## Hardware-Aware Eval Gate
+
+FairEval supports hardware-aware release gating, where a model candidate can preserve output quality yet still be blocked if it regresses serving behavior on target hardware.
+
+Example AMD MI300X-style result:
+
+- `summary.quality_pass = true`
+- `serving_gate.latency_pass = false`
+- `release_decision = block`
+
+In the included example, the candidate preserved quality parity but showed a 47.1014% p95 latency regression, so the release was blocked.
+
+Generate compare artifact:
+
+```bash
+python scripts/amd/build_hardware_compare.py
+Apply gate:
+
+python -m evals.cli gate \
+  --compare-artifact artifacts/amd_mi300x/compare_serving_regression.json \
+  --out-dir artifacts/amd_mi300x \
+  --max-latency-p95-regression-pct 20 \
+  --max-throughput-drop-pct 15
+

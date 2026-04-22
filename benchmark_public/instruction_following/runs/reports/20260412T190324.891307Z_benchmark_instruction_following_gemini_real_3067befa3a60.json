@@ -1,0 +1,152 @@
+{
+  "config": {
+    "artifact_version": "v2",
+    "created_at": "2026-04-12 19:03:24.891330+00:00",
+    "gate_rules_version": "v2",
+    "model_name": "gemini_real",
+    "scorer_name": "rag_overlap_v1",
+    "suite_name": "benchmark_instruction_following",
+    "suite_version": "2026.03"
+  },
+  "integrity": {
+    "duplicate_case_ids": [],
+    "duplicate_case_payloads": [],
+    "missing_expected_ids": [],
+    "pack_completeness": {
+      "complete": true,
+      "num_cases": 10
+    },
+    "schema_violations": [],
+    "stale_baseline_warning": null,
+    "status": "pass"
+  },
+  "results": [
+    {
+      "case_id": "if-001",
+      "details": {
+        "metadata": {},
+        "model_output": "Retrieval-augmented generation is a technique that enhances large language models by first retrieving relevant information from external knowledge bases and then using that information to generate more accurate, current, and contextually rich responses.",
+        "scorer": "rag_overlap_v1",
+        "scorer_details": {
+          "matches": 2,
+          "mode": "keyword_fallback"
+        }
+      },
+      "passed": true,
+      "score": 1.0
+    },
+    {
+      "case_id": "if-002",
+      "details": {
+        "metadata": {},
+        "model_output": "Here are three reasons why regression gating matters for LLM releases:\n\n*   **Prevents Degradation of Core Capabilities:** New releases, fine-tunes, or architectural changes can inadvertently degrade critical functions like factual accuracy, coherence, instruction following, or safety guardrails, directly impacting the model's fundamental utility. Gating ensures these don't ship.\n*   **Maintains User Trust and Experience:** Releasing an LLM that performs worse than its predecessor erodes user confidence and adoption. Regression gating guarantees a consistent or improved user experience by preventing the deployment of models with noticeable performance drops.\n*   **Reduces Remediation Costs and Resource Drain:** Discovering and fixing regressions post-release is significantly more expensive and time-consuming, requiring emergency patches, rollbacks, and frantic debugging. Gating catches these issues proactively, saving operational overhead and development cycles.",
+        "scorer": "rag_overlap_v1",
+        "scorer_details": {
+          "matches": 2,
+          "mode": "keyword_fallback"
+        }
+      },
+      "passed": true,
+      "score": 0.6667
+    },
+    {
+      "case_id": "if-003",
+      "details": {
+        "metadata": {},
+        "model_output": "```python\ndef add(num1: float, num2: float) -> float:\n  \"\"\"\n  Calculates the sum of two numbers.\n\n  Args:\n    num1: The first number (can be an integer or a float).\n    num2: The second number (can be an integer or a float).\n\n  Returns:\n    The sum of num1 and num2.\n  \"\"\"\n  return num1 + num2\n\n# --- Example Usage ---\n\n# Test with integers\nresult_int = add(5, 3)\nprint(f\"The sum of 5 and 3 is: {result_int}\")  # Output: The sum of 5 and 3 is: 8\n\n# Test with floats\nresult_float = add(10.5, 2.3)\nprint(f\"The sum of 10.5 and 2.3 is: {result_float}\") # Output: The sum of 10.5 and 2.3 is: 12.8\n\n# Test with mixed types\nresult_mixed = add(7, 4.1)\nprint(f\"The sum of 7 and 4.1 is: {result_mixed}\")   # Output: The sum of 7 and 4.1 is: 11.1\n\n# Test with negative numbers\nresult_negative = add(-5, 10)\nprint(f\"The sum of -5 and 10 is: {result_negative}\") # Output: The sum of -5 and 10 is: 5\n\nresult_both_negative = add(-2, -3.5)\nprint(f\"The sum of -2 and -3.5 is: {result_both_negative}\") # Output: The sum of -2 and -3.5 is: -5.5\n```",
+        "scorer": "rag_overlap_v1",
+        "scorer_details": {
+          "matches": 2,
+          "mode": "keyword_fallback"
+        }
+      },
+      "passed": true,
+      "score": 1.0
+    },
+    {
+      "case_id": "if-004",
+      "details": {
+        "metadata": {},
+        "model_output": "Overfitting occurs when a learned explanation or pattern perfectly fits past observations, but fails to accurately account for new, unseen situations because it incorporated specific noise rather than general principles.",
+        "scorer": "rag_overlap_v1",
+        "scorer_details": {
+          "matches": 0,
+          "mode": "keyword_fallback"
+        }
+      },
+      "passed": false,
+      "score": 0.0
+    },
+    {
+      "case_id": "if-005",
+      "details": {
+        "metadata": {},
+        "model_output": "```json\n{\n  \"risk\": [\n    \"Introducing critical bugs, regressions, or performance degradation into the target environment (e.g., production, downstream systems).\",\n    \"Causing system instability, crashes, or data corruption that could lead to service outages or data loss.\",\n    \"Compromising security by exposing vulnerabilities or failing to meet compliance standards.\",\n    \"Leading to a poor user experience, loss of trust, and potential customer churn.\",\n    \"Increasing operational costs due to incident response, urgent hotfixes, and complex rollbacks.\",\n    \"Damaging organizational reputation and credibility among users, stakeholders, or clients.\"\n  ],\n  \"action\": [\n    \"Immediately halt any further progression (e.g., deployment, release, promotion) of the degraded candidate.\",\n    \"Isolate the degraded candidate to prevent its issues from affecting other components or environments.\",\n    \"Initiate a thorough root cause analysis to identify and understand the source of the degradation.\",\n    \"Prioritize the remediation of all identified issues, ensuring fixes are fully tested and validated.\",\n    \"Only allow the candidate to proceed once all degradation criteria have been fully resolved and it successfully meets all quality gates, performance benchmarks, and security requirements.\",\n    \"Document the incident, the degradation criteria, and the resolution steps for future reference and process improvement.\"\n  ]\n}\n```",
+        "scorer": "rag_overlap_v1",
+        "scorer_details": {
+          "matches": 2,
+          "mode": "keyword_fallback"
+        }
+      },
+      "passed": true,
+      "score": 1.0
+    },
+    {
+      "case_id": "if-006",
+      "details": {
+        "metadata": {},
+        "model_output": "It ensures specific criteria are met before software can progress to the next deployment phase.",
+        "scorer": "rag_overlap_v1",
+        "scorer_details": {
+          "matches": 0,
+          "mode": "keyword_fallback"
+        }
+      },
+      "passed": false,
+      "score": 0.0
+    },
+    {
+      "case_id": "if-007",
+      "details": {
+        "error": "exception",
+        "message": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\\nPlease retry in 4.452510035s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '4s'}]}}"
+      },
+      "passed": false,
+      "score": 0.0
+    },
+    {
+      "case_id": "if-008",
+      "details": {
+        "error": "exception",
+        "message": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\\nPlease retry in 4.286048105s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '4s'}]}}"
+      },
+      "passed": false,
+      "score": 0.0
+    },
+    {
+      "case_id": "if-009",
+      "details": {
+        "error": "exception",
+        "message": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\\nPlease retry in 4.091589741s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '4s'}]}}"
+      },
+      "passed": false,
+      "score": 0.0
+    },
+    {
+      "case_id": "if-010",
+      "details": {
+        "error": "exception",
+        "message": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, model: gemini-2.5-flash\\nPlease retry in 3.928277013s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '5'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '3s'}]}}"
+      },
+      "passed": false,
+      "score": 0.0
+    }
+  ],
+  "run_id": "20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60",
+  "summary": {
+    "avg_score": 0.3667,
+    "failed_case_count": 6,
+    "num_cases": 10,
+    "pass_rate": 0.4
+  }
+}
