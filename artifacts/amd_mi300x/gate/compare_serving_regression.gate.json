@@ -3,7 +3,7 @@
   "release_decision": "block",
   "reason": "Blocked candidate due to serving-latency regression despite quality parity.",
   "reasons": [
-    "latency_p95_regression_exceeded: 41.8000 > 20.0000"
+    "latency_p95_regression_exceeded: 47.1014 > 20.0000"
   ],
   "thresholds": {
     "max_avg_score_drop": 0.05,
@@ -22,8 +22,8 @@
     "quality_pass": true
   },
   "serving_gate": {
-    "latency_p95_regression_pct": 41.8,
-    "throughput_delta_pct": -5.0,
+    "latency_p95_regression_pct": 47.1014,
+    "throughput_delta_pct": -6.0976,
     "latency_pass": false,
     "throughput_pass": true
   },

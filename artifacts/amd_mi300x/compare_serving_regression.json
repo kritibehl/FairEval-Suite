@@ -5,7 +5,18 @@
   },
   "case_diffs": [],
   "serving_delta": {
-    "latency_p95_regression_pct": 41.8,
-    "throughput_delta_pct": -5.0
+    "baseline_latency_p50_ms": 410.0,
+    "candidate_latency_p50_ms": 438.0,
+    "baseline_latency_p95_ms": 690.0,
+    "candidate_latency_p95_ms": 1015.0,
+    "baseline_throughput_rps": 8.2,
+    "candidate_throughput_rps": 7.7,
+    "latency_p50_regression_pct": 6.8293,
+    "latency_p95_regression_pct": 47.1014,
+    "throughput_delta_pct": -6.0976
+  },
+  "hardware": {
+    "provider": "amd_dev_cloud",
+    "gpu": "AMD MI300X"
   }
 }
