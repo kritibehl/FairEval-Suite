@@ -27,22 +27,24 @@ def stable_run_id(suite_name: str, model_name: str, scorer_name: str, dataset_pa
 
 
 def _resolve_model(model_name: str):
-    from .models.mock import MockModelClient
-    from .models.mock_regressed import MockRegressedModelClient
-    from .models.real.openai_real import OpenAIRealModelClient
-    from .models.real.anthropic_real import AnthropicRealModelClient
-    from .models.real.gemini_real import GeminiRealModelClient
-
     if model_name == "mock":
+        from .models.mock import MockModelClient
         return MockModelClient()
     elif model_name == "mock_regressed":
+        from .models.mock_regressed import MockRegressedModelClient
         return MockRegressedModelClient()
     elif model_name == "openai_real":
+        from .models.real.openai_real import OpenAIRealModelClient
         return OpenAIRealModelClient()
     elif model_name == "anthropic_real":
+        from .models.real.anthropic_real import AnthropicRealModelClient
         return AnthropicRealModelClient()
     elif model_name == "gemini_real":
+        from .models.real.gemini_real import GeminiRealModelClient
         return GeminiRealModelClient()
+    elif model_name == "distilbert-sst2":
+        from .models.distilbert_sst2 import DistilBertSST2ModelClient
+        return DistilBertSST2ModelClient()
     raise RuntimeError(f"unsupported model_name={model_name}")
 
 def _resolve_scorer(suite_name: str, scorer_name: str | None):
