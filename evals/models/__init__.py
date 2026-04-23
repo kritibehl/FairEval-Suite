@@ -1,8 +1,12 @@
-# Optional provider imports so local tests / CI do not require all SDKs installed.
+# Optional model/provider imports so CI and local tests do not require all SDKs.
 
 from .mock import MockModelClient
 from .mock_regressed import MockRegressedModelClient
-from .distilbert_sst2 import DistilBertSST2ModelClient
+
+try:
+    from .distilbert_sst2 import DistilBertSST2ModelClient
+except Exception:
+    DistilBertSST2ModelClient = None
 
 try:
     from .real.openai_real import OpenAIRealModelClient
