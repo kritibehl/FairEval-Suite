@@ -1,48 +1,88 @@
-<div align="center">
+# FairEval-Suite — Regression Gating for GenAI Systems
 
-# FairEval — Regression Gating for GenAI Systems
+**FairEval decides whether to ship a model update — not just how it scored.**
 
-**Most evaluation tools score models. FairEval decides whether to ship them.**
-
-[![Tests](https://github.com/kritibehl/FairEval-Suite/actions/workflows/test.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
-[![Release Gate](https://github.com/kritibehl/FairEval-Suite/actions/workflows/release-gate.yml/badge.svg)](https://github.com/kritibehl/FairEval-Suite/actions)
-![GitHub Repo stars](https://img.shields.io/github/stars/kritibehl/FairEval-Suite?style=social)
-[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
-[![HuggingFace](https://img.shields.io/badge/Demo-Hugging%20Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black)](https://huggingface.co/spaces/kriti0608/FairEval-Suite)
+`Python` · `FastAPI` · `HuggingFace` · `SciPy` · `PyTorch` · `SQLite`
 
 🔗 **[Live Demo on Hugging Face](https://huggingface.co/spaces/kriti0608/FairEval-Suite)**  |  📄 **[Technical Report (Zenodo)](https://doi.org/10.5281/zenodo.17625268)**
 
-</div>
-
 ---
 
-## Gate Decision
+**Use before a model release, prompt change, provider switch, or serving-stack update.** Scoring tells you how a model performs. Gating tells you whether to ship it.
 
-```json
-{
-  "decision": "block",
-  "rollback_recommendation": "rollback_to_baseline",
-  "reasons": ["candidate quality regressed beyond configured release thresholds"]
-}
+```
+Baseline:   avg 0.794 · pass rate 100% → SHIP
+Candidate:  avg 0.000 · pass rate   0% → BLOCK   (p=0.0, Welch t-test)
+AMD gate:   quality pass=true · p95 +47.1% → BLOCK  (latency threshold exceeded)
 ```
 
 ---
 
-## Ship / Block: What This Looks Like
+## Run in 30 Seconds
+
+```bash
+git clone https://github.com/kritibehl/FairEval-Suite
+cd FairEval-Suite
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+python3 -m evals.cli run --suite rag_basic --model mock --out-dir .
+python3 -m evals.cli run --suite rag_basic --model mock_regressed --out-dir .
+python3 -m evals.cli compare --baseline <run_id_1> --candidate <run_id_2> --reports-dir ./reports --out-dir .
+python3 -m evals.cli gate --compare-artifact compare/<artifact>.json --out-dir .
+# → SHIP or BLOCK decision, no GPU required
+```
+
+---
+
+## Why This Project Matters in Hiring Terms
+
+- Shows ML infrastructure thinking: evaluation pipeline, statistical regression gating, artifact-based outputs
+- Shows release engineering applied to AI: not "how does the model score" but "should it ship"
+- Shows hardware-aware gating: a model can preserve quality and still be blocked on serving regression
+- Relevant to: ML infra, evaluation infrastructure, AI/ML platform engineering, GenAI release engineering
+
+---
+
+## When to Use FairEval
+
+Use before a **model release**, **prompt change**, **provider switch**, or **serving-stack update** — any change that could silently shift model behavior, serving latency, or output quality.
+
+---
+
+## Proof, Up Front
+
+**Controlled mock regression** (deterministic, CI-portable):
+
+| Run | Avg Score | Pass Rate | Decision |
+|---|---|---|---|
+| Baseline (mock) | 0.794 | 100% | **SHIP** |
+| Candidate (regressed) | 0.000 | 0% | **BLOCK** |
+| Statistical confidence | Welch t-test p=0.0 · chi-squared p=0.0 | — | regression confirmed |
+
+**Real Gemini benchmark** (live API):
 
 | Model | Avg Score | Pass Rate | Decision |
 |---|---|---|---|
 | Gemini 2.0 Flash | 0.367 | 40% | **BLOCK** |
-| Baseline (mock) | 0.794 | 100% | **SHIP** |
-| Candidate (regressed) | 0.000 | 0% | **BLOCK** |
+
+**AMD MI300X hardware serving gate**:
+
+| Signal | Value |
+|---|---|
+| Quality pass | `true` |
+| p95 latency regression | +47.1% (threshold: 20%) |
+| Latency pass | `false` |
+| Release decision | **BLOCK** |
 
 ---
 
 ## The Problem
 
-AI systems degrade silently. A model update that scores slightly lower on average may not raise any alerts — but if it consistently fails instruction-following cases, breaks JSON output contracts, or changes safety posture, it affects a measurable fraction of production queries.
+AI systems degrade silently. A model update that scores slightly lower on average may not raise any alerts — but if it consistently fails instruction-following cases, breaks JSON output contracts, or shifts safety posture, it affects a measurable fraction of production queries.
 
-Example of what FairEval catches before deployment:
+Average score hides this. A model can hold a 0.79 average while silently collapsing on the specific case class that matters most.
+
+**Example of what FairEval catches:**
 
 | | Response |
 |---|---|
@@ -54,97 +94,64 @@ Example of what FairEval catches before deployment:
 
 ---
 
-## Controlled Regression: Demonstrated
+## What FairEval Does
 
-**Baseline pack:**
-```json
-{ "avg_score_confidence_interval": { "mean": 0.794 }, "pass_rate_confidence_interval": { "mean": 1.0 } }
-```
-
-**Candidate pack (regressed):**
-```json
-{ "avg_score_confidence_interval": { "mean": 0.0 }, "pass_rate_confidence_interval": { "mean": 0.0 } }
-```
-
-**Comparison artifact:**
-```json
-{
-  "score_change_test": { "test": "welch_t_test", "p_value": 0.0 },
-  "pass_fail_distribution_test": { "test": "chi_squared", "p_value": 0.0 },
-  "drift_significant": true
-}
-```
-
-A p-value of 0.0 on both tests means the regression is not noise — it is a structural change in model behavior.
-
----
-
-## Live Demo
-
-🔗 [FairEval on Hugging Face Spaces](https://huggingface.co/spaces/kriti0608/FairEval-Suite)
-
-Input baseline and candidate responses, configure regression thresholds, receive a gate decision with downloadable artifact JSON.
-
-![FairEval Hugging Face Demo](docs/images/hf-demo-full.png)
-
-![FairEval Gate Controls and Delta Summary](docs/images/hf-demo-gate.png)
+- **Runs** evaluation suites against baseline and candidate models
+- **Compares** at the case level — not just average score
+- **Detects** regressions that survive aggregate filtering: safety drift, format changes, JSON contract breaks
+- **Tests** statistical significance with Welch t-test and chi-squared, separating real regressions from noise
+- **Gates** releases with configurable thresholds: avg score drop, pass rate drop, any per-case regression
+- **Recommends** rollback when the regression is structural
+- **Extends** to hardware-aware gating — blocks on serving latency regression even when output quality holds
 
 ---
 
 ## Release Workflow
 
 ```
-Baseline run → Candidate run → Compare artifact → Gate decision → SHIP or BLOCK
+Baseline run
+    │
+    ▼
+Candidate run
+    │
+    ▼
+Compare artifact
+  ├── avg_score_delta
+  ├── pass_rate_delta
+  ├── per-case regressions
+  └── statistical significance (Welch t-test + chi-squared)
+    │
+    ▼
+Gate decision
+  ├── SHIP / BLOCK
+  ├── rollback recommendation
+  └── production impact estimate
 ```
 
 ---
 
-## Why Average Score Is Not Enough
-
-A model can maintain a 0.79 average score while silently collapsing on the specific case class that matters most. Safety refusal quality, factuality on low-frequency topics, and toxicity under adversarial prompts are invisible to average-score monitoring if their weight in the dataset is small. FairEval surfaces them by tracking pass/fail at the case level and flagging any case that regresses, regardless of aggregate effect.
-
----
-
-## Regression Case Library
-
-FairEval ships with a 10-case library covering the failure classes most commonly introduced by model updates:
-
-| Case | Failure type |
-|---|---|
-| `instruction_drop` | Model ignores explicit instruction |
-| `format_regression` | Output format changes unexpectedly |
-| `keyword_omission` | Required term missing from output |
-| `length_violation` | Response length constraint broken |
-| `json_contract_break` | JSON schema not honored |
-| `code_signature_break` | Function signature altered |
-| `safety_style_drift` | Tone or safety posture shifts |
-| `multi_constraint_failure` | Multiple simultaneous constraint violations |
-| `consistency_drop` | Same input → inconsistent outputs |
-| `context_regression` | Behavior degrades under longer context |
-
----
-
-## System Architecture
+## Architecture
 
 ```
 Dataset (cases.jsonl)
-        ↓
+        │
+        ▼
 Model adapter (Gemini / OpenAI / Anthropic / mock)
-        ↓
+        │
+        ▼
 Scorer (keyword fallback / RAG-overlap / classification)
-        ↓
+        │
+        ▼
 Evaluation run → runs/<run_id>.json
-        ↓
-Baseline vs candidate comparison → compare/<artifact>.json
-  · avg_score_delta
-  · pass_rate_delta
-  · per-case regressions
-  · statistical significance (Welch t-test + chi-squared)
-        ↓
+        │
+        ▼
+Comparison → compare/<artifact>.json
+        │
+        ▼
 Release gate → gate/<run>.gate.json
-  · SHIP / BLOCK decision
-  · rollback recommendation
-  · production impact (affected_query_pct, downstream_risk)
+  ├── SHIP / BLOCK decision
+  ├── rollback recommendation
+  └── production impact (affected_query_pct, downstream_risk)
 ```
 
 ---
@@ -160,6 +167,84 @@ thresholds:
 
 ---
 
+## Regression Case Library
+
+| Case | Failure type |
+|---|---|
+| `instruction_drop` | Model ignores explicit instruction |
+| `format_regression` | Output format changes unexpectedly |
+| `keyword_omission` | Required term missing from output |
+| `length_violation` | Response length constraint broken |
+| `json_contract_break` | JSON schema not honored |
+| `code_signature_break` | Function signature altered |
+| `safety_style_drift` | Tone or safety posture shifts |
+| `multi_constraint_failure` | Multiple simultaneous constraint violations |
+| `consistency_drop` | Same input → inconsistent outputs |
+| `context_regression` | Behavior degrades under longer context |
+
+New cases require no backend code changes — just a JSONL entry.
+
+---
+
+## Hardware-Aware Gate
+
+FairEval extends to hardware serving validation. A candidate can pass quality evaluation and still be blocked on serving behavior.
+
+```bash
+python -m evals.cli gate \
+  --compare-artifact artifacts/amd_mi300x/compare_serving_regression.json \
+  --out-dir artifacts/amd_mi300x \
+  --max-latency-p95-regression-pct 20 \
+  --max-throughput-drop-pct 15
+```
+
+This captures a real production scenario: outputs look fine, but the system serving them would violate SLOs under load.
+
+---
+
+## Quick Demo
+
+```bash
+git clone https://github.com/kritibehl/FairEval-Suite.git
+cd FairEval-Suite
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+
+python3 -m evals.cli run --suite rag_basic --model mock --out-dir .
+python3 -m evals.cli run --suite rag_basic --model mock_regressed --out-dir .
+python3 -m evals.cli compare \
+  --baseline <baseline_run_id> --candidate <candidate_run_id> \
+  --reports-dir ./reports --out-dir .
+python3 -m evals.cli gate --compare-artifact compare/<artifact>.json --out-dir .
+```
+
+Or use the live demo: 🔗 [huggingface.co/spaces/kriti0608/FairEval-Suite](https://huggingface.co/spaces/kriti0608/FairEval-Suite)
+
+---
+
+## Example Gate Output
+
+```json
+{
+  "decision": "block",
+  "rollback_recommendation": "rollback_to_baseline",
+  "reasons": ["candidate quality regressed beyond configured release thresholds"]
+}
+```
+
+**Comparison artifact (controlled regression):**
+```json
+{
+  "score_change_test": { "test": "welch_t_test", "p_value": 0.0 },
+  "pass_fail_distribution_test": { "test": "chi_squared", "p_value": 0.0 },
+  "drift_significant": true
+}
+```
+
+A p-value of 0.0 on both tests means this is a structural change in model behavior, not run-to-run variance.
+
+---
+
 ## Providers
 
 | Provider | Status |
@@ -171,37 +256,15 @@ thresholds:
 
 ---
 
-## Running
+## Full Setup
 
 ```bash
-git clone https://github.com/kritibehl/FairEval-Suite.git
-cd FairEval-Suite
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-
-# Step 1 — Baseline
-python3 -m evals.cli run --suite rag_basic --model mock --out-dir .
-
-# Step 2 — Candidate
-python3 -m evals.cli run --suite rag_basic --model mock_regressed --out-dir .
-
-# Step 3 — Compare
-python3 -m evals.cli compare \
-  --baseline <baseline_run_id> --candidate <candidate_run_id> \
-  --reports-dir ./reports --out-dir .
-
-# Step 4 — Gate
-python3 -m evals.cli gate \
-  --compare-artifact compare/<artifact>.json --out-dir .
-```
-
----
-
-## API
-
-```bash
+# API
 uvicorn api.main:app --reload
 # Docs: http://localhost:8000/docs
+
+# Tests
+pytest
 ```
 
 | Endpoint | Description |
@@ -220,42 +283,42 @@ uvicorn api.main:app --reload
 | `reports/` | Evaluation summaries |
 | `compare/` | Baseline vs candidate diffs |
 | `gate/` | Release gate decisions |
-| `packs/` | Repeated benchmark run collections |
-| `benchmark_public/` | Public benchmark packages |
-| `dashboard_exports/` | BI-ready CSVs (runs, compares, gates) |
+| `dashboard_exports/` | BI-ready CSVs for Power BI / Tableau |
 
 ---
 
-## Key Engineering Decisions
+## Why This Matters
 
-**Deterministic mock evaluation** — full pipeline runs in CI with no GPU, no external API calls, no flaky results.
+Scoring tells you how a model performs. Gating tells you whether to ship it. Those are different questions.
 
-**Artifact-based outputs** — every run, comparison, and gate decision is a debuggable file, not ephemeral state.
+A score is a static measurement. A gate is a decision with a threshold, a statistical test, and a recommendation. FairEval treats model changes the same way production engineering treats code changes: measurable, comparable, and blockable before they reach users.
 
-**Statistical confidence layer** — Welch t-test and chi-squared separate real regressions from run-to-run variance.
-
-**Dataset-driven suites** — new evaluation cases require no code changes, just a JSONL entry.
-
-**BI-ready exports** — `runs.csv`, `compares.csv`, `gates.csv` for Power BI, Tableau, or QuickSight.
+The deterministic mock model means the full pipeline — including the gate decision — runs in CI with no GPU, no external API calls, and no flaky results.
 
 ---
 
-## Why This Matters in Production
+## Limitations
 
-FairEval is a release-review system for AI changes — not a benchmark tool. It makes model changes measurable, comparable, and blockable before they reach production. That is directly relevant for ML infra, evaluation platform, and release-safety engineering roles. Scoring tells you how a model performs. Gating tells you whether to ship it.
-
----
-
-## Scope and Limitations
-
-- Evaluation is simulation-based (mock model) by default; live evaluation requires API keys or local transformer models
-- DistilBERT-backed live evaluation supports classification suites; RAG and generation suites use mock inference
+- Evaluation is simulation-based by default; live evaluation requires API keys or local transformer models
 - Gate thresholds are static configuration, not adaptive baselines
 - Designed for release-time gating, not continuous production monitoring
+- Case library covers 10 failure types; coverage depends on which cases are included
 
 ---
 
-## Signals For
+## Interview Notes
+
+**Design decision:** Statistical significance layer (Welch t-test + chi-squared). Without this, a gate would block on noise. The p-value of 0.0 on both tests for the regressed candidate means the signal is unambiguous — but the framework handles the ambiguous case too.
+
+**Hard problem:** Deterministic evaluation in CI. Any non-determinism in the scoring pipeline produces flaky gate decisions. The mock model solves this for CI; the tradeoff is that mock results don't reflect real model behavior. The two-path design (mock for CI, live for release) keeps CI reliable without losing signal quality on actual releases.
+
+**Tradeoff:** Static thresholds vs adaptive baselines. Static thresholds are predictable and auditable. Adaptive baselines are more sensitive to real drift but harder to reason about. The current design prioritizes predictability.
+
+**What I'd build next:** Continuous production monitoring — running the comparison pipeline on production traffic samples, catching gradual degradation post-deployment rather than only at release time.
+
+---
+
+## Relevant To
 
 `ML Infra` · `AI/ML Platform Engineering` · `Evaluation Infrastructure` · `GenAI Product Engineering` · `Release Engineering`
 
@@ -267,73 +330,9 @@ Python · FastAPI · Typer · SQLite · SciPy · HuggingFace Transformers · PyT
 
 ---
 
-## Tests
-
-```bash
-pytest
-```
-
----
-
 ## Related
 
 - [Faultline](https://github.com/kritibehl/faultline) — exactly-once correctness under distributed failure
 - [KubePulse](https://github.com/kritibehl/KubePulse) — resilience validation for Kubernetes services
 - [DetTrace](https://github.com/kritibehl/dettrace) — incident replay and divergence analysis
 - [AutoOps-Insight](https://github.com/kritibehl/AutoOps-Insight) — operator-facing CI failure intelligence
-
----
-
-## License
-
-MIT
-
-## Hardware-Aware Release Gate
-
-FairEval supports hardware-aware release gating, where a candidate can preserve model quality yet still be blocked if it regresses serving behavior on target hardware.
-
-Example AMD MI300X-style gate result:
-
-- `quality_pass = true`
-- `latency_pass = false`
-- `release_decision = block`
-
-This captures a production scenario where output quality remains acceptable, but p95 serving latency regresses enough to make the candidate unsafe to ship.
-
-Example artifact:
-
-`artifacts/amd_mi300x/gate/compare_serving_regression.gate.json`
-
-Run it from the CLI:
-
-```bash
-python -m evals.cli gate \
-  --compare-artifact artifacts/amd_mi300x/compare_serving_regression.json \
-  --out-dir artifacts/amd_mi300x \
-  --max-latency-p95-regression-pct 20 \
-  --max-throughput-drop-pct 15
-
-## Hardware-Aware Eval Gate
-
-FairEval supports hardware-aware release gating, where a model candidate can preserve output quality yet still be blocked if it regresses serving behavior on target hardware.
-
-Example AMD MI300X-style result:
-
-- `summary.quality_pass = true`
-- `serving_gate.latency_pass = false`
-- `release_decision = block`
-
-In the included example, the candidate preserved quality parity but showed a 47.1014% p95 latency regression, so the release was blocked.
-
-Generate compare artifact:
-
-```bash
-python scripts/amd/build_hardware_compare.py
-Apply gate:
-
-python -m evals.cli gate \
-  --compare-artifact artifacts/amd_mi300x/compare_serving_regression.json \
-  --out-dir artifacts/amd_mi300x \
-  --max-latency-p95-regression-pct 20 \
-  --max-throughput-drop-pct 15
-
