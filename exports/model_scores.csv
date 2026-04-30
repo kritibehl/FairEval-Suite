@@ -1,0 +1,118 @@
+run_id,model_name,case_id,score,passed,scorer,model_output
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-001,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-002,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-003,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-004,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-005,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-006,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-007,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-008,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-009,0.0,False,,
+20260412T171732.034140Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-010,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-001,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-002,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-003,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-004,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-005,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-006,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-007,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-008,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-009,0.0,False,,
+20260412T183717.101345Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-010,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-001,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-002,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-003,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-004,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-005,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-006,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-007,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-008,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-009,0.0,False,,
+20260412T185512.139379Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-010,0.0,False,,
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-001,1.0,True,rag_overlap_v1,"Retrieval-augmented generation is a technique that enhances large language models by first retrieving relevant information from external knowledge bases and then using that information to generate more accurate, current, and contextually rich responses."
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-002,0.6667,True,rag_overlap_v1,"Here are three reasons why regression gating matters for LLM releases:
+
+*   **Prevents Degradation of Core Capabilities:** New releases, fine-tunes, or architectural changes can inadvertently degrade critical functions like factual accuracy, coherence, instruction following, or safety guardrails, directly impacting the model's fundamental utility. Gating ensures these don't ship.
+*   **Maintains User Trust and Experience:** Releasing an LLM that performs worse than its predecessor erodes user confidence and adoption. Regression gating guarantees a consistent or improved user experience by preventing the deployment of models with noticeable performance drops.
+*   **Reduces Remediation Costs and Resource Drain:** Discovering and fixing regressions post-release is significantly more expensive and time-consuming, requiring emergency patches, rollbacks, and frantic debugging. Gating catches these issues proactively, saving operational overhead and development cycles."
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-003,1.0,True,rag_overlap_v1,"```python
+def add(num1: float, num2: float) -> float:
+  """"""
+  Calculates the sum of two numbers.
+
+  Args:
+    num1: The first number (can be an integer or a float).
+    num2: The second number (can be an integer or a float).
+
+  Returns:
+    The sum of num1 and num2.
+  """"""
+  return num1 + num2
+
+# --- Example Usage ---
+
+# Test with integers
+result_int = add(5, 3)
+print(f""The sum of 5 and 3 is: {result_int}"")  # Output: The sum of 5 and 3 is: 8
+
+# Test with floats
+result_float = add(10.5, 2.3)
+print(f""The sum of 10.5 and 2.3 is: {result_float}"") # Output: The sum of 10.5 and 2.3 is: 12.8
+
+# Test with mixed types
+result_mixed = add(7, 4.1)
+print(f""The sum of 7 and 4.1 is: {result_mixed}"")   # Output: The sum of 7 and 4.1 is: 11.1
+
+# Test with negative numbers
+result_negative = add(-5, 10)
+print(f""The sum of -5 and 10 is: {result_negative}"") # Output: The sum of -5 and 10 is: 5
+
+result_both_negative = add(-2, -3.5)
+print(f""The sum of -2 and -3.5 is: {result_both_negative}"") # Output: The sum of -2 and -3.5 is: -5.5
+```"
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-004,0.0,False,rag_overlap_v1,"Overfitting occurs when a learned explanation or pattern perfectly fits past observations, but fails to accurately account for new, unseen situations because it incorporated specific noise rather than general principles."
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-005,1.0,True,rag_overlap_v1,"```json
+{
+  ""risk"": [
+    ""Introducing critical bugs, regressions, or performance degradation into the target environment (e.g., production, downstream systems)."",
+    ""Causing system instability, crashes, or data corruption that could lead to service outages or data loss."",
+    ""Compromising security by exposing vulnerabilities or failing to meet compliance standards."",
+    ""Leading to a poor user experience, loss of trust, and potential customer churn."",
+    ""Increasing operational costs due to incident response, urgent hotfixes, and complex rollbacks."",
+    ""Damaging organizational reputation and credibility among users, stakeholders, or clients.""
+  ],
+  ""action"": [
+    ""Immediately halt any further progression (e.g., deployment, release, promotion) of the degraded candidate."",
+    ""Isolate the degraded candidate to prevent its issues from affecting other components or environments."",
+    ""Initiate a thorough root cause analysis to identify and understand the source of the degradation."",
+    ""Prioritize the remediation of all identified issues, ensuring fixes are fully tested and validated."",
+    ""Only allow the candidate to proceed once all degradation criteria have been fully resolved and it successfully meets all quality gates, performance benchmarks, and security requirements."",
+    ""Document the incident, the degradation criteria, and the resolution steps for future reference and process improvement.""
+  ]
+}
+```"
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-006,0.0,False,rag_overlap_v1,It ensures specific criteria are met before software can progress to the next deployment phase.
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-007,0.0,False,,
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-008,0.0,False,,
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-009,0.0,False,,
+20260412T190324.891307Z_benchmark_instruction_following_gemini_real_3067befa3a60,gemini_real,if-010,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-001,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-002,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-003,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-004,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-005,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-006,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-007,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-008,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-009,0.0,False,,
+20260415T203612.588432Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-010,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-001,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-002,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-003,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-004,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-005,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-006,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-007,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-008,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-009,0.0,False,,
+20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044,openai_real,if-010,0.0,False,,
