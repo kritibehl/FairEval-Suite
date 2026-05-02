@@ -78,7 +78,7 @@ Use before a **model release**, **prompt change**, **provider switch**, or **ser
 
 ## The Problem
 
-AI systems degrade silently. A model update that scores slightly lower on average may not raise any alerts — but if it consistently fails instruction-following cases, breaks JSON output contracts, or shifts safety posture, it affects a measurable fraction of production queries.
+AI systems degrade silently. A model update that scores slightly lower on average may not raise any alerts — but if it consistently fails instruction-following cases, breaks JSON output contracts or shifts safety posture, it affects a measurable fraction of production queries.
 
 Average score hides this. A model can hold a 0.79 average while silently collapsing on the specific case class that matters most.
 
@@ -198,7 +198,7 @@ python -m evals.cli gate \
   --max-throughput-drop-pct 15
 ```
 
-This captures a real production scenario: outputs look fine, but the system serving them would violate SLOs under load.
+This captures a real production scenario: outputs look fine but the system serving them would violate SLOs under load.
 
 ---
 
