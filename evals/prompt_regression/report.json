@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "num_cases": 3,
+    "passed": 1,
+    "failed": 2,
+    "pass_rate": 0.3333
+  },
+  "results": [
+    {
+      "case_id": "pr-001",
+      "score": 1.0,
+      "passed": true,
+      "failed_checks": [],
+      "output": "Explain regression gating in one sentence and include the word release."
+    },
+    {
+      "case_id": "pr-002",
+      "score": 1.0,
+      "passed": false,
+      "failed_checks": [
+        "bullet_count_check_required"
+      ],
+      "output": "Return exactly three bullet points explaining why model evals matter."
+    },
+    {
+      "case_id": "pr-003",
+      "score": 1.0,
+      "passed": false,
+      "failed_checks": [
+        "json_contract_check_required"
+      ],
+      "output": "Return valid JSON with keys decision and reason."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "num_examples": 3,
+  "accuracy": 0.3333,
+  "note": "Tiny PyTorch evaluation demo on synthetic issue categories; not production ML.",
+  "rows": [
+    {
+      "tokens": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "expected": "instruction_failure",
+      "predicted": "instruction_failure"
+    },
+    {
+      "tokens": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "expected": "format_regression",
+      "predicted": "instruction_failure"
+    },
+    {
+      "tokens": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "expected": "quality_regression",
+      "predicted": "instruction_failure"
+    }
+  ]
+}

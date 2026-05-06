@@ -1,0 +1,8 @@
+suite: prompt_regression
+checks:
+  - expected keyword coverage
+  - instruction compliance
+  - format compliance
+  - JSON contract compliance
+  - bullet count compliance
+  - sentence count compliance

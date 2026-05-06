@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pr-001",
+    "prompt": "Explain regression gating in one sentence and include the word release.",
+    "expected_keywords": ["regression", "release"],
+    "max_sentences": 1
+  },
+  {
+    "id": "pr-002",
+    "prompt": "Return exactly three bullet points explaining why model evals matter.",
+    "expected_keywords": ["model", "eval"],
+    "required_bullets": 3
+  },
+  {
+    "id": "pr-003",
+    "prompt": "Return valid JSON with keys decision and reason.",
+    "expected_keywords": ["decision", "reason"],
+    "requires_json": true
+  }
+]
