@@ -1,0 +1,11 @@
+{
+  "run_id": "20260415T203654.860666Z_benchmark_instruction_following_openai_real_b75a5c833044",
+  "parent_run_id": null,
+  "model_name": "openai_real",
+  "model_version": "unknown",
+  "prompt_version": "prompt_v1",
+  "dataset_hash": "49c0f83a8e31be52ffd24307fecc1352d3b9d41a44a5be80d7dd5106e2f048ed",
+  "evaluator_version": "rag_overlap_v1",
+  "threshold_version": "release_gate_v1",
+  "timestamp": "2026-05-08T21:19:39.629003+00:00"
+}
