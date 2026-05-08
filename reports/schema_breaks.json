@@ -1,0 +1,55 @@
+{
+  "run_id": "20260508T212003.905573Z_benchmark_instruction_following_gemini_real_3067befa3a60",
+  "schema_breaks": [
+    {
+      "case_id": "if-001",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-002",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-003",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-004",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-005",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-006",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-007",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-008",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-009",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    },
+    {
+      "case_id": "if-010",
+      "reason": "failed_required_output_contract",
+      "score": 0.0
+    }
+  ]
+}

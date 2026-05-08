@@ -1,0 +1,11 @@
+case_id,score,passed,failure_type
+if-001,0.0,False,constraint_or_quality_failure
+if-002,0.0,False,constraint_or_quality_failure
+if-003,0.0,False,constraint_or_quality_failure
+if-004,0.0,False,constraint_or_quality_failure
+if-005,0.0,False,constraint_or_quality_failure
+if-006,0.0,False,constraint_or_quality_failure
+if-007,0.0,False,constraint_or_quality_failure
+if-008,0.0,False,constraint_or_quality_failure
+if-009,0.0,False,constraint_or_quality_failure
+if-010,0.0,False,constraint_or_quality_failure
