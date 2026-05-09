@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FairEval Gate Artifact",
+  "type": "object",
+  "required": ["decision", "release_decision", "summary", "production_impact", "compare_artifact_path"],
+  "properties": {
+    "decision": { "type": "string", "enum": ["pass", "fail", "block", "review"] },
+    "release_decision": { "type": "string", "enum": ["ship", "block", "review"] },
+    "reason": { "type": ["string", "null"] },
+    "reasons": { "type": "array", "items": { "type": "string" } },
+    "summary": {
+      "type": "object",
+      "required": ["avg_score_delta", "pass_rate_delta", "regressed_case_count", "total_case_count"]
+    },
+    "production_impact": { "type": "object" },
+    "compare_artifact_path": { "type": "string" }
+  }
+}

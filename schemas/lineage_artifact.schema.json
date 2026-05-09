@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FairEval Run Lineage Artifact",
+  "type": "object",
+  "required": [
+    "run_id",
+    "parent_run_id",
+    "model_name",
+    "model_version",
+    "prompt_version",
+    "dataset_hash",
+    "evaluator_version",
+    "threshold_version",
+    "timestamp"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "parent_run_id": { "type": ["string", "null"] },
+    "model_name": { "type": "string" },
+    "model_version": { "type": "string" },
+    "prompt_version": { "type": "string" },
+    "dataset_hash": { "type": "string" },
+    "evaluator_version": { "type": "string" },
+    "threshold_version": { "type": "string" },
+    "timestamp": { "type": "string" }
+  }
+}

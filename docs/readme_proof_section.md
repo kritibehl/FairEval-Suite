@@ -17,6 +17,8 @@ Async eval workers with queue, run status, and failed-job tracking
 Regression reports for schema breaks, failed constraints, and prompt regressions
 Dashboard-ready CSV, JSON, Parquet, and screenshot exports
 CI-ready release-gate workflow
+Prometheus-style metrics endpoint
+Kubernetes deployment manifest
 Why score-only evals fail
 
-Average scores can hide output-contract breaks, instruction drops, formatting drift, and high-risk subset regressions. FairEval treats those as release risks, not cosmetic failures.
+Average scores can hide output-contract breaks, instruction drops, formatting drift, instability across repeated runs, and high-risk subset regressions. FairEval treats those as release risks, not cosmetic failures.

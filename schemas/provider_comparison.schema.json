@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FairEval Provider Comparison",
+  "type": "object",
+  "required": ["models", "latest_compare_artifact", "latest_gate_artifact"],
+  "properties": {
+    "models": { "type": "object" },
+    "latest_compare_artifact": { "type": ["string", "null"] },
+    "latest_gate_artifact": { "type": ["string", "null"] }
+  }
+}
