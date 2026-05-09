@@ -2,15 +2,16 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+COPY pyproject.toml README.md ./
+COPY evals ./evals
+COPY api ./api
+COPY benchmark_public ./benchmark_public
+COPY exports ./exports
+COPY reports ./reports
 
-COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r /app/requirements.txt
+    pip install --no-cache-dir -e . fastapi uvicorn
 
-COPY . /app
+EXPOSE 8010
 
-EXPOSE 8000
-
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8010"]

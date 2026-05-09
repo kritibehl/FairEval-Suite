@@ -1,0 +1,5 @@
+{"event_type": "eval_started", "run_id": "demo_stream_run", "model": "gemini_real"}
+{"event_type": "case_scored", "case_id": "if-001", "score": 1.0, "passed": true}
+{"event_type": "case_scored", "case_id": "if-002", "score": 0.67, "passed": true}
+{"event_type": "case_scored", "case_id": "if-003", "score": 0.0, "passed": false}
+{"event_type": "gate_decision", "decision": "review_before_release", "reason": "failed_cases_detected"}

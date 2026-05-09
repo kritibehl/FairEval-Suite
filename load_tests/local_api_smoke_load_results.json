@@ -1,0 +1,7 @@
+{
+  "requests": 30,
+  "errors": 0,
+  "avg_latency_ms": 2.15,
+  "max_latency_ms": 14.2,
+  "note": "Local smoke-load test only; not production-scale performance validation."
+}

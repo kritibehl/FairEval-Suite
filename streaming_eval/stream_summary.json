@@ -1,0 +1,5 @@
+{
+  "event_count": 5,
+  "output": "streaming_eval/sample_stream_events.jsonl",
+  "note": "Streaming eval simulation only; not a production streaming inference system."
+}
