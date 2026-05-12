@@ -1,0 +1,29 @@
+{
+  "service": "FairEval Evaluation API",
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/evaluations",
+      "purpose": "Submit an evaluation job",
+      "sample_request": {
+        "suite": "benchmark_instruction_following",
+        "model": "gemini_real",
+        "prompt_version": "prompt_v1"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/runs/compare",
+      "purpose": "Compare two benchmark runs",
+      "sample_request": {
+        "baseline_run_id": "run_a",
+        "candidate_run_id": "run_b"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/regressions/summary",
+      "purpose": "Retrieve regression summary availability"
+    }
+  ]
+}

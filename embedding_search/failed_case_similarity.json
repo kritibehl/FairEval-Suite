@@ -1,0 +1,24 @@
+{
+  "query": "output missed required JSON reason field",
+  "top_matches": [
+    {
+      "case_id": "case_01_instruction_drop",
+      "failure_type": "instruction_drop",
+      "similarity": 0.8454,
+      "text": "Model ignored a required instruction and omitted a requested field."
+    },
+    {
+      "case_id": "case_02_schema_break",
+      "failure_type": "schema_break",
+      "similarity": 0.8372,
+      "text": "Model returned malformed JSON and missed required schema fields."
+    },
+    {
+      "case_id": "case_03_variance_regression",
+      "failure_type": "consistency_regression",
+      "similarity": 0.792,
+      "text": "Model output changed across repeated runs with the same prompt."
+    }
+  ],
+  "note": "Lightweight embedding similarity demo for failed-case retrieval; not a production vector database."
+}

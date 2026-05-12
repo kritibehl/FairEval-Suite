@@ -1,0 +1,22 @@
+[
+  {
+    "annotation_id": "ann-001",
+    "case_id": "if-003",
+    "model_name": "gemini_real",
+    "failure_type": "instruction_drop",
+    "current_label": "fail",
+    "review_status": "pending_second_review",
+    "priority": "high",
+    "reason": "candidate output missed required instruction constraint"
+  },
+  {
+    "annotation_id": "ann-002",
+    "case_id": "pr-003",
+    "model_name": "prompt_regression_suite",
+    "failure_type": "json_contract_break",
+    "current_label": "fail",
+    "review_status": "pending_override_decision",
+    "priority": "critical",
+    "reason": "output requires explicit decision/reason JSON contract"
+  }
+]

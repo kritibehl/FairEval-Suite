@@ -1,0 +1,10 @@
+{
+  "override_id": "override-001",
+  "case_id": "pr-003",
+  "original_label": "pass",
+  "corrected_label": "fail",
+  "approved_by": "review_policy_demo",
+  "reason": "required reason field missing from structured output",
+  "downstream_impact": "schema contract failure can break release automation",
+  "release_recommendation": "block_until_resolved"
+}
