@@ -1,0 +1,41 @@
+{
+  "worker": "async_eval_worker",
+  "jobs_received": 2,
+  "jobs_succeeded": 2,
+  "jobs_failed": 0,
+  "retry_jobs": 1,
+  "processed_jobs": [
+    {
+      "job_id": "eval-job-001",
+      "suite": "benchmark_instruction_following",
+      "model": "gemini_real",
+      "status": "succeeded",
+      "attempt": 0,
+      "max_retries": 2,
+      "started_at": "2026-05-12T05:28:17.821426+00:00",
+      "result": {
+        "regression_summary_exported": true,
+        "failed_cases": 0,
+        "release_recommendation": "ship"
+      },
+      "finished_at": "2026-05-12T05:28:17.872586+00:00"
+    },
+    {
+      "job_id": "eval-job-002",
+      "suite": "prompt_regression",
+      "model": "prompt_regression_suite",
+      "status": "succeeded_after_retry",
+      "attempt": 2,
+      "max_retries": 2,
+      "last_error": "json_contract_check_required",
+      "started_at": "2026-05-12T05:28:17.872738+00:00",
+      "result": {
+        "regression_summary_exported": true,
+        "failed_cases": 1,
+        "release_recommendation": "review_before_release"
+      },
+      "finished_at": "2026-05-12T05:28:17.923492+00:00"
+    }
+  ],
+  "note": "Demo async evaluation worker queue for FairEval; not a distributed job scheduler."
+}
