@@ -1,0 +1,30 @@
+{
+  "providers": [
+    {
+      "name": "GPT-4o-mini",
+      "adapter": "openai_real",
+      "status": "wired",
+      "note": "Requires valid OpenAI quota for live run"
+    },
+    {
+      "name": "Gemini Flash",
+      "adapter": "gemini_real",
+      "status": "working",
+      "note": "Used for real benchmark artifacts"
+    },
+    {
+      "name": "Claude Haiku",
+      "adapter": "anthropic_real",
+      "status": "wired",
+      "note": "Requires Anthropic credits/model access for live run"
+    }
+  ],
+  "comparison_fields": [
+    "avg_score",
+    "pass_rate",
+    "failed_case_count",
+    "score_variance",
+    "pass_rate_variance",
+    "gate_decision"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "dataset": {
+    "name": "benchmark_instruction_following",
+    "version": "2026.04",
+    "hash_strategy": "sha256",
+    "source_path": "datasets/benchmark_instruction_following/cases.jsonl"
+  },
+  "prompts": {
+    "prompt_version": "prompt_v1",
+    "change_policy": "increment version when instructions, expected constraints, or scoring assumptions change"
+  },
+  "evaluator": {
+    "evaluator_version": "rag_overlap_v1",
+    "threshold_version": "release_gate_v1",
+    "statistical_checks": ["repeated_run_variance", "welch_t_test", "chi_squared"]
+  },
+  "release_policy": {
+    "decision_values": ["ship", "review", "block"],
+    "lineage_required": true
+  }
+}

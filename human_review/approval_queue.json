@@ -1,0 +1,18 @@
+[
+  {
+    "review_id": "rev-001",
+    "case_id": "if-003",
+    "model_name": "gemini_real",
+    "failure_type": "schema_or_constraint_failure",
+    "status": "pending_review",
+    "recommended_action": "review_before_release"
+  },
+  {
+    "review_id": "rev-002",
+    "case_id": "pr-003",
+    "model_name": "prompt_regression_suite",
+    "failure_type": "json_contract_check_required",
+    "status": "pending_review",
+    "recommended_action": "block_until_resolved"
+  }
+]
