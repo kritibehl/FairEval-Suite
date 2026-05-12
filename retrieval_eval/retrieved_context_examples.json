@@ -1,0 +1,25 @@
+[
+  {
+    "case_id": "rag-eval-001",
+    "question": "Why did the release gate block the candidate?",
+    "retrieved_context": [
+      "Gate artifacts block releases when schema breaks or failed constraints appear.",
+      "Failed constraints include missing required fields and format violations."
+    ],
+    "answer_without_context": "The model may have performed worse.",
+    "answer_with_context": "The release gate blocked the candidate because failed constraints or schema-sensitive output violations were detected.",
+    "quality_delta": "more_specific_with_context",
+    "hallucination_risk_reduced": true
+  },
+  {
+    "case_id": "rag-eval-002",
+    "question": "Why does evaluator drift matter?",
+    "retrieved_context": [
+      "Evaluator drift compares prompt, threshold, evaluator-version, dataset-hash, and failed-case changes across benchmark runs."
+    ],
+    "answer_without_context": "It affects evaluation.",
+    "answer_with_context": "Evaluator drift matters because score changes may come from prompt, threshold, evaluator, or dataset changes rather than the model itself.",
+    "quality_delta": "more_grounded_with_context",
+    "hallucination_risk_reduced": true
+  }
+]

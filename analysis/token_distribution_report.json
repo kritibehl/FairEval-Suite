@@ -1,0 +1,45 @@
+{
+  "num_prompts": 4,
+  "min_tokens": 6,
+  "max_tokens": 8,
+  "avg_tokens": 7.0,
+  "prompt_token_counts": [
+    {
+      "prompt": "Return JSON with decision and reason.",
+      "token_count": 6
+    },
+    {
+      "prompt": "Explain why score-only evals can miss regressions.",
+      "token_count": 7
+    },
+    {
+      "prompt": "Give exactly three bullets about model evaluation.",
+      "token_count": 7
+    },
+    {
+      "prompt": "Why does evaluator drift matter for model releases?",
+      "token_count": 8
+    }
+  ],
+  "embedding_distance_examples": [
+    {
+      "baseline_prompt": "Return JSON with decision and reason.",
+      "comparison_prompt": "Explain why score-only evals can miss regressions.",
+      "cosine_similarity": 0.9242,
+      "embedding_distance": 0.0758
+    },
+    {
+      "baseline_prompt": "Return JSON with decision and reason.",
+      "comparison_prompt": "Give exactly three bullets about model evaluation.",
+      "cosine_similarity": 0.8243,
+      "embedding_distance": 0.1757
+    },
+    {
+      "baseline_prompt": "Return JSON with decision and reason.",
+      "comparison_prompt": "Why does evaluator drift matter for model releases?",
+      "cosine_similarity": 0.8629,
+      "embedding_distance": 0.1371
+    }
+  ],
+  "note": "Simple tokenizer and embedding drift analysis; not production tokenizer instrumentation."
+}

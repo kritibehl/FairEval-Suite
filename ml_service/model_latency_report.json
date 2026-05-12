@@ -1,0 +1,25 @@
+{
+  "num_requests": 2,
+  "avg_latency_ms": 0.0004,
+  "max_latency_ms": 0.0005,
+  "avg_token_count_estimate": 15.5,
+  "results": [
+    {
+      "request_id": "req-001",
+      "prompt": "Return JSON with decision and reason.",
+      "response": "{\"decision\": \"review\", \"reason\": \"schema-sensitive output requires validation\"}",
+      "batch_size": 1,
+      "token_count_estimate": 13,
+      "latency_ms": 0.0005
+    },
+    {
+      "request_id": "req-002",
+      "prompt": "Explain why score-only evals can miss regressions.",
+      "response": "Score-only evals can hide failed constraints, schema breaks, and subset regressions.",
+      "batch_size": 1,
+      "token_count_estimate": 18,
+      "latency_ms": 0.0003
+    }
+  ],
+  "note": "Tiny local inference workflow demo; not production or distributed model serving."
+}
