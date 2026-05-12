@@ -1,0 +1,19 @@
+[
+  {
+    "job_id": "eval-job-001",
+    "suite": "benchmark_instruction_following",
+    "model": "gemini_real",
+    "status": "queued",
+    "attempt": 0,
+    "max_retries": 2
+  },
+  {
+    "job_id": "eval-job-002",
+    "suite": "prompt_regression",
+    "model": "prompt_regression_suite",
+    "status": "retry_pending",
+    "attempt": 1,
+    "max_retries": 2,
+    "last_error": "json_contract_check_required"
+  }
+]
