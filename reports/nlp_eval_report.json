@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "num_examples": 3,
+    "accuracy": 1.0,
+    "label_distribution": {
+      "schema_break": 1,
+      "instruction_drop": 1,
+      "consistency_regression": 1
+    },
+    "note": "Simple NLP classification/evaluation demo for model-output analysis; not production ML training."
+  },
+  "results": [
+    {
+      "text": "The model response omitted the required JSON field.",
+      "expected": "schema_break",
+      "predicted": "schema_break",
+      "passed": true
+    },
+    {
+      "text": "The answer is fluent but ignores the user's formatting instruction.",
+      "expected": "instruction_drop",
+      "predicted": "instruction_drop",
+      "passed": true
+    },
+    {
+      "text": "The output changed across repeated runs with the same prompt.",
+      "expected": "consistency_regression",
+      "predicted": "consistency_regression",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "num_examples": 3,
+  "labels": [
+    "consistency_regression",
+    "instruction_drop",
+    "schema_break"
+  ],
+  "accuracy": 1.0,
+  "macro_precision": 1.0,
+  "macro_recall": 1.0,
+  "macro_f1": 1.0,
+  "per_label": {
+    "consistency_regression": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1
+    },
+    "instruction_drop": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1
+    },
+    "schema_break": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 1
+    }
+  },
+  "confusion_matrix": {
+    "consistency_regression": {
+      "consistency_regression": 1,
+      "instruction_drop": 0,
+      "schema_break": 0
+    },
+    "instruction_drop": {
+      "consistency_regression": 0,
+      "instruction_drop": 1,
+      "schema_break": 0
+    },
+    "schema_break": {
+      "consistency_regression": 0,
+      "instruction_drop": 0,
+      "schema_break": 1
+    }
+  },
+  "note": "Simple NLP classification metrics for evaluation workflow demonstration; not production ML benchmarking."
+}
