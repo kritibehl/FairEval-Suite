@@ -1,0 +1,38 @@
+{
+  "summary": {
+    "num_cases": 3,
+    "regressions_detected": 2,
+    "avg_embedding_similarity": 0.8589,
+    "note": "Mini PyTorch evaluation demo only; not a production ML training system."
+  },
+  "rows": [
+    {
+      "prompt": "Return JSON with decision and reason.",
+      "baseline_output": "{\"decision\": \"ship\", \"reason\": \"no regression\"}",
+      "candidate_output": "{\"decision\": \"ship\"}",
+      "embedding_similarity": 0.9,
+      "failed_constraints": [
+        "missing_reason_field"
+      ],
+      "regression_detected": true
+    },
+    {
+      "prompt": "Explain release gating in one sentence.",
+      "baseline_output": "Release gating blocks unsafe model updates before deployment.",
+      "candidate_output": "Release gating helps evaluate models.",
+      "embedding_similarity": 0.8784,
+      "failed_constraints": [],
+      "regression_detected": false
+    },
+    {
+      "prompt": "Give exactly three bullets about model evaluation.",
+      "baseline_output": "- evaluate behavior\n- compare outputs\n- gate releases",
+      "candidate_output": "Model evals are useful.",
+      "embedding_similarity": 0.7984,
+      "failed_constraints": [
+        "bullet_count_regression"
+      ],
+      "regression_detected": true
+    }
+  ]
+}
