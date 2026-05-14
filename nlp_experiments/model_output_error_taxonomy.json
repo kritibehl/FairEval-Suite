@@ -1,0 +1,41 @@
+{
+  "taxonomy_name": "transformer_output_error_taxonomy",
+  "version": "2026.05",
+  "error_types": [
+    {
+      "error_type": "instruction_missed",
+      "definition": "The output ignores or partially satisfies a required instruction.",
+      "example": "Prompt asks for exactly two bullets, but model returns a paragraph."
+    },
+    {
+      "error_type": "entity_omitted",
+      "definition": "The output omits a required entity, field, or named item.",
+      "example": "Prompt requires decision and reason fields, but reason is missing."
+    },
+    {
+      "error_type": "hallucinated_detail",
+      "definition": "The output adds unsupported facts not present in the input or retrieved context.",
+      "example": "Model claims the release failed due to latency when context only mentions schema failure."
+    },
+    {
+      "error_type": "unsupported_answer",
+      "definition": "The output gives an answer that cannot be justified from the provided context.",
+      "example": "Model recommends shipping even though the gate artifact indicates review-before-release."
+    },
+    {
+      "error_type": "groundedness_gap",
+      "definition": "The output is plausible but insufficiently tied to the provided context.",
+      "example": "Model says the release was risky but does not cite missing JSON fields from context."
+    },
+    {
+      "error_type": "formatting_violation",
+      "definition": "The output violates required output format or structure.",
+      "example": "Prompt asks for valid JSON, but model returns prose."
+    },
+    {
+      "error_type": "verbosity_mismatch",
+      "definition": "The output is overly verbose or insufficiently concise relative to task constraints.",
+      "example": "Smart-reply task asks for a short response, but model returns a long explanation."
+    }
+  ]
+}

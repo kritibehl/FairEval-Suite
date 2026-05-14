@@ -1,0 +1,49 @@
+{
+  "pack_name": "text_generation_eval_pack",
+  "version": "2026.05",
+  "purpose": "Small NLP/GenAI evaluation pack for text generation, instruction-following, groundedness, and formatting regression review.",
+  "tasks": [
+    {
+      "task_id": "tg-001",
+      "task_type": "rewrite_for_clarity",
+      "input": "The release was blocked because stuff broke in the output format and it might impact users.",
+      "expected_behavior": "Rewrite clearly while preserving meaning and avoiding unsupported details.",
+      "required_constraints": ["preserve_meaning", "concise", "no_new_facts"]
+    },
+    {
+      "task_id": "tg-002",
+      "task_type": "summarization",
+      "input": "A candidate model passed average score checks but failed JSON field requirements in two user-facing workflows. The release gate recommended review before release.",
+      "expected_behavior": "Summarize the key release risk and gate outcome.",
+      "required_constraints": ["mention_failed_json_fields", "mention_review_before_release", "concise"]
+    },
+    {
+      "task_id": "tg-003",
+      "task_type": "smart_reply_style_generation",
+      "input": "Thanks for reporting the schema issue. We are reviewing the failed case and will update the release decision.",
+      "expected_behavior": "Generate a short, polite reply acknowledging the update.",
+      "required_constraints": ["short", "polite", "no_unverified_commitment"]
+    },
+    {
+      "task_id": "tg-004",
+      "task_type": "instruction_following",
+      "input": "Return exactly two bullet points explaining why evaluator drift matters.",
+      "expected_behavior": "Return exactly two bullet points and explain prompt/evaluator/threshold drift.",
+      "required_constraints": ["exactly_two_bullets", "mention_evaluator_drift", "mention_threshold_or_prompt_change"]
+    },
+    {
+      "task_id": "tg-005",
+      "task_type": "constrained_formatting",
+      "input": "Return JSON with keys decision and reason. Decision should be review.",
+      "expected_behavior": "Return valid JSON with both required keys.",
+      "required_constraints": ["valid_json", "decision_key", "reason_key"]
+    },
+    {
+      "task_id": "tg-006",
+      "task_type": "grounded_answer_generation",
+      "input": "Context: The gate blocked release because required JSON fields were missing. Question: Why was the release blocked?",
+      "expected_behavior": "Answer only from context and mention missing required JSON fields.",
+      "required_constraints": ["grounded_in_context", "no_hallucinated_reason", "mention_missing_json_fields"]
+    }
+  ]
+}
