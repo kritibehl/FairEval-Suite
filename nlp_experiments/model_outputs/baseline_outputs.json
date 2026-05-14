@@ -1,0 +1,35 @@
+{
+  "model_name": "baseline_mock_adapter",
+  "outputs": [
+    {
+      "task_id": "tg-001",
+      "task_type": "rewrite_for_clarity",
+      "output": "The release was blocked because the output format failed validation and could affect users."
+    },
+    {
+      "task_id": "tg-002",
+      "task_type": "summarization",
+      "output": "The candidate model failed required JSON field checks in user-facing workflows, so the release gate recommended review before release."
+    },
+    {
+      "task_id": "tg-003",
+      "task_type": "smart_reply_style_generation",
+      "output": "Thanks for the update — we’ll review the failed case."
+    },
+    {
+      "task_id": "tg-004",
+      "task_type": "instruction_following",
+      "output": "- Prompt or evaluator changes can make scores incomparable across runs.\n- Threshold changes can alter release decisions even when model behavior is unchanged."
+    },
+    {
+      "task_id": "tg-005",
+      "task_type": "constrained_formatting",
+      "output": "{\"decision\": \"review\", \"reason\": \"required output fields need validation\"}"
+    },
+    {
+      "task_id": "tg-006",
+      "task_type": "grounded_answer_generation",
+      "output": "The release was blocked because required JSON fields were missing."
+    }
+  ]
+}

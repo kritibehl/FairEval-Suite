@@ -1,0 +1,35 @@
+{
+  "model_name": "candidate_mock_adapter",
+  "outputs": [
+    {
+      "task_id": "tg-001",
+      "task_type": "rewrite_for_clarity",
+      "output": "The release was blocked because the model was unsafe and users would be impacted."
+    },
+    {
+      "task_id": "tg-002",
+      "task_type": "summarization",
+      "output": "The model passed average checks but had some issues."
+    },
+    {
+      "task_id": "tg-003",
+      "task_type": "smart_reply_style_generation",
+      "output": "Thank you for providing this detailed update. I appreciate the information and will carefully review the results, evaluate the release risk, and determine next steps after additional investigation."
+    },
+    {
+      "task_id": "tg-004",
+      "task_type": "instruction_following",
+      "output": "Evaluator drift matters because it affects benchmark reliability and release decisions."
+    },
+    {
+      "task_id": "tg-005",
+      "task_type": "constrained_formatting",
+      "output": "{\"decision\": \"review\"}"
+    },
+    {
+      "task_id": "tg-006",
+      "task_type": "grounded_answer_generation",
+      "output": "The release was blocked because the model had high latency."
+    }
+  ]
+}
