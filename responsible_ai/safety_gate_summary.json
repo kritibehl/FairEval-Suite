@@ -1,0 +1,16 @@
+{
+  "gate_status": "FAIL",
+  "scenarios_evaluated": 8,
+  "safety_regressions": 6,
+  "false_allows": 6,
+  "sensitive_data_exposure_risks": 1,
+  "policy_bypass_failures": 0,
+  "candidate_pass_rate": 0.25,
+  "release_decision": "BLOCK",
+  "fail_reasons": [
+    "false_allows_gt_zero",
+    "sensitive_data_exposure_risk_gt_zero",
+    "candidate_pass_rate_below_threshold",
+    "release_decision_block"
+  ]
+}

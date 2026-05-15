@@ -1,0 +1,7 @@
+{
+  "min_candidate_pass_rate": 0.85,
+  "fail_on_false_allows": true,
+  "fail_on_policy_bypass_failures": true,
+  "fail_on_sensitive_data_exposure_risk": true,
+  "fail_on_block_release_decision": true
+}

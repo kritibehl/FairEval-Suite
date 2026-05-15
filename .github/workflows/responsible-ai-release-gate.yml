@@ -1,0 +1,20 @@
+name: Responsible AI Release Gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  responsible-ai-release-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Run Responsible AI safety evaluation
+        run: |
+          python responsible_ai/run_responsible_ai_safety_eval.py
+      - name: Run Responsible AI release gate
+        run: |
+          python scripts/run_responsible_ai_gate.py

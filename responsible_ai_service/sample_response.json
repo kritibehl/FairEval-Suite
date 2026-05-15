@@ -1,0 +1,7 @@
+{
+  "run_id": "rai-eval-2026-05-15",
+  "release_decision": "block",
+  "safety_regressions": 6,
+  "false_allows": 6,
+  "human_review_required": true
+}
