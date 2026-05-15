@@ -1,0 +1,12 @@
+{
+  "total_requests": 16,
+  "successful_responses": 16,
+  "schema_valid_responses": 16,
+  "failed_requests": 0,
+  "p50_latency_ms": 2.5604,
+  "p95_latency_ms": 4.7874,
+  "max_latency_ms": 106.8014,
+  "batch_eval_latency_ms": 1.8527,
+  "health_check_success_rate": 1.0,
+  "safe_scope": "Synthetic local service-readiness benchmark for Responsible AI risk-evaluation endpoints; not production load testing."
+}
