@@ -1,13 +1,10 @@
 # FairEval Responsible AI API — Live Deployment Status
 
 ## Live API
-Pending deployment.
+https://faireval-rai-api-126325674316.us-central1.run.app
 
-After deployment, update:
+## Swagger Docs
+https://faireval-rai-api-126325674316.us-central1.run.app/docs
 
-```text
-Live API: https://YOUR-CLOUD-RUN-URL
-Health: https://YOUR-CLOUD-RUN-URL/rai/health
-Resume header format
-\textbf{FairEval-Suite} — Responsible AI Risk Evaluation Service \hfill \href{GITHUB_URL}{GitHub} $\cdot$ \href{LIVE_API_URL}{Live API}
-
+## Health Endpoint
+https://faireval-rai-api-126325674316.us-central1.run.app/rai/health
