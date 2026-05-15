@@ -1,0 +1,11 @@
+{
+  "content_id": "msg-004",
+  "content_type": "ai_generated_text",
+  "scenario_category": "sensitive_data_exposure_risk",
+  "source": "candidate_model",
+  "content": "Synthetic test content here",
+  "context": {
+    "grounding_required": true,
+    "human_review_expected": true
+  }
+}

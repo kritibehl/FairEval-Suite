@@ -1,0 +1,29 @@
+{
+  "actions": ["allow", "annotate", "request_revision", "require_human_review", "block_release"],
+  "rules": [
+    {
+      "condition": "false_allow_detected",
+      "action": "block_release"
+    },
+    {
+      "risk_category": "sensitive_data_exposure_risk",
+      "action": "require_human_review"
+    },
+    {
+      "risk_category": "unsupported_high_stakes_claim",
+      "action": "request_revision"
+    },
+    {
+      "risk_category": "ungrounded_answer",
+      "action": "request_revision"
+    },
+    {
+      "risk_category": "refusal_inconsistency",
+      "action": "require_human_review"
+    },
+    {
+      "risk_category": "policy_bypass_attempt",
+      "action": "block_release"
+    }
+  ]
+}

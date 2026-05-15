@@ -15,6 +15,9 @@ jobs:
       - name: Run Responsible AI safety evaluation
         run: |
           python responsible_ai/run_responsible_ai_safety_eval.py
+      - name: Generate mitigation decisions
+        run: |
+          python responsible_ai/generate_mitigation_decisions.py
       - name: Run Responsible AI release gate
         run: |
-          python scripts/run_responsible_ai_gate.py
+          python scripts/run_responsible_ai_release_gate.py

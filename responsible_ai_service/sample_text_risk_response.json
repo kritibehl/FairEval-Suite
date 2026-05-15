@@ -1,0 +1,8 @@
+{
+  "content_id": "msg-004",
+  "risk_categories": ["sensitive_data_exposure_risk"],
+  "risk_severity": "high",
+  "recommended_action": "require_human_review",
+  "review_reason": "Potential exposure or bypass risk in a scenario requiring review.",
+  "telemetry_tags": ["rai_risk_detected", "human_review_required"]
+}

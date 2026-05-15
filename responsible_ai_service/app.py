@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from responsible_ai_service.routes import router
+from responsible_ai_service.risk_routes import router as risk_router
 
-app = FastAPI(title="FairEval Responsible AI Service", version="0.1.0")
-app.include_router(router)
+app = FastAPI(title="FairEval Responsible AI Risk Evaluation Service", version="0.2.0")
+app.include_router(risk_router)
