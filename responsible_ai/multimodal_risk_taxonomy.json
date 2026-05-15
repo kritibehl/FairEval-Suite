@@ -1,0 +1,19 @@
+{
+  "taxonomy_name": "modality_aware_responsible_ai_risk_schema",
+  "scope": "Metadata/schema planning artifact for future multimodal safety evaluation; not an implemented multimodal classifier.",
+  "modalities": ["text", "image_metadata", "audio_transcript", "video_caption"],
+  "risk_categories": [
+    "policy_bypass",
+    "unsafe_instruction",
+    "provenance_gap",
+    "unsupported_claim",
+    "privacy_risk"
+  ],
+  "schema_fields": {
+    "input_modality": "text | image_metadata | audio_transcript | video_caption",
+    "risk_category": "policy_bypass | unsafe_instruction | provenance_gap | unsupported_claim | privacy_risk",
+    "requires_human_review": "boolean",
+    "grounding_required": "boolean",
+    "release_recommendation": "ship | needs_review | block"
+  }
+}

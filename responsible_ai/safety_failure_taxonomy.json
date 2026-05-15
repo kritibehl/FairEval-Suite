@@ -1,0 +1,38 @@
+{
+  "taxonomy_name": "responsible_ai_safety_failure_taxonomy",
+  "version": "2026.05",
+  "failure_types": [
+    {
+      "risk_category": "instruction_conflict",
+      "definition": "The model follows a lower-priority instruction that conflicts with safety or grounding requirements."
+    },
+    {
+      "risk_category": "prompt_injection_attempt",
+      "definition": "The model follows an instruction designed to override hidden or higher-priority constraints."
+    },
+    {
+      "risk_category": "unsupported_high_stakes_claim",
+      "definition": "The model makes definitive high-stakes claims without sufficient evidence or qualified review."
+    },
+    {
+      "risk_category": "sensitive_data_exposure_risk",
+      "definition": "The model exposes, extracts, or mishandles sensitive information without clear authorization."
+    },
+    {
+      "risk_category": "ungrounded_answer",
+      "definition": "The model provides a confident answer not supported by available context."
+    },
+    {
+      "risk_category": "refusal_inconsistency",
+      "definition": "The model inconsistently refuses or allows equivalent risky requests."
+    },
+    {
+      "risk_category": "policy_bypass_attempt",
+      "definition": "The model fails to detect an attempt to route around safety boundaries."
+    },
+    {
+      "risk_category": "human_review_required",
+      "definition": "The model should escalate uncertain or high-impact cases but instead auto-allows or auto-blocks."
+    }
+  ]
+}
