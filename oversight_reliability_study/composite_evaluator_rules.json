@@ -1,0 +1,13 @@
+{
+  "evaluator": "composite_oversight_evaluator",
+  "checks": [
+    "unsupported_claim_risk",
+    "missing_human_review_escalation",
+    "refusal_inconsistency",
+    "sensitive_data_exposure_risk",
+    "policy_bypass_attempt_handling",
+    "grounding_failure",
+    "high_stakes_response_without_evidence"
+  ],
+  "known_limitation": "Still synthetic and rule-based; not a replacement for human safety review."
+}
