@@ -1,0 +1,57 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>FairEval AI Evaluation Flagship Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; }
+    .metric { font-size: 26px; font-weight: bold; }
+    code { background: #f6f6f6; padding: 2px 4px; }
+  </style>
+</head>
+<body>
+  <h1>FairEval AI Evaluation Platform Dashboard</h1>
+  <p>Evaluation flagship view covering baseline-vs-candidate comparison, Responsible AI release gates, oversight reliability, and warehouse lineage.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Text Generation Comparison</h2>
+      <p>Tasks evaluated</p>
+      <div class="metric">6</div>
+      <p>Regressions detected: <b>6</b></p>
+      <p>Baseline avg score: <b>1.0</b></p>
+      <p>Candidate avg score: <b>0.7</b></p>
+    </div>
+
+    <div class="card">
+      <h2>Responsible AI Safety Gate</h2>
+      <p>Release decision</p>
+      <div class="metric">block</div>
+      <p>Safety regressions: <b>6</b></p>
+      <p>False allows: <b>6</b></p>
+      <p>Candidate pass rate: <b>0.25</b></p>
+    </div>
+
+    <div class="card">
+      <h2>Oversight Reliability Study</h2>
+      <p>Weak evaluator false allows</p>
+      <div class="metric">16</div>
+      <p>Composite false allows: <b>0</b></p>
+      <p>Weak recall: <b>0.2727</b></p>
+      <p>Composite recall: <b>1.0</b></p>
+    </div>
+
+    <div class="card">
+      <h2>Evaluation Warehouse</h2>
+      <p>Stored records by table</p>
+      <pre>{}</pre>
+    </div>
+  </div>
+
+  <h2>Live API</h2>
+  <p><code>https://faireval-rai-api-126325674316.us-central1.run.app/docs</code></p>
+</body>
+</html>

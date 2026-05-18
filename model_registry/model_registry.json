@@ -1,0 +1,44 @@
+{
+  "registry_version": "2026.05",
+  "models": [
+    {
+      "model_id": "baseline_mock_adapter",
+      "provider": "local_mock",
+      "model_type": "text_generation",
+      "status": "baseline",
+      "supported_tasks": [
+        "rewrite",
+        "summarization",
+        "smart_reply",
+        "grounded_answer",
+        "instruction_following"
+      ],
+      "risk_review_required": false
+    },
+    {
+      "model_id": "candidate_mock_adapter",
+      "provider": "local_mock",
+      "model_type": "text_generation",
+      "status": "candidate",
+      "supported_tasks": [
+        "rewrite",
+        "summarization",
+        "smart_reply",
+        "grounded_answer",
+        "instruction_following"
+      ],
+      "risk_review_required": true
+    },
+    {
+      "model_id": "gemini_real",
+      "provider": "google",
+      "model_type": "real_adapter",
+      "status": "available_when_key_configured",
+      "supported_tasks": [
+        "instruction_following",
+        "text_generation"
+      ],
+      "risk_review_required": true
+    }
+  ]
+}

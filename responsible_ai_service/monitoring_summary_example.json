@@ -1,0 +1,9 @@
+{
+  "service": "faireval-rai-api",
+  "health": "ok",
+  "latest_release_decision": "block",
+  "false_allows": 6,
+  "safety_regressions": 6,
+  "human_review_required": true,
+  "live_docs": "https://faireval-rai-api-126325674316.us-central1.run.app/docs"
+}
