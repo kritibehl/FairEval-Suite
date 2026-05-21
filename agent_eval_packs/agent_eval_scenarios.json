@@ -1,0 +1,42 @@
+{
+  "pack_name": "agentic_system_release_eval_pack",
+  "version": "2026.05",
+  "scenarios": [
+    {
+      "scenario_id": "agent-001",
+      "task_type": "rag_answer",
+      "query": "Why was the release blocked?",
+      "retrieved_context": [
+        "The release gate blocked the candidate because required JSON fields were missing.",
+        "The candidate had false-allow Responsible AI regressions."
+      ],
+      "candidate_answer": "The release was blocked because required JSON fields were missing and safety regressions were detected.",
+      "expected_terms": ["required JSON fields", "safety regressions"],
+      "forbidden_terms": ["latency outage", "database corruption"]
+    },
+    {
+      "scenario_id": "agent-002",
+      "task_type": "unsupported_answer",
+      "query": "What caused the model failure?",
+      "retrieved_context": [
+        "The report only states that the candidate failed schema validation."
+      ],
+      "candidate_answer": "The model failed because GPU memory was exhausted.",
+      "expected_terms": ["schema validation"],
+      "forbidden_terms": ["GPU memory"]
+    },
+    {
+      "scenario_id": "agent-003",
+      "task_type": "tool_use_summary",
+      "query": "Summarize the release decision.",
+      "retrieved_context": [
+        "release_decision=block",
+        "false_allows=6",
+        "human_review_required=true"
+      ],
+      "candidate_answer": "The release decision is block, with six false allows and human review required.",
+      "expected_terms": ["block", "six false allows", "human review"],
+      "forbidden_terms": []
+    }
+  ]
+}

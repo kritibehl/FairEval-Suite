@@ -1,0 +1,14 @@
+{
+  "rag_groundedness_pass_count": 2,
+  "unsupported_answer_count": 1,
+  "hallucination_detected_count": 1,
+  "p95_latency_ms": 950,
+  "max_cost_per_request_usd": 0.012,
+  "failures": [
+    "unsupported_answers_detected",
+    "hallucination_detected",
+    "latency_threshold_failed",
+    "cost_threshold_failed"
+  ],
+  "release_decision": "block"
+}

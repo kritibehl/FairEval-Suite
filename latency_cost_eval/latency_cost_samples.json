@@ -1,0 +1,11 @@
+{
+  "thresholds": {
+    "max_p95_latency_ms": 800,
+    "max_cost_per_request_usd": 0.01
+  },
+  "samples": [
+    {"scenario_id": "agent-001", "latency_ms": 420, "cost_usd": 0.004},
+    {"scenario_id": "agent-002", "latency_ms": 950, "cost_usd": 0.006},
+    {"scenario_id": "agent-003", "latency_ms": 510, "cost_usd": 0.012}
+  ]
+}

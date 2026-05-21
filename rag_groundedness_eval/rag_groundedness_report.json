@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "total_scenarios": 3,
+    "groundedness_pass_count": 2,
+    "unsupported_answer_count": 1,
+    "hallucination_detected_count": 1,
+    "release_risk": "block"
+  },
+  "results": [
+    {
+      "scenario_id": "agent-001",
+      "task_type": "rag_answer",
+      "groundedness_pass": true,
+      "unsupported_answer": false,
+      "missing_expected_terms": [],
+      "hallucinated_terms": []
+    },
+    {
+      "scenario_id": "agent-002",
+      "task_type": "unsupported_answer",
+      "groundedness_pass": false,
+      "unsupported_answer": true,
+      "missing_expected_terms": [
+        "schema validation"
+      ],
+      "hallucinated_terms": [
+        "GPU memory"
+      ]
+    },
+    {
+      "scenario_id": "agent-003",
+      "task_type": "tool_use_summary",
+      "groundedness_pass": true,
+      "unsupported_answer": false,
+      "missing_expected_terms": [],
+      "hallucinated_terms": []
+    }
+  ]
+}
