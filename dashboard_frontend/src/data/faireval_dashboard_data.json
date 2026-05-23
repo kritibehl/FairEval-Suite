@@ -1,0 +1,96 @@
+{
+  "text_generation": {
+    "baseline_model": "baseline_mock_adapter",
+    "candidate_model": "candidate_mock_adapter",
+    "num_tasks": 6,
+    "regressions_detected": 6,
+    "baseline_avg_score": 1.0,
+    "candidate_avg_score": 0.7,
+    "latency_ms": 0.0651,
+    "criteria": [
+      "instruction_adherence",
+      "groundedness",
+      "format_compliance",
+      "entity_preservation",
+      "conciseness"
+    ],
+    "note": "Local mock-adapter text generation eval; no production model-serving claim."
+  },
+  "responsible_ai": {
+    "num_scenarios": 8,
+    "num_safety_regressions": 6,
+    "baseline_pass_rate": 1.0,
+    "candidate_pass_rate": 0.25,
+    "risk_categories_triggered": [
+      "human_review_required",
+      "instruction_conflict",
+      "refusal_inconsistency",
+      "sensitive_data_exposure_risk",
+      "ungrounded_answer",
+      "unsupported_high_stakes_claim"
+    ],
+    "false_allows": 6,
+    "false_blocks": 0,
+    "release_decision": "block"
+  },
+  "oversight": {
+    "num_scenarios": 32,
+    "safety_regressions_present": 22,
+    "weak_evaluator_false_allows": 16,
+    "composite_evaluator_false_allows": 0,
+    "weak_evaluator_regression_recall": 0.2727,
+    "composite_evaluator_regression_recall": 1.0,
+    "evaluator_disagreement_rate": 0.5,
+    "weak_missed_composite_caught": 16,
+    "risk_category_breakdown": {
+      "sensitive_data_exposure_risk": 3,
+      "policy_bypass_attempt": 3,
+      "grounding_failure": 3,
+      "refusal_inconsistency": 3,
+      "instruction_conflict": 3,
+      "ambiguous_risk_case": 3,
+      "unsupported_high_stakes_claim": 2,
+      "human_review_escalation_gap": 2
+    }
+  },
+  "agentic_release": {
+    "rag_groundedness_pass_count": 2,
+    "unsupported_answer_count": 1,
+    "hallucination_detected_count": 1,
+    "p95_latency_ms": 950,
+    "max_cost_per_request_usd": 0.012,
+    "failures": [
+      "unsupported_answers_detected",
+      "hallucination_detected",
+      "latency_threshold_failed",
+      "cost_threshold_failed"
+    ],
+    "release_decision": "block"
+  },
+  "rag": {
+    "total_scenarios": 3,
+    "groundedness_pass_count": 2,
+    "unsupported_answer_count": 1,
+    "hallucination_detected_count": 1,
+    "release_risk": "block"
+  },
+  "latency_cost": {
+    "num_requests": 3,
+    "p95_latency_ms": 950,
+    "avg_cost_per_request_usd": 0.007333,
+    "max_cost_per_request_usd": 0.012,
+    "latency_fail": true,
+    "cost_fail": true,
+    "release_decision": "block"
+  },
+  "warehouse": {
+    "model_registry": 3,
+    "evaluation_runs": 1,
+    "responsible_ai_runs": 1,
+    "oversight_studies": 1
+  },
+  "live_api": {
+    "docs": "https://faireval-rai-api-126325674316.us-central1.run.app/docs",
+    "health": "https://faireval-rai-api-126325674316.us-central1.run.app/rai/health"
+  }
+}
