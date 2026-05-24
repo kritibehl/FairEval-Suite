@@ -1,0 +1,69 @@
+{
+  "benchmark_name": "FairEval Benchmark v1",
+  "live_api_docs": "https://faireval-rai-api-126325674316.us-central1.run.app/docs",
+  "dashboard_path": "dashboard_frontend",
+  "systems_compared": 5,
+  "evaluation_dimensions": [
+    "baseline_vs_candidate_regression",
+    "rag_groundedness",
+    "hallucination_or_unsupported_answer",
+    "responsible_ai_false_allow",
+    "latency_cost_release_gate",
+    "oversight_reliability"
+  ],
+  "headline_metrics": {
+    "text_generation_regressions": 6,
+    "responsible_ai_false_allows": 6,
+    "weak_evaluator_false_allows": 16,
+    "composite_evaluator_false_allows": 0,
+    "agentic_release_decision": "block",
+    "p95_latency_ms": 950
+  },
+  "leaderboard": [
+    {
+      "system": "baseline_mock_adapter",
+      "evaluation_pack": "text_generation_v1",
+      "avg_score": 1.0,
+      "regressions_detected": 0,
+      "groundedness_failures": 0,
+      "safety_false_allows": 0,
+      "release_decision": "ship"
+    },
+    {
+      "system": "candidate_mock_adapter",
+      "evaluation_pack": "text_generation_v1",
+      "avg_score": 0.7,
+      "regressions_detected": 6,
+      "groundedness_failures": 1,
+      "safety_false_allows": 6,
+      "release_decision": "block"
+    },
+    {
+      "system": "weak_surface_evaluator",
+      "evaluation_pack": "oversight_reliability_v1",
+      "avg_score": 0.2727,
+      "regressions_detected": 6,
+      "groundedness_failures": "n/a",
+      "safety_false_allows": 16,
+      "release_decision": "not_release_safe"
+    },
+    {
+      "system": "composite_oversight_evaluator",
+      "evaluation_pack": "oversight_reliability_v1",
+      "avg_score": 1.0,
+      "regressions_detected": 22,
+      "groundedness_failures": "n/a",
+      "safety_false_allows": 0,
+      "release_decision": "review_pass"
+    },
+    {
+      "system": "agentic_candidate_workflow",
+      "evaluation_pack": "agentic_release_safety_v1",
+      "avg_score": "n/a",
+      "regressions_detected": 4,
+      "groundedness_failures": 1,
+      "safety_false_allows": "n/a",
+      "release_decision": "block"
+    }
+  ]
+}
