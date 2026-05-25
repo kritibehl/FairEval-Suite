@@ -1,0 +1,70 @@
+{
+  "trace_id": "faireval-trace-001",
+  "run_id": "agentic-release-gate-2026-05",
+  "trace_type": "ai_release_evaluation",
+  "status": "failed_release_gate",
+  "input": {
+    "workflow": "agentic_rag_release_eval",
+    "candidate": "candidate_mock_adapter"
+  },
+  "steps": [
+    {
+      "step_id": "retrieve_context",
+      "step_type": "retrieval",
+      "latency_ms": 120,
+      "retrieval_hit": true,
+      "retrieved_docs": 2
+    },
+    {
+      "step_id": "generate_answer",
+      "step_type": "generation",
+      "latency_ms": 410,
+      "input_tokens": 78,
+      "output_tokens": 46,
+      "estimated_cost_usd": 0.004
+    },
+    {
+      "step_id": "groundedness_check",
+      "step_type": "evaluation",
+      "latency_ms": 35,
+      "groundedness_pass": false,
+      "unsupported_answer": true,
+      "hallucination_detected": true
+    },
+    {
+      "step_id": "latency_cost_gate",
+      "step_type": "release_gate",
+      "latency_ms": 12,
+      "p95_latency_ms": 950,
+      "max_cost_per_request_usd": 0.012,
+      "latency_fail": true,
+      "cost_fail": true
+    },
+    {
+      "step_id": "release_decision",
+      "step_type": "decision",
+      "release_decision": "block",
+      "failures": [
+        "unsupported_answers_detected",
+        "hallucination_detected",
+        "latency_threshold_failed",
+        "cost_threshold_failed"
+      ]
+    }
+  ],
+  "summary": {
+    "total_latency_ms": 577,
+    "total_tokens": 124,
+    "estimated_cost_usd": 0.004,
+    "release_decision": "block",
+    "observable_signals": [
+      "retrieval",
+      "generation",
+      "groundedness",
+      "latency",
+      "cost",
+      "release_gate"
+    ]
+  },
+  "safe_scope": "Langfuse/LangSmith-style trace export artifact; not an integrated hosted observability backend."
+}

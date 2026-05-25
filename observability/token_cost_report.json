@@ -1,0 +1,13 @@
+{
+  "report_id": "faireval-token-cost-001",
+  "scope": "agentic_release_eval",
+  "requests": 3,
+  "total_input_tokens": 212,
+  "total_output_tokens": 121,
+  "total_tokens": 333,
+  "estimated_total_cost_usd": 0.018,
+  "avg_cost_per_request_usd": 0.006,
+  "max_cost_per_request_usd": 0.012,
+  "release_gate_threshold_usd": 0.01,
+  "cost_gate_status": "fail"
+}
