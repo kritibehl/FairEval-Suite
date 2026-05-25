@@ -1,0 +1,26 @@
+{
+  "dataset_registry_version": "2026.05",
+  "datasets": [
+    {
+      "dataset_id": "benchmark_instruction_following_v1",
+      "dataset_hash": "synthetic-if-v1-2026-05",
+      "num_cases": 10,
+      "task_types": ["instruction_following", "formatting", "grounded_answer"],
+      "used_by": ["text_generation_eval", "release_gate"]
+    },
+    {
+      "dataset_id": "responsible_ai_red_team_v1",
+      "dataset_hash": "synthetic-rai-v1-2026-05",
+      "num_cases": 8,
+      "task_types": ["false_allow", "sensitive_data_risk", "policy_bypass", "human_review"],
+      "used_by": ["rai_safety_eval", "ci_release_gate"]
+    },
+    {
+      "dataset_id": "oversight_reliability_v1",
+      "dataset_hash": "synthetic-oversight-v1-2026-05",
+      "num_cases": 32,
+      "task_types": ["oversight_failure", "false_allow", "evaluator_disagreement"],
+      "used_by": ["oversight_reliability_study"]
+    }
+  ]
+}

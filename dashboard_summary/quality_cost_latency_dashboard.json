@@ -1,0 +1,28 @@
+{
+  "dashboard_name": "quality_cost_latency_release_dashboard",
+  "quality": {
+    "text_generation_regressions": 6,
+    "candidate_avg_score": 0.7,
+    "baseline_avg_score": 1.0
+  },
+  "safety": {
+    "responsible_ai_false_allows": 6,
+    "release_decision": "block"
+  },
+  "groundedness": {
+    "unsupported_answer_count": 1,
+    "hallucination_detected_count": 1,
+    "release_risk": "block"
+  },
+  "latency_cost": {
+    "p95_latency_ms": 950,
+    "max_cost_per_request_usd": 0.012,
+    "latency_fail": true,
+    "cost_fail": true
+  },
+  "oversight": {
+    "weak_evaluator_false_allows": 16,
+    "composite_evaluator_false_allows": 0,
+    "evaluator_disagreement_rate": 0.5
+  }
+}
