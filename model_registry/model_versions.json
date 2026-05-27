@@ -1,0 +1,24 @@
+{
+  "registry_version": "2026.05.scalable_eval",
+  "models": [
+    {
+      "model_version_id": "baseline_mock_adapter@2026.05",
+      "role": "baseline",
+      "provider": "local_mock",
+      "release_status": "reference"
+    },
+    {
+      "model_version_id": "candidate_mock_adapter@2026.05",
+      "role": "candidate",
+      "provider": "local_mock",
+      "release_status": "blocked",
+      "rollback_candidate": "baseline_mock_adapter@2026.05"
+    },
+    {
+      "model_version_id": "gemini_real@configured",
+      "role": "external_provider_adapter",
+      "provider": "google",
+      "release_status": "requires_key_or_quota"
+    }
+  ]
+}

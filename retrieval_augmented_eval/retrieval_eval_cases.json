@@ -1,0 +1,39 @@
+{
+  "pack_name": "retrieval_augmented_eval_v1",
+  "cases": [
+    {
+      "case_id": "ret-001",
+      "query": "Why was the release blocked?",
+      "retrieved_context": [
+        "The release was blocked because required JSON fields were missing.",
+        "Responsible AI false allows were detected."
+      ],
+      "expected_context_terms": ["required JSON fields", "false allows"],
+      "candidate_answer": "The release was blocked because required JSON fields were missing and false allows were detected.",
+      "citations_present": true,
+      "unsupported_context_terms": []
+    },
+    {
+      "case_id": "ret-002",
+      "query": "What caused the model failure?",
+      "retrieved_context": [
+        "The candidate failed schema validation."
+      ],
+      "expected_context_terms": ["schema validation"],
+      "candidate_answer": "The model failed because GPU memory was exhausted.",
+      "citations_present": false,
+      "unsupported_context_terms": ["GPU memory"]
+    },
+    {
+      "case_id": "ret-003",
+      "query": "What action should be taken?",
+      "retrieved_context": [
+        "The recommended action is require_human_review."
+      ],
+      "expected_context_terms": ["require_human_review"],
+      "candidate_answer": "The action should be require_human_review.",
+      "citations_present": true,
+      "unsupported_context_terms": []
+    }
+  ]
+}

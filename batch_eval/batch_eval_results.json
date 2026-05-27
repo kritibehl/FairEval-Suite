@@ -1,0 +1,38 @@
+{
+  "execution_mode": "pyspark_local",
+  "total_cases": 8,
+  "avg_score": 0.6813,
+  "regression_count": 5,
+  "task_metrics": [
+    {
+      "task_type": "latency_cost",
+      "num_cases": 1,
+      "avg_score": 0.5,
+      "regression_count": 1
+    },
+    {
+      "task_type": "rag_groundedness",
+      "num_cases": 2,
+      "avg_score": 0.7,
+      "regression_count": 1
+    },
+    {
+      "task_type": "responsible_ai",
+      "num_cases": 1,
+      "avg_score": 0.25,
+      "regression_count": 1
+    },
+    {
+      "task_type": "rewrite",
+      "num_cases": 2,
+      "avg_score": 0.8,
+      "regression_count": 1
+    },
+    {
+      "task_type": "summarization",
+      "num_cases": 2,
+      "avg_score": 0.85,
+      "regression_count": 1
+    }
+  ]
+}

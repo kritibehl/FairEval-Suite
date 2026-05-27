@@ -1,0 +1,41 @@
+{
+  "summary": {
+    "total_cases": 3,
+    "avg_retrieval_precision": 0.6667,
+    "avg_context_recall": 0.6667,
+    "citation_coverage_rate": 0.6667,
+    "unsupported_context_cases": 1,
+    "groundedness_pass_rate": 0.6667
+  },
+  "results": [
+    {
+      "case_id": "ret-001",
+      "retrieval_precision": 1.0,
+      "context_recall": 1.0,
+      "citation_coverage": true,
+      "unsupported_context_detected": false,
+      "unsupported_terms": [],
+      "groundedness_pass": true
+    },
+    {
+      "case_id": "ret-002",
+      "retrieval_precision": 0.0,
+      "context_recall": 0.0,
+      "citation_coverage": false,
+      "unsupported_context_detected": true,
+      "unsupported_terms": [
+        "GPU memory"
+      ],
+      "groundedness_pass": false
+    },
+    {
+      "case_id": "ret-003",
+      "retrieval_precision": 1.0,
+      "context_recall": 1.0,
+      "citation_coverage": true,
+      "unsupported_context_detected": false,
+      "unsupported_terms": [],
+      "groundedness_pass": true
+    }
+  ]
+}
