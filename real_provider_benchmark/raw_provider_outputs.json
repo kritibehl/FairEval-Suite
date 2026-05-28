@@ -1,0 +1,94 @@
+{
+  "outputs": [
+    {
+      "provider": "OpenAI",
+      "model_id": "gpt-4o-mini",
+      "case_id": "real-001",
+      "dimension": "groundedness",
+      "prompt": "Context: The release was blocked because required JSON fields were missing. Question: Why was the release blocked? Answer using only the context.",
+      "response": "",
+      "latency_ms": 1339.4296,
+      "error": "Error code: 401 - {'error': {'message': 'Incorrect API key provided: PASTE_OP****_KEY. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}"
+    },
+    {
+      "provider": "OpenAI",
+      "model_id": "gpt-4o-mini",
+      "case_id": "real-002",
+      "dimension": "instruction_following",
+      "prompt": "Return exactly two bullet points explaining why evaluator drift matters. Do not add an intro or conclusion.",
+      "response": "",
+      "latency_ms": 202.117,
+      "error": "Error code: 401 - {'error': {'message': 'Incorrect API key provided: PASTE_OP****_KEY. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}"
+    },
+    {
+      "provider": "OpenAI",
+      "model_id": "gpt-4o-mini",
+      "case_id": "real-003",
+      "dimension": "hallucination",
+      "prompt": "Context: Candidate output omitted the required reason field. Question: What failed? Answer only from the context.",
+      "response": "",
+      "latency_ms": 433.3792,
+      "error": "Error code: 401 - {'error': {'message': 'Incorrect API key provided: PASTE_OP****_KEY. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}"
+    },
+    {
+      "provider": "Anthropic",
+      "model_id": "REAL_CLAUDE_HAIKU_MODEL_ID",
+      "case_id": "real-001",
+      "dimension": "groundedness",
+      "prompt": "Context: The release was blocked because required JSON fields were missing. Question: Why was the release blocked? Answer using only the context.",
+      "response": "",
+      "latency_ms": 692.2611,
+      "error": "Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CbVdDFwJDujRQFRUqF8SP'}"
+    },
+    {
+      "provider": "Anthropic",
+      "model_id": "REAL_CLAUDE_HAIKU_MODEL_ID",
+      "case_id": "real-002",
+      "dimension": "instruction_following",
+      "prompt": "Return exactly two bullet points explaining why evaluator drift matters. Do not add an intro or conclusion.",
+      "response": "",
+      "latency_ms": 239.4495,
+      "error": "Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CbVdDGwaFE85QgWg8yY8K'}"
+    },
+    {
+      "provider": "Anthropic",
+      "model_id": "REAL_CLAUDE_HAIKU_MODEL_ID",
+      "case_id": "real-003",
+      "dimension": "hallucination",
+      "prompt": "Context: Candidate output omitted the required reason field. Question: What failed? Answer only from the context.",
+      "response": "",
+      "latency_ms": 204.6615,
+      "error": "Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'invalid x-api-key'}, 'request_id': 'req_011CbVdDHq9qpmnaDGGvWjPE'}"
+    },
+    {
+      "provider": "Google Gemini",
+      "model_id": "gemini-2.5-flash",
+      "case_id": "real-001",
+      "dimension": "groundedness",
+      "prompt": "Context: The release was blocked because required JSON fields were missing. Question: Why was the release blocked? Answer using only the context.",
+      "response": "",
+      "latency_ms": 1388.7705,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}"
+    },
+    {
+      "provider": "Google Gemini",
+      "model_id": "gemini-2.5-flash",
+      "case_id": "real-002",
+      "dimension": "instruction_following",
+      "prompt": "Return exactly two bullet points explaining why evaluator drift matters. Do not add an intro or conclusion.",
+      "response": "",
+      "latency_ms": 212.0875,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}"
+    },
+    {
+      "provider": "Google Gemini",
+      "model_id": "gemini-2.5-flash",
+      "case_id": "real-003",
+      "dimension": "hallucination",
+      "prompt": "Context: Candidate output omitted the required reason field. Question: What failed? Answer only from the context.",
+      "response": "",
+      "latency_ms": 223.0283,
+      "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'API key not valid. Please pass a valid API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key not valid. Please pass a valid API key.'}]}}"
+    }
+  ]
+}

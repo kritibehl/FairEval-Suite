@@ -1,0 +1,41 @@
+{
+  "benchmark_name": "real_provider_groundedness_instruction_hallucination_v1",
+  "providers_evaluated": 3,
+  "cases_per_provider": 3,
+  "safe_scope": "Real provider API outputs were generated only for providers with configured API keys. Raw prompts and responses are stored for auditability.",
+  "leaderboard": [
+    {
+      "provider": "OpenAI",
+      "model_id": "gpt-4o-mini",
+      "avg_score": 0.0,
+      "groundedness_pass_rate": 0.0,
+      "instruction_pass_rate": 0.0,
+      "hallucination_count": 0,
+      "avg_latency_ms": 658.3086,
+      "errors": 3,
+      "release_decision": "block"
+    },
+    {
+      "provider": "Anthropic",
+      "model_id": "REAL_CLAUDE_HAIKU_MODEL_ID",
+      "avg_score": 0.0,
+      "groundedness_pass_rate": 0.0,
+      "instruction_pass_rate": 0.0,
+      "hallucination_count": 0,
+      "avg_latency_ms": 378.7907,
+      "errors": 3,
+      "release_decision": "block"
+    },
+    {
+      "provider": "Google Gemini",
+      "model_id": "gemini-2.5-flash",
+      "avg_score": 0.0,
+      "groundedness_pass_rate": 0.0,
+      "instruction_pass_rate": 0.0,
+      "hallucination_count": 0,
+      "avg_latency_ms": 607.9621,
+      "errors": 3,
+      "release_decision": "block"
+    }
+  ]
+}

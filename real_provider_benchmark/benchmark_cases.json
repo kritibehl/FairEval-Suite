@@ -1,0 +1,30 @@
+{
+  "benchmark_name": "real_provider_groundedness_instruction_hallucination_v1",
+  "version": "2026.05",
+  "cases": [
+    {
+      "case_id": "real-001",
+      "dimension": "groundedness",
+      "prompt": "Context: The release was blocked because required JSON fields were missing. Question: Why was the release blocked? Answer using only the context.",
+      "expected_terms": ["required JSON fields"],
+      "forbidden_terms": ["latency", "GPU", "database"],
+      "format_requirement": "plain_text"
+    },
+    {
+      "case_id": "real-002",
+      "dimension": "instruction_following",
+      "prompt": "Return exactly two bullet points explaining why evaluator drift matters. Do not add an intro or conclusion.",
+      "expected_terms": ["evaluator", "drift"],
+      "forbidden_terms": [],
+      "format_requirement": "exactly_two_bullets"
+    },
+    {
+      "case_id": "real-003",
+      "dimension": "hallucination",
+      "prompt": "Context: Candidate output omitted the required reason field. Question: What failed? Answer only from the context.",
+      "expected_terms": ["reason field"],
+      "forbidden_terms": ["memory", "network", "latency", "security breach"],
+      "format_requirement": "plain_text"
+    }
+  ]
+}
