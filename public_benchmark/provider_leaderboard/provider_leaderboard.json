@@ -1,0 +1,39 @@
+{
+  "benchmark_name": "provider_style_groundedness_instruction_hallucination_v1",
+  "safe_scope": "GPT/Claude/Gemini-style benchmark using local stored outputs unless real provider artifacts are explicitly supplied.",
+  "providers_compared": 3,
+  "dimensions": [
+    "groundedness",
+    "instruction_following",
+    "hallucination"
+  ],
+  "leaderboard": [
+    {
+      "provider": "Claude-style",
+      "model_id": "claude_style_reference",
+      "avg_score": 0.9,
+      "groundedness_score": 0.95,
+      "instruction_pass_rate": 1.0,
+      "hallucination_count": 0,
+      "release_decision": "ship"
+    },
+    {
+      "provider": "GPT-style",
+      "model_id": "gpt_style_reference",
+      "avg_score": 0.85,
+      "groundedness_score": 0.9,
+      "instruction_pass_rate": 1.0,
+      "hallucination_count": 0,
+      "release_decision": "ship"
+    },
+    {
+      "provider": "Gemini-style",
+      "model_id": "gemini_style_reference",
+      "avg_score": 0.7,
+      "groundedness_score": 0.75,
+      "instruction_pass_rate": 0.6667,
+      "hallucination_count": 2,
+      "release_decision": "block"
+    }
+  ]
+}

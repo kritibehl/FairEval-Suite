@@ -1,0 +1,33 @@
+{
+  "benchmark_name": "provider_style_groundedness_instruction_hallucination_v1",
+  "safe_scope": "GPT/Claude/Gemini-style benchmark using local stored outputs unless real provider artifacts are explicitly supplied.",
+  "providers": [
+    {
+      "provider": "GPT-style",
+      "model_id": "gpt_style_reference",
+      "outputs": [
+        {"case_id": "case-001", "task": "groundedness", "score": 0.90, "hallucination": false, "instruction_following": true},
+        {"case_id": "case-002", "task": "instruction_following", "score": 0.85, "hallucination": false, "instruction_following": true},
+        {"case_id": "case-003", "task": "hallucination", "score": 0.80, "hallucination": false, "instruction_following": true}
+      ]
+    },
+    {
+      "provider": "Claude-style",
+      "model_id": "claude_style_reference",
+      "outputs": [
+        {"case_id": "case-001", "task": "groundedness", "score": 0.95, "hallucination": false, "instruction_following": true},
+        {"case_id": "case-002", "task": "instruction_following", "score": 0.90, "hallucination": false, "instruction_following": true},
+        {"case_id": "case-003", "task": "hallucination", "score": 0.85, "hallucination": false, "instruction_following": true}
+      ]
+    },
+    {
+      "provider": "Gemini-style",
+      "model_id": "gemini_style_reference",
+      "outputs": [
+        {"case_id": "case-001", "task": "groundedness", "score": 0.75, "hallucination": true, "instruction_following": true},
+        {"case_id": "case-002", "task": "instruction_following", "score": 0.70, "hallucination": false, "instruction_following": false},
+        {"case_id": "case-003", "task": "hallucination", "score": 0.65, "hallucination": true, "instruction_following": true}
+      ]
+    }
+  ]
+}
