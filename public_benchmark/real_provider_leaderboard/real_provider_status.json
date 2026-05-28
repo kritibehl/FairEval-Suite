@@ -1,0 +1,8 @@
+{
+  "status": "not_successfully_run",
+  "reason": "placeholder_or_invalid_api_keys",
+  "successful_provider_runs": 0,
+  "failed_provider_requests": 9,
+  "safe_claim": "real-provider benchmark framework implemented; successful provider-output benchmark pending valid API keys",
+  "do_not_claim": "Do not claim real OpenAI/Anthropic/Gemini benchmark results from this run."
+}
