@@ -1,8 +1,8 @@
 # Real Provider Benchmark Leaderboard
 
-Status: **Not yet run successfully**
+Status: **Framework ready; successful provider-output run pending API credits**
 
-This benchmark framework is designed to run OpenAI, Anthropic, and Gemini on the same prompts and evaluate:
+This benchmark framework is designed to run configured providers on the same prompts and evaluate:
 
 - groundedness
 - instruction following
@@ -12,9 +12,9 @@ This benchmark framework is designed to run OpenAI, Anthropic, and Gemini on the
 
 ## Current status
 
-The first attempted run used placeholder API keys and produced authentication errors for all providers.
+A Gemini API key was accepted, but the provider returned `RESOURCE_EXHAUSTED` because prepaid credits were depleted.
 
-No model-output benchmark results should be claimed from this run.
+No successful model-output benchmark results should be claimed from this run.
 
 ## What is implemented
 
@@ -26,7 +26,8 @@ No model-output benchmark results should be claimed from this run.
 - error capture
 - latency capture
 - release-decision logic
+- provider failure reporting
 
 ## Safe scope
 
-This is currently a real-provider benchmark framework. It becomes a real benchmark only after valid provider API keys produce successful model responses.
+This is currently a real-provider benchmark framework. It becomes a real benchmark only after configured providers return successful model responses.
