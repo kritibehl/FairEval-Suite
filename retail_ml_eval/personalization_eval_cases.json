@@ -1,0 +1,36 @@
+{
+  "pack_name": "retail_product_discovery_eval_v1",
+  "safe_scope": "Synthetic retail-style product discovery evaluation; not trained on private user data.",
+  "cases": [
+    {
+      "case_id": "retail-001",
+      "user_intent": "student looking for lightweight laptop",
+      "query": "portable laptop for school",
+      "expected_relevant_items": ["macbook_air_13", "ipad_air_keyboard_bundle"],
+      "ranked_results": ["macbook_air_13", "macbook_pro_16", "ipad_air_keyboard_bundle"],
+      "recommended_items": ["macbook_air_13", "airpods_pro"],
+      "rag_answer": "The MacBook Air 13 is a lightweight option for school, and an iPad Air with keyboard can also fit portable student workflows.",
+      "grounding_context": ["MacBook Air 13 is lightweight.", "iPad Air supports keyboard accessories."]
+    },
+    {
+      "case_id": "retail-002",
+      "user_intent": "creator looking for high performance device",
+      "query": "laptop for video editing",
+      "expected_relevant_items": ["macbook_pro_16", "mac_studio"],
+      "ranked_results": ["macbook_air_13", "macbook_pro_16", "mac_studio"],
+      "recommended_items": ["macbook_pro_16", "studio_display"],
+      "rag_answer": "For video editing, MacBook Pro 16 is a stronger fit than MacBook Air because the context says it is intended for high performance workflows.",
+      "grounding_context": ["MacBook Pro 16 supports high performance workflows.", "Mac Studio is a desktop option for creators."]
+    },
+    {
+      "case_id": "retail-003",
+      "user_intent": "budget-conscious phone upgrade",
+      "query": "affordable iphone upgrade",
+      "expected_relevant_items": ["iphone_se", "iphone_15"],
+      "ranked_results": ["iphone_15_pro", "iphone_se", "iphone_15"],
+      "recommended_items": ["iphone_se", "apple_watch_ultra"],
+      "rag_answer": "The iPhone SE is the most affordable option listed in the context.",
+      "grounding_context": ["iPhone SE is positioned as an affordable iPhone option.", "iPhone 15 is a mainstream iPhone option."]
+    }
+  ]
+}

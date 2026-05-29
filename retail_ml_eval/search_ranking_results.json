@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "total_cases": 3,
+    "avg_precision_at_3": 0.6667,
+    "avg_recall_at_3": 1.0,
+    "avg_ndcg_at_3": 0.7688,
+    "ranking_regressions": 2
+  },
+  "results": [
+    {
+      "case_id": "retail-001",
+      "precision_at_3": 0.6667,
+      "recall_at_3": 1.0,
+      "ndcg_at_3": 0.9197,
+      "ranking_regression": false
+    },
+    {
+      "case_id": "retail-002",
+      "precision_at_3": 0.6667,
+      "recall_at_3": 1.0,
+      "ndcg_at_3": 0.6934,
+      "ranking_regression": true
+    },
+    {
+      "case_id": "retail-003",
+      "precision_at_3": 0.6667,
+      "recall_at_3": 1.0,
+      "ndcg_at_3": 0.6934,
+      "ranking_regression": true
+    }
+  ]
+}

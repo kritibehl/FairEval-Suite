@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "total_cases": 3,
+    "groundedness_pass_rate": 1.0,
+    "unsupported_answer_count": 0
+  },
+  "results": [
+    {
+      "case_id": "retail-001",
+      "expected_mentions_found": [
+        "macbook_air_13",
+        "ipad_air_keyboard_bundle"
+      ],
+      "unsupported_terms": [],
+      "groundedness_pass": true
+    },
+    {
+      "case_id": "retail-002",
+      "expected_mentions_found": [
+        "macbook_pro_16",
+        "mac_studio"
+      ],
+      "unsupported_terms": [],
+      "groundedness_pass": true
+    },
+    {
+      "case_id": "retail-003",
+      "expected_mentions_found": [
+        "iphone_se",
+        "iphone_15"
+      ],
+      "unsupported_terms": [],
+      "groundedness_pass": true
+    }
+  ]
+}

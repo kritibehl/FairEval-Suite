@@ -1,0 +1,31 @@
+{
+  "summary": {
+    "total_cases": 3,
+    "hit_rate": 1.0,
+    "avg_recommendation_precision": 0.5,
+    "quality_regressions": 0
+  },
+  "results": [
+    {
+      "case_id": "retail-001",
+      "recommendation_hit": true,
+      "recommendation_precision": 0.5,
+      "irrelevant_recommendation_count": 1,
+      "quality_regression": false
+    },
+    {
+      "case_id": "retail-002",
+      "recommendation_hit": true,
+      "recommendation_precision": 0.5,
+      "irrelevant_recommendation_count": 1,
+      "quality_regression": false
+    },
+    {
+      "case_id": "retail-003",
+      "recommendation_hit": true,
+      "recommendation_precision": 0.5,
+      "irrelevant_recommendation_count": 1,
+      "quality_regression": false
+    }
+  ]
+}
