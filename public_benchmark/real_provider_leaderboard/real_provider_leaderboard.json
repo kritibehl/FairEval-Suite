@@ -11,7 +11,7 @@
       "groundedness_pass_rate": 0.0,
       "instruction_pass_rate": 0.0,
       "hallucination_count": 0,
-      "avg_latency_ms": 777.1638,
+      "avg_latency_ms": 571.9238,
       "errors": 3,
       "release_decision": "block"
     }
