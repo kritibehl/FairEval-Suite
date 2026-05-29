@@ -1,9 +1,9 @@
 {
-  "status": "provider_framework_ready_but_not_successfully_run",
-  "reason": "Gemini API key was accepted but project returned RESOURCE_EXHAUSTED due to depleted prepaid credits; OpenAI and Anthropic were not run with valid paid keys.",
+  "status": "not_successfully_run",
+  "reason": "Gemini run used placeholder API key REAL_GEMINI_KEY and returned API_KEY_INVALID for all requests.",
   "successful_provider_runs": 0,
   "failed_provider_requests": 3,
   "configured_provider_attempted": "Google Gemini",
-  "safe_claim": "real-provider benchmark framework implemented with provider API calls, error capture, latency capture, scoring, and leaderboard generation; successful provider-output benchmark pending available API credits.",
-  "do_not_claim": "Do not claim successful real OpenAI/Anthropic/Gemini benchmark results from this run."
+  "safe_claim": "real-provider benchmark framework implemented with provider API calls, error capture, latency capture, scoring, and leaderboard generation; successful provider-output benchmark pending a valid API key and available provider credits.",
+  "do_not_claim": "Do not claim successful real Gemini/OpenAI/Anthropic benchmark outputs from this run."
 }
