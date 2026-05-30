@@ -1,0 +1,13 @@
+{
+  "decision_id": "release-decision-2026-05-apple-ml",
+  "baseline_run_id": "baseline-run-2026-05-apple-ml",
+  "candidate_run_id": "candidate-run-2026-05-apple-ml",
+  "decision": "block",
+  "primary_reasons": [
+    "text_generation_regressions",
+    "responsible_ai_false_allows",
+    "rag_groundedness_regression",
+    "agent_tool_action_regression"
+  ],
+  "recommended_next_action": "rollback_to_baseline_and_require_human_review"
+}

@@ -1,0 +1,11 @@
+{
+  "run_id": "candidate-run-2026-05-apple-ml",
+  "model": "candidate_mock_adapter",
+  "dataset_version": "benchmark_instruction_following_v1",
+  "avg_score": 0.7,
+  "regressions": 6,
+  "groundedness_pass_rate": 0.6667,
+  "responsible_ai_false_allows": 6,
+  "agent_regressions": 1,
+  "release_decision": "block"
+}

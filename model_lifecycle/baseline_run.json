@@ -1,0 +1,9 @@
+{
+  "run_id": "baseline-run-2026-05-apple-ml",
+  "model": "baseline_mock_adapter",
+  "dataset_version": "benchmark_instruction_following_v1",
+  "avg_score": 1.0,
+  "regressions": 0,
+  "groundedness_pass_rate": 1.0,
+  "release_decision": "reference"
+}

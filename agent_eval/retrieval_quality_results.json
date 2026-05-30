@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "total_cases": 3,
+    "tool_selection_accuracy": 0.6667,
+    "argument_accuracy": 0.6667,
+    "grounded_tool_result_rate": 0.6667,
+    "avg_retrieval_quality_score": 0.6667,
+    "agent_regressions": 1
+  },
+  "results": [
+    {
+      "case_id": "agent-tool-001",
+      "tool_correct": true,
+      "args_correct": true,
+      "tool_result_grounded": true,
+      "retrieval_quality_score": 1.0,
+      "agent_regression": false
+    },
+    {
+      "case_id": "agent-tool-002",
+      "tool_correct": true,
+      "args_correct": true,
+      "tool_result_grounded": true,
+      "retrieval_quality_score": 1.0,
+      "agent_regression": false
+    },
+    {
+      "case_id": "agent-tool-003",
+      "tool_correct": false,
+      "args_correct": false,
+      "tool_result_grounded": false,
+      "retrieval_quality_score": 0.0,
+      "agent_regression": true
+    }
+  ]
+}
