@@ -1,0 +1,27 @@
+{
+  "experiment": "retail_search_baseline_vs_candidate",
+  "metric_scope": "synthetic retail product discovery",
+  "baseline_ranker": {
+    "model_id": "baseline_search_ranker_v1",
+    "precision_at_3": 0.7778,
+    "recall_at_3": 1.0,
+    "ndcg_at_3": 0.9012,
+    "ranking_regressions": 0
+  },
+  "candidate_ranker": {
+    "model_id": "candidate_search_ranker_v2",
+    "precision_at_3": 0.6667,
+    "recall_at_3": 1.0,
+    "ndcg_at_3": 0.7688,
+    "ranking_regressions": 2
+  },
+  "deltas": {
+    "precision_at_3_delta": -0.1111,
+    "recall_at_3_delta": 0.0,
+    "ndcg_at_3_delta": -0.1324,
+    "ranking_regression_delta": 2
+  },
+  "release_decision": "block_candidate",
+  "decision_reason": "Candidate ranker reduced NDCG@3 and introduced ranking regressions in synthetic retail discovery cases.",
+  "safe_scope": "Synthetic ranking ablation for retail-style product discovery evaluation."
+}

@@ -1,0 +1,27 @@
+{
+  "experiment": "retail_recommendation_baseline_vs_candidate",
+  "metric_scope": "synthetic retail product discovery",
+  "baseline_recommender": {
+    "model_id": "baseline_recommender_v1",
+    "hit_rate": 1.0,
+    "avg_recommendation_precision": 0.6667,
+    "irrelevant_recommendation_count": 1,
+    "quality_regressions": 0
+  },
+  "candidate_recommender": {
+    "model_id": "candidate_recommender_v2",
+    "hit_rate": 1.0,
+    "avg_recommendation_precision": 0.5,
+    "irrelevant_recommendation_count": 3,
+    "quality_regressions": 0
+  },
+  "deltas": {
+    "hit_rate_delta": 0.0,
+    "avg_recommendation_precision_delta": -0.1667,
+    "irrelevant_recommendation_count_delta": 2,
+    "quality_regression_delta": 0
+  },
+  "release_decision": "needs_review",
+  "decision_reason": "Candidate recommender preserved hit rate but reduced recommendation precision and increased irrelevant recommendations.",
+  "safe_scope": "Synthetic recommendation ablation for retail-style product discovery evaluation."
+}
