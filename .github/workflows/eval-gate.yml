@@ -1,0 +1,22 @@
+name: FairEval Prompt Regression Gate
+
+on:
+  push:
+    paths:
+      - "ci_eval_gate/**"
+      - ".github/workflows/eval-gate.yml"
+  pull_request:
+    paths:
+      - "ci_eval_gate/**"
+      - ".github/workflows/eval-gate.yml"
+
+jobs:
+  eval-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run prompt regression gate
+        run: python ci_eval_gate/regression_gate.py

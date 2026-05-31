@@ -1,0 +1,8 @@
+{
+  "model": "candidate_mock_adapter",
+  "outputs": [
+    {"case_id": "case-001", "grounded": false, "format_pass": true, "false_allow": false},
+    {"case_id": "case-002", "grounded": false, "format_pass": false, "false_allow": false},
+    {"case_id": "case-003", "grounded": true, "format_pass": false, "false_allow": false}
+  ]
+}

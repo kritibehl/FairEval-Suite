@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>FairEval Model Evaluation Leaderboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 10px; }
+    th { background: #f4f4f4; }
+    .ship { color: green; font-weight: bold; }
+    .block { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>FairEval Model Evaluation Leaderboard</h1>
+  <p>Compares candidate outputs across groundedness, hallucination risk, instruction adherence, latency, cost, and release readiness.</p>
+
+  <table>
+    <tr>
+      <th>Model</th>
+      <th>Groundedness</th>
+      <th>Hallucination Risk</th>
+      <th>Instruction Adherence</th>
+      <th>p95 Latency</th>
+      <th>Cost/Request</th>
+      <th>Release Readiness</th>
+    </tr>
+    <tr>
+      <td>baseline_mock_adapter</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>420 ms</td>
+      <td>$0.004</td>
+      <td class="ship">ship</td>
+    </tr>
+    <tr>
+      <td>candidate_mock_adapter</td>
+      <td>0.6667</td>
+      <td>0.3333</td>
+      <td>0.6667</td>
+      <td>950 ms</td>
+      <td>$0.012</td>
+      <td class="block">block</td>
+    </tr>
+    <tr>
+      <td>provider_style_claude_reference</td>
+      <td>0.95</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>610 ms</td>
+      <td>$0.006</td>
+      <td class="ship">ship</td>
+    </tr>
+  </table>
+</body>
+</html>

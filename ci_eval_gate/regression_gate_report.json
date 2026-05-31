@@ -1,0 +1,26 @@
+{
+  "candidate": "blocked",
+  "groundedness_regressions": 2,
+  "format_failures": 2,
+  "false_allows": 0,
+  "results": [
+    {
+      "case_id": "case-001",
+      "groundedness_regression": true,
+      "format_failure": false,
+      "false_allow": false
+    },
+    {
+      "case_id": "case-002",
+      "groundedness_regression": true,
+      "format_failure": true,
+      "false_allow": false
+    },
+    {
+      "case_id": "case-003",
+      "groundedness_regression": false,
+      "format_failure": true,
+      "false_allow": false
+    }
+  ]
+}

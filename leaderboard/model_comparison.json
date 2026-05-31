@@ -1,0 +1,32 @@
+{
+  "leaderboard_name": "faireval_model_quality_release_readiness",
+  "models": [
+    {
+      "model": "baseline_mock_adapter",
+      "groundedness": 1.0,
+      "hallucination_risk": 0.0,
+      "instruction_adherence": 1.0,
+      "p95_latency_ms": 420,
+      "cost_per_request_usd": 0.004,
+      "release_readiness": "ship"
+    },
+    {
+      "model": "candidate_mock_adapter",
+      "groundedness": 0.6667,
+      "hallucination_risk": 0.3333,
+      "instruction_adherence": 0.6667,
+      "p95_latency_ms": 950,
+      "cost_per_request_usd": 0.012,
+      "release_readiness": "block"
+    },
+    {
+      "model": "provider_style_claude_reference",
+      "groundedness": 0.95,
+      "hallucination_risk": 0.0,
+      "instruction_adherence": 1.0,
+      "p95_latency_ms": 610,
+      "cost_per_request_usd": 0.006,
+      "release_readiness": "ship"
+    }
+  ]
+}
