@@ -1,0 +1,37 @@
+{
+  "timeline": [
+    {
+      "version": "v1",
+      "date": "2026-05-10",
+      "decision": "ship",
+      "why": "Baseline evaluation passed groundedness, formatting, and Responsible AI checks.",
+      "key_metrics": {
+        "avg_score": 1.0,
+        "false_allows": 0,
+        "ranking_regressions": 0
+      }
+    },
+    {
+      "version": "v2",
+      "date": "2026-05-15",
+      "decision": "block",
+      "why": "Candidate introduced Responsible AI false allows, groundedness regressions, and ranking regressions.",
+      "key_metrics": {
+        "avg_score": 0.7,
+        "false_allows": 6,
+        "ranking_regressions": 2
+      }
+    },
+    {
+      "version": "v3",
+      "date": "2026-05-20",
+      "decision": "needs_review",
+      "why": "Recommendation hit rate was preserved, but precision dropped and irrelevant recommendations increased.",
+      "key_metrics": {
+        "hit_rate": 1.0,
+        "avg_recommendation_precision": 0.5,
+        "irrelevant_recommendations": 3
+      }
+    }
+  ]
+}

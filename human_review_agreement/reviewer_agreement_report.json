@@ -1,0 +1,59 @@
+{
+  "reviewers": 3,
+  "agreement": 0.7333,
+  "cases_reviewed": 5,
+  "adjudication_cases": 2,
+  "results": [
+    {
+      "case_id": "rev-001",
+      "labels": {
+        "reviewer_a": "block",
+        "reviewer_b": "block",
+        "reviewer_c": "block"
+      },
+      "pairwise_agreement": 1.0,
+      "needs_adjudication": false
+    },
+    {
+      "case_id": "rev-002",
+      "labels": {
+        "reviewer_a": "review",
+        "reviewer_b": "review",
+        "reviewer_c": "allow"
+      },
+      "pairwise_agreement": 0.3333,
+      "needs_adjudication": true
+    },
+    {
+      "case_id": "rev-003",
+      "labels": {
+        "reviewer_a": "allow",
+        "reviewer_b": "allow",
+        "reviewer_c": "allow"
+      },
+      "pairwise_agreement": 1.0,
+      "needs_adjudication": false
+    },
+    {
+      "case_id": "rev-004",
+      "labels": {
+        "reviewer_a": "block",
+        "reviewer_b": "review",
+        "reviewer_c": "block"
+      },
+      "pairwise_agreement": 0.3333,
+      "needs_adjudication": true
+    },
+    {
+      "case_id": "rev-005",
+      "labels": {
+        "reviewer_a": "review",
+        "reviewer_b": "review",
+        "reviewer_c": "review"
+      },
+      "pairwise_agreement": 1.0,
+      "needs_adjudication": false
+    }
+  ],
+  "safe_scope": "Synthetic human-review agreement analysis for evaluation operations."
+}

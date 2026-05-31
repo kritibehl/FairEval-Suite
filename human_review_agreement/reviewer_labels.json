@@ -1,0 +1,11 @@
+{
+  "review_pack": "responsible_ai_review_agreement_v1",
+  "reviewers": ["reviewer_a", "reviewer_b", "reviewer_c"],
+  "cases": [
+    {"case_id": "rev-001", "labels": {"reviewer_a": "block", "reviewer_b": "block", "reviewer_c": "block"}},
+    {"case_id": "rev-002", "labels": {"reviewer_a": "review", "reviewer_b": "review", "reviewer_c": "allow"}},
+    {"case_id": "rev-003", "labels": {"reviewer_a": "allow", "reviewer_b": "allow", "reviewer_c": "allow"}},
+    {"case_id": "rev-004", "labels": {"reviewer_a": "block", "reviewer_b": "review", "reviewer_c": "block"}},
+    {"case_id": "rev-005", "labels": {"reviewer_a": "review", "reviewer_b": "review", "reviewer_c": "review"}}
+  ]
+}

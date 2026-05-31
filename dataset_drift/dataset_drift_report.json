@@ -1,0 +1,18 @@
+{
+  "baseline_dataset": "retail_product_discovery_v1",
+  "candidate_dataset": "retail_product_discovery_v2",
+  "new_entity_names": [
+    "vision",
+    "watch"
+  ],
+  "new_entities": 24,
+  "distribution_shift": true,
+  "shifted_intents": {
+    "spatial_computing": 0.15,
+    "budget": -0.1,
+    "health": 0.15,
+    "student": -0.1
+  },
+  "release_readiness": "needs_review",
+  "safe_scope": "Synthetic dataset drift analysis for evaluation dataset monitoring."
+}

@@ -1,0 +1,20 @@
+{
+  "dataset_id": "retail_product_discovery_v2",
+  "version": "v2",
+  "entity_counts": {
+    "macbook": 14,
+    "iphone": 11,
+    "ipad": 8,
+    "accessory": 6,
+    "vision": 10,
+    "watch": 14
+  },
+  "intent_distribution": {
+    "student": 0.20,
+    "creator": 0.20,
+    "budget": 0.15,
+    "accessory": 0.15,
+    "spatial_computing": 0.15,
+    "health": 0.15
+  }
+}
