@@ -1,0 +1,42 @@
+{
+  "pack_name": "video_temporal_consistency_eval",
+  "description": "Synthetic multimodal evaluation pack for video-style model outputs, focused on temporal consistency, object persistence, action continuity, and caption grounding.",
+  "tasks": [
+    {
+      "task_id": "robot_pickup_sequence",
+      "domain": "robotics",
+      "frames": [
+        {"frame_id": 1, "objects": ["robot_arm", "red_cube", "table"], "action": "approach_cube"},
+        {"frame_id": 2, "objects": ["robot_arm", "red_cube", "table"], "action": "grasp_cube"},
+        {"frame_id": 3, "objects": ["robot_arm", "red_cube", "table"], "action": "lift_cube"}
+      ],
+      "expected_objects": ["robot_arm", "red_cube"],
+      "expected_action_sequence": ["approach_cube", "grasp_cube", "lift_cube"],
+      "reference_caption": "A robot arm approaches, grasps, and lifts a red cube from a table."
+    },
+    {
+      "task_id": "pedestrian_crossing_sequence",
+      "domain": "driving",
+      "frames": [
+        {"frame_id": 1, "objects": ["car", "pedestrian", "crosswalk"], "action": "pedestrian_waiting"},
+        {"frame_id": 2, "objects": ["car", "pedestrian", "crosswalk"], "action": "pedestrian_crossing"},
+        {"frame_id": 3, "objects": ["car", "pedestrian", "crosswalk"], "action": "car_yielding"}
+      ],
+      "expected_objects": ["pedestrian", "crosswalk"],
+      "expected_action_sequence": ["pedestrian_waiting", "pedestrian_crossing", "car_yielding"],
+      "reference_caption": "A pedestrian moves through a crosswalk while the car yields."
+    },
+    {
+      "task_id": "indoor_navigation_sequence",
+      "domain": "indoor_robotics",
+      "frames": [
+        {"frame_id": 1, "objects": ["mobile_robot", "chair", "door"], "action": "navigate_toward_door"},
+        {"frame_id": 2, "objects": ["mobile_robot", "chair", "door"], "action": "avoid_chair"},
+        {"frame_id": 3, "objects": ["mobile_robot", "chair", "door"], "action": "pass_through_door"}
+      ],
+      "expected_objects": ["mobile_robot", "chair", "door"],
+      "expected_action_sequence": ["navigate_toward_door", "avoid_chair", "pass_through_door"],
+      "reference_caption": "A mobile robot navigates around a chair and passes through a door."
+    }
+  ]
+}

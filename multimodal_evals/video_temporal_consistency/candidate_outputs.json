@@ -1,0 +1,35 @@
+{
+  "model_name": "candidate_video_model_v1",
+  "outputs": [
+    {
+      "task_id": "robot_pickup_sequence",
+      "predicted_objects_by_frame": [
+        ["robot_arm", "red_cube", "table"],
+        ["robot_arm", "red_cube", "table"],
+        ["robot_arm", "blue_cube", "table"]
+      ],
+      "predicted_action_sequence": ["approach_cube", "grasp_cube", "lift_cube"],
+      "caption": "A robot arm picks up a cube from a table."
+    },
+    {
+      "task_id": "pedestrian_crossing_sequence",
+      "predicted_objects_by_frame": [
+        ["car", "pedestrian", "crosswalk"],
+        ["car", "pedestrian", "crosswalk"],
+        ["car", "crosswalk"]
+      ],
+      "predicted_action_sequence": ["pedestrian_waiting", "pedestrian_crossing", "car_yielding"],
+      "caption": "A pedestrian crosses at a crosswalk as a car slows down."
+    },
+    {
+      "task_id": "indoor_navigation_sequence",
+      "predicted_objects_by_frame": [
+        ["mobile_robot", "chair", "door"],
+        ["mobile_robot", "chair", "door"],
+        ["mobile_robot", "chair", "door"]
+      ],
+      "predicted_action_sequence": ["navigate_toward_door", "avoid_chair", "enter_room"],
+      "caption": "A robot moves indoors near a chair and doorway."
+    }
+  ]
+}
