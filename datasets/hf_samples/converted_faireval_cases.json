@@ -1,0 +1,56 @@
+[
+  {
+    "id": "hf-eval-001",
+    "input": {
+      "prompt": "The model response omitted the required JSON field.",
+      "context": []
+    },
+    "expected": {
+      "label": "schema_break",
+      "answer_contains": [
+        "JSON",
+        "field"
+      ]
+    },
+    "metadata": {
+      "source": "local_hf_style_sample",
+      "task": "nlp_classification_eval"
+    }
+  },
+  {
+    "id": "hf-eval-002",
+    "input": {
+      "prompt": "The answer is fluent but ignores the user's formatting instruction.",
+      "context": []
+    },
+    "expected": {
+      "label": "instruction_drop",
+      "answer_contains": [
+        "formatting",
+        "instruction"
+      ]
+    },
+    "metadata": {
+      "source": "local_hf_style_sample",
+      "task": "nlp_classification_eval"
+    }
+  },
+  {
+    "id": "hf-eval-003",
+    "input": {
+      "prompt": "The output changed across repeated runs with the same prompt.",
+      "context": []
+    },
+    "expected": {
+      "label": "consistency_regression",
+      "answer_contains": [
+        "repeated",
+        "prompt"
+      ]
+    },
+    "metadata": {
+      "source": "local_hf_style_sample",
+      "task": "nlp_classification_eval"
+    }
+  }
+]

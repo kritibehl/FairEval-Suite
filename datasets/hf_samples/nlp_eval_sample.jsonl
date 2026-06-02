@@ -1,0 +1,3 @@
+{"text":"The model response omitted the required JSON field.","label":"schema_break","expected_terms":["JSON","field"],"task":"nlp_classification_eval","source":"local_hf_style_sample"}
+{"text":"The answer is fluent but ignores the user's formatting instruction.","label":"instruction_drop","expected_terms":["formatting","instruction"],"task":"nlp_classification_eval","source":"local_hf_style_sample"}
+{"text":"The output changed across repeated runs with the same prompt.","label":"consistency_regression","expected_terms":["repeated","prompt"],"task":"nlp_classification_eval","source":"local_hf_style_sample"}
