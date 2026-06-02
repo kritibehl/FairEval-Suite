@@ -1,0 +1,24 @@
+name: FairEval Gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  fair-eval-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      - name: Run prompt regression suite
+        run: |
+          python evals/prompt_regression/run_prompt_regression.py
+      - name: Export regression reports
+        run: |
+          python scripts/export_regression_reports.py
