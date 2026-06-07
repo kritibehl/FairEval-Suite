@@ -1,0 +1,35 @@
+{
+  "registry_name": "faireval_experiment_registry",
+  "experiments": [
+    {
+      "experiment_id": "exp-retail-rag-001",
+      "dataset": "retail_product_discovery_v1",
+      "model": "candidate_mock_adapter",
+      "release": "rel-v2",
+      "score": 0.7,
+      "latency_ms": 950,
+      "cost_usd": 0.012,
+      "decision": "blocked"
+    },
+    {
+      "experiment_id": "exp-agent-eval-001",
+      "dataset": "agent_tool_call_correctness_v1",
+      "model": "agentic_candidate_workflow",
+      "release": "rel-v4",
+      "score": 0.6667,
+      "latency_ms": 610,
+      "cost_usd": 0.006,
+      "decision": "rolled_back"
+    },
+    {
+      "experiment_id": "exp-drift-001",
+      "dataset": "retail_product_discovery_v2",
+      "model": "candidate_recommender_v2",
+      "release": "rel-v3",
+      "score": 0.5,
+      "latency_ms": 480,
+      "cost_usd": 0.004,
+      "decision": "needs_review"
+    }
+  ]
+}

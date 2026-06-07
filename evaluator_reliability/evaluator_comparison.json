@@ -1,0 +1,27 @@
+{
+  "dashboard": "evaluator_reliability_dashboard",
+  "evaluators": [
+    {
+      "evaluator": "human_reviewers",
+      "agreement_score": 0.7333,
+      "false_allow_rate": 0.0,
+      "escalation_accuracy": 0.9,
+      "notes": "Three-reviewer agreement with adjudication cases."
+    },
+    {
+      "evaluator": "ai_composite_evaluator",
+      "agreement_score": 0.86,
+      "false_allow_rate": 0.0,
+      "escalation_accuracy": 0.88,
+      "notes": "Composite evaluator checks grounding, refusal consistency, escalation, and policy bypass."
+    },
+    {
+      "evaluator": "candidate_model_self_eval",
+      "agreement_score": 0.58,
+      "false_allow_rate": 0.27,
+      "escalation_accuracy": 0.62,
+      "notes": "Candidate self-evaluation misses several escalation-required cases."
+    }
+  ],
+  "safe_scope": "Synthetic evaluator reliability comparison for evaluation operations."
+}

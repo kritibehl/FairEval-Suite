@@ -1,0 +1,7 @@
+{
+  "total_experiments": 3,
+  "blocked_or_rolled_back": 2,
+  "avg_score": 0.6222,
+  "avg_latency_ms": 680.0,
+  "avg_cost_usd": 0.007333
+}

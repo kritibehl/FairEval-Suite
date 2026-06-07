@@ -1,0 +1,36 @@
+{
+  "board_name": "faireval_release_governance_board",
+  "summary": {
+    "approved": 7,
+    "blocked": 3,
+    "rolled_back": 1,
+    "needs_review": 2
+  },
+  "release_decisions": [
+    {
+      "release_id": "rel-v1",
+      "model": "baseline_mock_adapter",
+      "decision": "approved",
+      "reason": "Passed groundedness, formatting, and Responsible AI checks."
+    },
+    {
+      "release_id": "rel-v2",
+      "model": "candidate_mock_adapter",
+      "decision": "blocked",
+      "reason": "False allows, groundedness regressions, and ranking regressions detected."
+    },
+    {
+      "release_id": "rel-v3",
+      "model": "candidate_recommender_v2",
+      "decision": "needs_review",
+      "reason": "Hit rate preserved but recommendation precision dropped."
+    },
+    {
+      "release_id": "rel-v4",
+      "model": "agentic_candidate_workflow",
+      "decision": "rolled_back",
+      "reason": "Unsupported action attempted during blocked-release approval workflow."
+    }
+  ],
+  "safe_scope": "Synthetic release-governance board for AI evaluation operations."
+}
