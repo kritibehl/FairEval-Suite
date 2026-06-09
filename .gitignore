@@ -18,3 +18,5 @@ reports/
 # Local experiments
 quick_test.py
 toxicity.py
+!reports/
+!reports/**

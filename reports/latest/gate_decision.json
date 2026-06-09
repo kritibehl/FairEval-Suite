@@ -1,0 +1,12 @@
+{
+  "project": "FairEval",
+  "false_allows_prevented": 16,
+  "gate_decision": "BLOCK",
+  "citation_coverage_drop_pp": -91,
+  "providers_evaluated": 3,
+  "groundedness_regressions": 2,
+  "release_status": "BLOCKED",
+  "p_value_welch": 0.0,
+  "p_value_chi_squared": 0.0,
+  "candidate_run_type": "intentional_regression_fixture"
+}
