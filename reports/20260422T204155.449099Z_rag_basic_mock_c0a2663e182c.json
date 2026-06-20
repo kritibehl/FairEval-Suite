@@ -1,0 +1,41 @@
+{
+  "config": {
+    "artifact_version": "v2",
+    "created_at": "2026-04-22 20:41:55.449434+00:00",
+    "gate_rules_version": "v2",
+    "model_name": "mock",
+    "scorer_name": "rag_overlap_v1",
+    "suite_name": "rag_basic",
+    "suite_version": "2026.03"
+  },
+  "integrity": {
+    "duplicate_case_ids": [],
+    "duplicate_case_payloads": [],
+    "missing_expected_ids": [],
+    "pack_completeness": {
+      "complete": true,
+      "num_cases": 1
+    },
+    "schema_violations": [],
+    "stale_baseline_warning": null,
+    "status": "pass"
+  },
+  "results": [
+    {
+      "case_id": "c1",
+      "details": {
+        "error": "exception",
+        "message": "MockModelClient.generate() takes 2 positional arguments but 3 were given"
+      },
+      "passed": false,
+      "score": 0.0
+    }
+  ],
+  "run_id": "20260422T204155.449099Z_rag_basic_mock_c0a2663e182c",
+  "summary": {
+    "avg_score": 0.0,
+    "failed_case_count": 1,
+    "num_cases": 1,
+    "pass_rate": 0.0
+  }
+}
