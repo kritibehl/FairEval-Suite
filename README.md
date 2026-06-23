@@ -2,7 +2,7 @@
 
 **Stopped 16 unsafe model releases before deployment.**
 
-Gating GenAI model deployments using regression detection, hallucination scoring, and statistical significance testing.
+Gating GenAI model deployments using regression detection, hallucination scoring and statistical significance testing.
 
 `Python` · `FastAPI` · `SciPy` · `HuggingFace` · `SQLite`
 
