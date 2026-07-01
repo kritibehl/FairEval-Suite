@@ -1,0 +1,8 @@
+{
+  "baseline_groundedness": 1.0,
+  "candidate_groundedness": 0.67,
+  "groundedness_drop": 0.33,
+  "hallucination_regression": true,
+  "prompt_output_comparison": "candidate introduced unsupported responses",
+  "release_decision": "BLOCK"
+}
